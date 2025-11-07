@@ -68,7 +68,7 @@ public class PlayerWaveController : MonoBehaviour
 
         // Movimento: avanza lungo X (verticale visivo), oscilla su Y
         float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
-        float x = _startPos.y + _time;
+        float x = _startPos.y + _time;   
         float y = Mathf.Sin(phase) * amplitude;
         transform.position = new Vector3(x, y, 0f);
 

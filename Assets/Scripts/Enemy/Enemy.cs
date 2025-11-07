@@ -3,8 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
-    public float speed = 2f;
     private SpriteRenderer _sprite;
+    [SerializeField] private EnemyData _enemyData;
+
+    public EnemyData EnemyData => _enemyData;
 
     void Start()
     {
@@ -15,7 +17,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // Muoviti verso sinistra (indietro rispetto al player)
-        transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.left * _enemyData.moveSpeed * Time.deltaTime, Space.World);
 
         // Distruggi se troppo indietro rispetto alla camera
         if (transform.position.x < Camera.main.transform.position.x - 10f)

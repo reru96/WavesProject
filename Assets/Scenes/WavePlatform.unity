@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 1415131233706008856, guid: 28e184dd47cead94c963514586694108, type: 3}
-  obstaclePrefab: {fileID: 1375192389643622548, guid: 4be99dd5263630441a6b4e9f8ca1aaab, type: 3}
+  obstaclePrefab: {fileID: 3439360728421853213, guid: d00405e11b0886544b5b5ee01a5ce94c, type: 3}
   spawnRate: 2
   yRange: 4
   spawnOffsetX: 10
@@ -4681,6 +4681,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ce35d924ea6f6449e4ee4e1c4aedca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWaveController
+--- !u!114 &1019552814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019552802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576c6d678c183e64c92fb1e8dda3a98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLifeController
+  maxLives: 3
+  infiniteLives: 0
+  maxLivesOnStart: 1
+--- !u!58 &1019552815
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019552802}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.00000063772603, y: -0.004066676}
+  m_Radius: 0.2846
+--- !u!50 &1019552816
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019552802}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1024782787
 GameObject:
   m_ObjectHideFlags: 0
@@ -9588,6 +9666,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019552808}
+    - targetCorrespondingSourceObject: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019552814}
+    - targetCorrespondingSourceObject: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019552815}
+    - targetCorrespondingSourceObject: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019552816}
   m_SourcePrefab: {fileID: 100100000, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

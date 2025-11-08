@@ -1245,8 +1245,8 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
   obstacleSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
   spawnRate: 2
-  yRange: 4
-  spawnOffsetX: 10
+  yRange: 5
+  spawnOffsetX: 12
   obstacleChance: 0.3
 --- !u!1 &227078415
 GameObject:

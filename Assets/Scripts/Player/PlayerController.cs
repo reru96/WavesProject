@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         _wave = GetComponent<PlayerWaveController>();
-        _targetAmplitude  = _wave.amplitude;
+        _targetAmplitude = _wave.amplitude;
         _targetWavelength = _wave.waveLength;
     }
 
@@ -41,19 +41,11 @@ public class PlayerControl : MonoBehaviour
     {
         HandleAmplitude();
         HandleWavelength();
-
-        // ---- FEEDBACK VISIVO DELL’INERZIA ----
-        // fattore 0..1 per quanta “pesantezza” abbiamo ora
-        float maxAmpAbs = Mathf.Max(Mathf.Abs(minAmplitude), Mathf.Abs(maxAmplitude));
-        float ampInertiaFactor  = Mathf.InverseLerp(0f, maxAmpAbs, Mathf.Abs(_wave.amplitude));
-        float waveInertiaFactor = Mathf.InverseLerp(minWavelength, maxWavelength, _wave.waveLength);
-
-        _wave.ApplyInertiaFeedback(ampInertiaFactor, waveInertiaFactor);
+        ApplyInertiaFeedback();
     }
 
-    void HandleAmplitude()
+    private void HandleAmplitude()
     {
-        // Sensibilità adattiva (più ampiezza ⇒ meno sensibilità)
         float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
 
         if (Input.GetKey(KeyCode.Q))
@@ -62,13 +54,11 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
             _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
 
-        // Ampiezza reattiva ma morbida
         _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
     }
 
-    void HandleWavelength()
+    private void HandleWavelength()
     {
-        // Sensibilità adattiva (più lunghezza ⇒ meno sensibilità)
         float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
 
         float dir = 0f;
@@ -83,7 +73,15 @@ public class PlayerControl : MonoBehaviour
             );
         }
 
-        // Il controller interno farà lo "slew" lineare (vedi PlayerWaveController)
         _wave.waveLength = _targetWavelength;
+    }
+
+    private void ApplyInertiaFeedback()
+    {
+        float maxAmpAbs = Mathf.Max(Mathf.Abs(minAmplitude), Mathf.Abs(maxAmplitude));
+        float ampFactor = Mathf.InverseLerp(0f, maxAmpAbs, Mathf.Abs(_wave.amplitude));
+        float waveFactor = Mathf.InverseLerp(minWavelength, maxWavelength, _wave.waveLength);
+
+        _wave.ApplyInertiaFeedback(ampFactor, waveFactor);
     }
 }

@@ -27,6 +27,7 @@ public class RespawnManager : Singleton<RespawnManager>
     protected override void Awake()
     {
         base.Awake();
+        FindPlayer();
         leftTry = maxTry;
         livesUI = FindAnyObjectByType<UpdateLivesUI>();
     }

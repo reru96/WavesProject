@@ -36,13 +36,15 @@ public class UpdateLivesUI : MonoBehaviour
     {
         if (RespawnManager.Instance == null) return;
 
-        int triesLeft = RespawnManager.Instance.LeftTry;
+       var player = RespawnManager.Instance.GetPlayer();
+       var life = player.GetComponent<LifeController>();
+       int hp = life.GetHp();
 
         foreach (var icon in icons)
             Destroy(icon);
         icons.Clear();
 
-        for (int i = 0; i < triesLeft; i++)
+        for (int i = 0; i < hp; i++)
         {
             GameObject newIcon = Instantiate(lifeIcon, lifeParent);
             newIcon.SetActive(true);

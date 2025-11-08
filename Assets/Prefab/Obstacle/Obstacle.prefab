@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1062686200474423747}
   - component: {fileID: 4710397813791958033}
   - component: {fileID: 3227375563518987882}
+  - component: {fileID: 5520102545758581356}
+  - component: {fileID: 5472035718408517843}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -111,3 +113,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5520102545758581356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375192389643622548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0662a1373a52914ca917fea28fb96dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PooledMarker
+  data: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
+--- !u!114 &5472035718408517843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375192389643622548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LifeController
+  objectSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

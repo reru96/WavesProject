@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3241812213070224310}
   - component: {fileID: 4069098585781517196}
   - component: {fileID: 1471973178889230750}
+  - component: {fileID: 865338351278033998}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -275,3 +276,19 @@ MonoBehaviour:
   minWavelength: 1
   maxWavelength: 10
   amplitudeResponse: 10
+--- !u!114 &865338351278033998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263917700265880030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LifeController
+  objectSO: {fileID: 11400000, guid: ba8a0564125e2b748a275e942c35748a, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

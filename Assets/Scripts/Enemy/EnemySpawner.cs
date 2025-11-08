@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject enemyPrefab;
-    public GameObject obstaclePrefab;
+    public Object enemySO;
+    public Object obstacleSO;
 
     [Header("Spawn Settings")]
     public float spawnRate = 2f;
@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        _player = RespawnManager.Instance.GetPlayer()?.transform;
         _timer = 0f;
     }
 
@@ -36,11 +36,14 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEntity()
     {
         bool spawnObstacle = Random.value < obstacleChance;
-        GameObject prefab = spawnObstacle ? obstaclePrefab : enemyPrefab;
+        Object prefab = spawnObstacle ? obstacleSO : enemySO;
+
+        if (prefab == null) return;
 
         float y = Random.Range(-yRange, yRange);
-        float x = _player.position.x + spawnOffsetX; // avanti nella direzione del movimento
+        float x = _player.position.x + spawnOffsetX;
 
-        Instantiate(prefab, new Vector3(x, y, 0f), Quaternion.identity);
+        ObjectPooler.Instance.Spawn(prefab, new Vector3(x, y, 0f), Quaternion.identity);
     }
 }
+

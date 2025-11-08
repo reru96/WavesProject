@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 62514011960851083}
   - component: {fileID: 2783763052009137537}
   - component: {fileID: 6752003340368034588}
+  - component: {fileID: 132741838927846209}
+  - component: {fileID: -5655358860017750366}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -140,4 +142,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9dbda6dd2fcaa241a1c981853e85402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  damage: 1
   speed: 2
+--- !u!114 &132741838927846209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415131233706008856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0662a1373a52914ca917fea28fb96dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PooledMarker
+  data: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+--- !u!114 &-5655358860017750366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415131233706008856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LifeController
+  objectSO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

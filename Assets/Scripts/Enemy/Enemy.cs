@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
+    public int damage = 1;
     public float speed = 2f;
     private SpriteRenderer _sprite;
 
@@ -24,18 +25,20 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var player = other.GetComponent<PlayerWaveController>();
+        //var player = other.GetComponent<PlayerWaveController>(); al momento non serve, poi vediamo se riutilizzarla
+        var player = other.GetComponent<LifeController>();
+        var life = this.GetComponent<LifeController>();
         if (player != null)
         {
             Color playerColor = player.GetComponent<SpriteRenderer>().color;
             if (ColorsSimilar(_sprite.color, playerColor))
             {
-                Destroy(gameObject);
+                life.SetHp(0);
                 // Qui potresti aggiungere: GameManager.Instance.AddScore(10);
             }
             else
             {
-                Destroy(player.gameObject);
+                player.TakeDamage(1);
                 // Game Over: puoi chiamare un evento qui
             }
         }

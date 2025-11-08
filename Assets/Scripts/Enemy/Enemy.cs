@@ -21,11 +21,10 @@ public class Enemy : MonoBehaviour
     {
         if (player == null) return;
 
-        // Muoviti verso il player lungo X (verso sinistra se player fermo)
-        Vector3 dir = (player.position - transform.position).normalized;
-        transform.position += dir * speed * Time.deltaTime;
+        // Muoviti costantemente verso sinistra
+        transform.position += Vector3.left * speed * Time.deltaTime;
 
-        // Rimuovi dall'area se troppo lontano dietro il player
+        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
         if (transform.position.x < player.position.x - 10f)
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }

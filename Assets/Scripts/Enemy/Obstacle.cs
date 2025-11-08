@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 
     public float speed = 2f;
     private Transform player;
+    public float returnToPoolOffset = 10f;
 
     void Start()
     {
@@ -16,13 +17,13 @@ public class Obstacle : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 dir = (player.position - transform.position).normalized;
-        transform.position += dir * speed * Time.deltaTime;
+        // Muoviti costantemente verso sinistra
+        transform.position += Vector3.left * speed * Time.deltaTime;
 
-        if (transform.position.x < player.position.x - 10f)
+        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
+        if (transform.position.x < player.position.x - returnToPoolOffset)
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -36,4 +37,7 @@ public class Obstacle : MonoBehaviour
         }
     }
 }
+
+    
+
 

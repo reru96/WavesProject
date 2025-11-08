@@ -5,35 +5,37 @@ using UnityEngine.SceneManagement;
 
 public class RespawnManager : Singleton<RespawnManager> 
 {
+    [Header("Player Settings")]
     [SerializeField] private int maxTry = 3;
     private int leftTry;
+    public Object playerSO; // ScriptableObject del player
 
     public int LeftTry => leftTry;
     public int MaxTry => maxTry;
 
+    [Header("Respawn Settings")]
     [SerializeField] private Transform puntoRespawn;
     [SerializeField] private float respawnDelay = 2f;
 
-    UpdateLivesUI livesUI;
-
     private GameObject player;
-
     public GameObject GetPlayer() => player;
 
     public event Action OnPlayerReady;
+
+    private UpdateLivesUI livesUI;
 
     protected override bool ShouldBeDestroyOnLoad() => false;
 
     protected override void Awake()
     {
         base.Awake();
-        FindPlayer();
         leftTry = maxTry;
-        livesUI = FindAnyObjectByType<UpdateLivesUI>();
+        SpawnPlayer(); 
+        livesUI = FindAnyObjectByType<UpdateLivesUI>(); 
     }
 
     private void Start()
-    { 
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -45,15 +47,26 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindPlayer();
-        livesUI.UpdateLives(); 
+        // Rispawna il player se non c'è
+        if (player == null)
+            SpawnPlayer();
+
+        livesUI?.UpdateLives();
     }
 
-    private void FindPlayer()
+    private void SpawnPlayer()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        if (playerSO == null || playerSO.prefab == null)
+        {
+            Debug.LogWarning("[RespawnManager] PlayerSO o prefab mancante!");
+            return;
+        }
+
+        if (player == null)
+        {
+            player = Instantiate(playerSO.prefab, puntoRespawn.position, Quaternion.identity);
             OnPlayerReady?.Invoke();
+        }
     }
 
     public void ResetTries()
@@ -64,17 +77,12 @@ public class RespawnManager : Singleton<RespawnManager>
     public void PlayerDied()
     {
         leftTry--;
-
-        livesUI.UpdateLives();
+        livesUI?.UpdateLives();
 
         if (leftTry > 0)
-        {
             StartCoroutine(RespawnRoutine());
-        }
         else
-        {
             GameOver();
-        }
     }
 
     private IEnumerator RespawnRoutine()
@@ -83,14 +91,13 @@ public class RespawnManager : Singleton<RespawnManager>
 
         bool done = false;
         ScreenFader.Instance.FadeOut(() => done = true);
-
         while (!done) yield return null;
 
         player.SetActive(false);
         yield return new WaitForSeconds(respawnDelay);
 
         var life = player.GetComponent<LifeController>();
-        if (life != null) life.SetHp(life.GetMaxHp());
+        life?.SetHp(life.GetMaxHp());
 
         player.transform.position = puntoRespawn.position;
         player.SetActive(true);
@@ -104,6 +111,7 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         Debug.Log("GAME OVER");
         ResetTries();
+
         ScreenFader.Instance.FadeOut(() =>
         {
             SceneManager.LoadScene("StartMenu");

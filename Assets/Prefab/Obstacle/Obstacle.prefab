@@ -180,4 +180,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2dd32e94e42e94581d6ce81ee58f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  speed: 1
+  speed: 2
+  returnToPoolOffset: 10

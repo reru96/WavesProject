@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4333d4ca6f87b5144a4b4e8f6dc71a5f, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::Object
-  maxHp: 1
-  currentHp: 1
+  maxHp: 3
+  currentHp: 3
   deathType: 3
   prefab: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}

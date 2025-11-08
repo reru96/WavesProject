@@ -8,8 +8,7 @@ public class RespawnManager : Singleton<RespawnManager>
     [Header("Player Settings")]
     [SerializeField] private int maxTry = 3;
     private int leftTry;
-    public Object playerSO; // ScriptableObject del player
-
+    public Object playerSO; 
     public int LeftTry => leftTry;
     public int MaxTry => maxTry;
 
@@ -110,12 +109,14 @@ public class RespawnManager : Singleton<RespawnManager>
     private void GameOver()
     {
         Debug.Log("GAME OVER");
-        ResetTries();
-
+    
         ScreenFader.Instance.FadeOut(() =>
         {
             SceneManager.LoadScene("MainMenu");
             ScreenFader.Instance.FadeIn();
-        });
+        });    
+        
+        ResetTries();
+
     }
 }

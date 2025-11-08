@@ -181,4 +181,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   speed: 2
-  returnToPoolOffset: 10
+  returnToPoolOffset: 2

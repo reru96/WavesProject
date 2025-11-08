@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour
     public float speed = 2f;
     private Transform player;
     public float returnToPoolOffset = 10f;
+    public string obstacleSound;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class Obstacle : MonoBehaviour
             var life = other.GetComponent<LifeController>();
             if (life != null)
                 life.TakeDamage(1);
-
+            AudioManager.Instance.PlaySfx(obstacleSound);
             ObjectPooler.Instance.ReturnToPool(gameObject);
         }
     }

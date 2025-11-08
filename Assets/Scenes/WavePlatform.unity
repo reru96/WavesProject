@@ -1246,7 +1246,7 @@ MonoBehaviour:
   obstacleSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
   spawnRate: 2
   yRange: 4
-  spawnOffsetX: 20
+  spawnOffsetX: 10
   obstacleChance: 0.3
 --- !u!1 &227078415
 GameObject:
@@ -1887,6 +1887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345423003}
+  - component: {fileID: 345423004}
   m_Layer: 0
   m_Name: RespawnManager
   m_TagString: Untagged
@@ -1909,6 +1910,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345423004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345423002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dd9d2b4ad1f46846a11eebb9d05993a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
+  maxTry: 3
+  puntoRespawn: {fileID: 412604725}
+  respawnDelay: 2
 --- !u!1 &351842080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,6 +2364,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &412604724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412604725}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &412604725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412604724}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000026481985, y: 0.0000002648131, z: 0.70710576, w: -0.70710784}
+  m_LocalPosition: {x: -5.49, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428678462
 GameObject:
   m_ObjectHideFlags: 0
@@ -10482,6 +10529,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1069747893}
   - {fileID: 217279286}
+  - {fileID: 412604725}
   - {fileID: 2869907272861634008}
   - {fileID: 734082098}
   - {fileID: 195803228}

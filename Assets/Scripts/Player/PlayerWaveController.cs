@@ -45,7 +45,7 @@ public class PlayerWaveController : MonoBehaviour
         _line.widthMultiplier = lineWidthBase;
 
         Texture2D dashTex = new Texture2D(2, 1);
-        dashTex.SetPixels(new Color[] { Color.white, Color.clear });
+        dashTex.SetPixels(new UnityEngine.Color[] { UnityEngine.Color.white, UnityEngine.Color.clear });
         dashTex.Apply();
         _line.material.mainTexture      = dashTex;
         _line.material.mainTextureScale = new Vector2(10f, 1f);
@@ -99,7 +99,7 @@ public class PlayerWaveController : MonoBehaviour
     void UpdateColors()
     {
         float colorFactor = Mathf.InverseLerp(-5f, 5f, amplitude);
-        Color c = colorByWave.Evaluate(colorFactor);
+        UnityEngine.Color c = colorByWave.Evaluate(colorFactor);
 
         // Alpha regolato da ApplyInertiaVisuals (qui lo lasciamo pieno, lo modificheremo dopo)
         c.a = 1f;
@@ -129,13 +129,13 @@ public class PlayerWaveController : MonoBehaviour
         float alpha = Mathf.Lerp(1f, lineMinAlphaAtMaxInertia, _inertiaBlend);
 
         // Applica alpha al colore attuale della linea (manteniamo tinta da gradient)
-        Color sc = _line.startColor; sc.a = alpha;
-        Color ec = _line.endColor;   ec.a = alpha;
+        UnityEngine.Color sc = _line.startColor; sc.a = alpha;
+        UnityEngine.Color ec = _line.endColor;   ec.a = alpha;
         _line.startColor = sc;
         _line.endColor   = ec;
 
         // (facoltativo) anche lo sprite potrebbe calare alpha con inerzia:
-        // Color pc = _sprite.color; pc.a = alpha; _sprite.color = pc;
+        // ColorData pc = _sprite.color; pc.a = alpha; _sprite.color = pc;
     }
 
     public void SetAmplitude(float value) => amplitude = Mathf.Clamp(value, -5f, 5f);

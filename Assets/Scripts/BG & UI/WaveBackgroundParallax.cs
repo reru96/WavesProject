@@ -23,7 +23,7 @@ public class WaveBackgroundField : MonoBehaviour
     private SpriteRenderer[] _renderers;
     private bool[] _groupA;
     private float[] _baseScales;
-    private Color[] _baseColors;
+    private UnityEngine.Color[] _baseColors;
 
     void Start()
     {
@@ -40,7 +40,7 @@ public class WaveBackgroundField : MonoBehaviour
         _renderers = new SpriteRenderer[squareCount];
         _groupA = new bool[squareCount];
         _baseScales = new float[squareCount];
-        _baseColors = new Color[squareCount];
+        _baseColors = new UnityEngine.Color[squareCount];
 
         for (int i = 0; i < squareCount; i++)
         {
@@ -60,7 +60,7 @@ public class WaveBackgroundField : MonoBehaviour
             SpriteRenderer sr = sq.GetComponent<SpriteRenderer>();
             if (sr == null) sr = sq.AddComponent<SpriteRenderer>();
             sr.sortingOrder = -100; // sempre in background
-            sr.color = new Color(1f, 1f, 1f, Random.Range(0.2f, 0.7f));
+            sr.color = new UnityEngine.Color(1f, 1f, 1f, Random.Range(0.2f, 0.7f));
 
             // Salva dati
             _squares[i] = sq.transform;
@@ -82,7 +82,7 @@ public class WaveBackgroundField : MonoBehaviour
         for (int i = 0; i < _squares.Length; i++)
         {
             float baseScale = _baseScales[i];
-            Color baseColor = _baseColors[i];
+            UnityEngine.Color baseColor = _baseColors[i];
             Transform t = _squares[i];
             SpriteRenderer sr = _renderers[i];
 
@@ -99,7 +99,7 @@ public class WaveBackgroundField : MonoBehaviour
 
             // Opacità proporzionale (più ampiezza, più trasparente in un gruppo)
             float targetAlpha = Mathf.Clamp01(baseColor.a * (1f + offset * 0.5f));
-            Color c = sr.color;
+            UnityEngine.Color c = sr.color;
             c.a = Mathf.Lerp(c.a, targetAlpha, lerpSpeed * Time.deltaTime);
             sr.color = c;
 

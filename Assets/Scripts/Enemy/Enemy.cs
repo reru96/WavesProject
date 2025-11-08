@@ -6,12 +6,12 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _sprite;
     [SerializeField] private EnemyData _enemyData;
 
+    private ColorData _enemyColor;
     public EnemyData EnemyData => _enemyData;
 
     void Start()
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+        SetEnemy(_enemyData);
     }
 
     void Update()
@@ -24,12 +24,30 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
     }
 
+    public void SetEnemy(EnemyData data)
+    {
+        _enemyData = data;
+        _enemyColor = data.enemyColor;
+        _sprite = _sprite ?? GetComponent<SpriteRenderer>();
+        switch (_enemyColor)
+        {
+            case ColorData.Red:
+                _sprite.color = UnityEngine.Color.red;
+                break;
+            case ColorData.Blue:
+                _sprite.color = UnityEngine.Color.blue;
+                break;
+            case ColorData.White:
+                _sprite.color = UnityEngine.Color.white;
+                break;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         var player = other.GetComponent<PlayerWaveController>();
         if (player != null)
         {
-            Color playerColor = player.GetComponent<SpriteRenderer>().color;
+            UnityEngine.Color playerColor = player.GetComponent<SpriteRenderer>().color;
             if (ColorsSimilar(_sprite.color, playerColor))
             {
                 Destroy(gameObject);
@@ -43,7 +61,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    bool ColorsSimilar(Color a, Color b)
+    bool ColorsSimilar(UnityEngine.Color a, UnityEngine.Color b)
     {
         return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.g, b.b)) < 0.3f;
     }

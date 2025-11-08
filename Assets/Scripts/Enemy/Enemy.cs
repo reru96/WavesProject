@@ -5,9 +5,11 @@ public class Enemy : MonoBehaviour
 {
     public int damage = 1;
     public float speed = 2f;
-
+    public float returnToPoolOffset = 5f;
     private SpriteRenderer _sprite;
     private Transform player;
+    public string fadeSound;
+    public string damageSound;
 
     void Start()
     {
@@ -25,14 +27,14 @@ public class Enemy : MonoBehaviour
         transform.position += Vector3.left * speed * Time.deltaTime;
 
         // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
-        if (transform.position.x < player.position.x - 10f)
+        if (transform.position.x < player.position.x - returnToPoolOffset)
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         var playerLife = other.GetComponent<LifeController>();
-        var life = this.GetComponent<LifeController>();
+        var life = gameObject.GetComponent<LifeController>();
 
         if (playerLife != null)
         {
@@ -41,10 +43,12 @@ public class Enemy : MonoBehaviour
             if (ColorsSimilar(_sprite.color, playerColor))
             {
                 life?.SetHp(0);
+                AudioManager.Instance.PlaySfx(fadeSound);
             }
             else
             {
                 playerLife.TakeDamage(damage);
+                AudioManager.Instance.PlaySfx(damageSound);
             }
 
             ObjectPooler.Instance.ReturnToPool(gameObject);

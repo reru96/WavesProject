@@ -7,14 +7,15 @@ public class UpdateLivesUI : MonoBehaviour
     [SerializeField] private GameObject lifeIcon;
     [SerializeField] private Transform lifeParent;
 
-    private LifeController lifeController;
     private List<GameObject> icons = new List<GameObject>();
 
     private void Start()
     {
         if (RespawnManager.Instance != null)
         {
-            RespawnManager.Instance.OnPlayerReady += OnPlayerReady;
+            UpdateLives();
+
+            RespawnManager.Instance.OnPlayerReady += UpdateLives;
         }
     }
 
@@ -22,32 +23,26 @@ public class UpdateLivesUI : MonoBehaviour
     {
         if (RespawnManager.Instance != null)
         {
-            RespawnManager.Instance.OnPlayerReady -= OnPlayerReady;
+            RespawnManager.Instance.OnPlayerReady -= UpdateLives;
         }
     }
 
-    private void OnPlayerReady()
+    private void Update()
     {
-        var player = RespawnManager.Instance.GetPlayer();
-        if (player != null)
-        {
-            lifeController = player.GetComponent<LifeController>();
-            UpdateLives();
-        }
+        UpdateLives();
     }
 
     public void UpdateLives()
     {
-        if (lifeController == null) return;
+        if (RespawnManager.Instance == null) return;
 
-        int hp = lifeController.GetHp();
+        int triesLeft = RespawnManager.Instance.LeftTry;
 
         foreach (var icon in icons)
             Destroy(icon);
-
         icons.Clear();
 
-        for (int i = 0; i < hp; i++)
+        for (int i = 0; i < triesLeft; i++)
         {
             GameObject newIcon = Instantiate(lifeIcon, lifeParent);
             newIcon.SetActive(true);

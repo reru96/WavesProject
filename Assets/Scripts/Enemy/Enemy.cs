@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _sprite;
     private Transform player;
     public string fadeSound;
-    public string damageSound;
 
     void Start()
     {
@@ -42,13 +41,11 @@ public class Enemy : MonoBehaviour
 
             if (ColorsSimilar(_sprite.color, playerColor))
             {
-                life?.SetHp(0);
                 AudioManager.Instance.PlaySfx(fadeSound);
             }
             else
             {
                 playerLife.TakeDamage(damage);
-                AudioManager.Instance.PlaySfx(damageSound);
             }
 
             ObjectPooler.Instance.ReturnToPool(gameObject);

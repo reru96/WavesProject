@@ -7857,8 +7857,8 @@ MonoBehaviour:
   sfxVolumeParam: SfxVolume
   musicSource: {fileID: 1623591096}
   sfxSource: {fileID: 168998726}
-  audioLibrary: {fileID: 0}
-  sceneMusicLibrary: {fileID: 0}
+  audioLibrary: {fileID: 11400000, guid: f7b6518915002dd4ab2146aabe7096fc, type: 2}
+  sceneMusicLibrary: {fileID: 11400000, guid: f034e7fb65c726e44a3900211059d3b9, type: 2}
 --- !u!1 &1642650575
 GameObject:
   m_ObjectHideFlags: 0

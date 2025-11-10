@@ -16,3 +16,5 @@ MonoBehaviour:
   currentHp: 1
   deathType: 1
   prefab: {fileID: 1375192389643622548, guid: 4be99dd5263630441a6b4e9f8ca1aaab, type: 3}
+  hitSound: EnemyHit
+  deathSound: EnemyHit

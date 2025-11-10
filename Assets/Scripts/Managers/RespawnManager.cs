@@ -3,12 +3,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RespawnManager : Singleton<RespawnManager> 
+public class RespawnManager : Singleton<RespawnManager>
 {
-    [Header("Player Settings")]
     [SerializeField] private int maxTry = 3;
     private int leftTry;
-    public Object playerSO; 
+    public Object playerSO;
     public int LeftTry => leftTry;
     public int MaxTry => maxTry;
 
@@ -29,8 +28,7 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         base.Awake();
         leftTry = maxTry;
-        SpawnPlayer(); 
-        livesUI = FindAnyObjectByType<UpdateLivesUI>(); 
+        SpawnPlayer();
     }
 
     private void Start()
@@ -46,18 +44,15 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Rispawna il player se non c'è
-        if (player == null)
-            SpawnPlayer();
-
-        livesUI?.UpdateLives();
+        livesUI = FindAnyObjectByType<UpdateLivesUI>();
+        NotifyLifeChanged();
     }
 
     private void SpawnPlayer()
     {
         if (playerSO == null || playerSO.prefab == null)
         {
-            Debug.LogWarning("[RespawnManager] PlayerSO o prefab mancante!");
+            Debug.LogWarning("[RespawnManager] PlayerSO o prefab mancante.");
             return;
         }
 
@@ -68,15 +63,24 @@ public class RespawnManager : Singleton<RespawnManager>
         }
     }
 
+    public void NotifyLifeChanged()
+    {
+        if (livesUI == null)
+            livesUI = FindAnyObjectByType<UpdateLivesUI>();
+
+        livesUI?.UpdateLives();
+    }
+
     public void ResetTries()
     {
         leftTry = maxTry;
+        NotifyLifeChanged();
     }
 
     public void PlayerDied()
     {
         leftTry--;
-        livesUI?.UpdateLives();
+        NotifyLifeChanged();
 
         if (leftTry > 0)
             StartCoroutine(RespawnRoutine());
@@ -97,9 +101,10 @@ public class RespawnManager : Singleton<RespawnManager>
 
         var life = player.GetComponent<LifeController>();
         life?.SetHp(life.GetMaxHp());
-
         player.transform.position = puntoRespawn.position;
         player.SetActive(true);
+
+        NotifyLifeChanged();
 
         done = false;
         ScreenFader.Instance.FadeIn(() => done = true);
@@ -108,15 +113,12 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void GameOver()
     {
-        Debug.Log("GAME OVER");
-    
         ScreenFader.Instance.FadeOut(() =>
         {
             SceneManager.LoadScene("MainMenu");
             ScreenFader.Instance.FadeIn();
-        });    
-        
-        ResetTries();
+        });
 
+        ResetTries();
     }
 }

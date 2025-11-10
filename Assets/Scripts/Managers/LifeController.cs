@@ -1,19 +1,43 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LifeController : MonoBehaviour
 {
     public Object objectSO;
 
-    public UnityEvent OnDeath;
+    public event Action OnDeath;
+    public event Action OnHit;
 
-    public int GetHp () => (int)objectSO.currentHp;
-    public int GetMaxHp() => (int)objectSO.maxHp;
+    public int GetHp() => objectSO.currentHp;
+    public int GetMaxHp() => objectSO.maxHp;
 
     public void Awake()
     {
         objectSO.currentHp = objectSO.maxHp;
+    }
+
+    public void OnEnable()
+    {
+        OnHit += HitAction;
+        OnDeath += Death;
+    }
+
+    public void OnDisable()
+    {
+        OnHit -= HitAction;
+        OnDeath -= Death;
+    }
+  
+    public void HitAction()
+    {
+        AudioManager.Instance.PlaySfxRandomPitch(objectSO.hitSound);
+        // qui possono andare animazioni o effetti particellari
+    }
+
+    public void Death()
+    {
+        AudioManager.Instance.PlaySfx(objectSO.deathSound);
     }
 
     public void TakeDamage(int amount)
@@ -22,13 +46,19 @@ public class LifeController : MonoBehaviour
 
         if (amount > 0)
         {
+            OnHit?.Invoke();
             SetHp(objectSO.currentHp - amount);
         }
     }
-    public void SetHp(float hp)
+
+    public void SetHp(int hp)
     {
-        float oldHp = objectSO.currentHp;
+        int oldHp = objectSO.currentHp;
         objectSO.currentHp = Mathf.Clamp(hp, 0, objectSO.maxHp);
+        
+        if (CompareTag("Player"))
+            RespawnManager.Instance.NotifyLifeChanged();
+
 
         if (oldHp > 0 && objectSO.currentHp == 0)
         {
@@ -46,7 +76,7 @@ public class LifeController : MonoBehaviour
             case DeathAction.Destroy:
                 Destroy(gameObject);
                 break;
-            case DeathAction.Die:
+            case DeathAction.Respawn:
                 RespawnManager.Instance.PlayerDied();
                 break;
             case DeathAction.Disable:

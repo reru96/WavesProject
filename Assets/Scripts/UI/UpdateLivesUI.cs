@@ -11,34 +11,32 @@ public class UpdateLivesUI : MonoBehaviour
 
     private void Start()
     {
-        if (RespawnManager.Instance != null)
-        {
-            UpdateLives();
-
-            RespawnManager.Instance.OnPlayerReady += UpdateLives;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (RespawnManager.Instance != null)
-        {
-            RespawnManager.Instance.OnPlayerReady -= UpdateLives;
-        }
-    }
-
-    private void Update()
-    {
         UpdateLives();
+    }
+    private void OnEnable()
+    {
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerReady += UpdateLives;
+    }
+
+    private void OnDisable()
+    {
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerReady -= UpdateLives;
     }
 
     public void UpdateLives()
     {
-        if (RespawnManager.Instance == null) return;
+        var manager = RespawnManager.Instance;
+        if (manager == null) return;
 
-       var player = RespawnManager.Instance.GetPlayer();
-       var life = player.GetComponent<LifeController>();
-       int hp = life.GetHp();
+        var player = manager.GetPlayer();
+        if (player == null) return;
+
+        var life = player.GetComponent<LifeController>();
+        if (life == null) return;
+
+        int hp = life.GetHp();
 
         foreach (var icon in icons)
             Destroy(icon);

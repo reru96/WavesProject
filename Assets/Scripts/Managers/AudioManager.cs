@@ -105,6 +105,17 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    public void PlaySfxRandomPitch(string key, float minPitch = 0.8f, float maxPitch = 1.2f, float volume = 1f)
+    {
+        if (audioDict.TryGetValue(key, out var clip))
+        {
+            float originalPitch = sfxSource.pitch;
+            sfxSource.pitch = Random.Range(minPitch, maxPitch);
+            sfxSource.PlayOneShot(clip, volume);
+            sfxSource.pitch = originalPitch;
+        }
+    }
+
     public AudioClip GetClip(string key) =>
         audioDict.TryGetValue(key, out var clip) ? clip : null;
 

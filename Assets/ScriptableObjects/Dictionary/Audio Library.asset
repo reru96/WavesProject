@@ -15,3 +15,5 @@ MonoBehaviour:
   clips:
   - key: 'Level1 '
     clip: {fileID: 0}
+  - key: EnemyHit
+    clip: {fileID: 8300000, guid: 2186f65a800fa0743a41191459aeec29, type: 3}

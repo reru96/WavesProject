@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/UI.meta
 guid: da0cc3b44c60847499f1be96ec19c6f7
+========
+guid: 726598d461a95fe428f8e2c90f8c3a9f
+>>>>>>>> Simo:Assets/Prefab/Player.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

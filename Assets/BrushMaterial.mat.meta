@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/BrushMaterial.mat.meta
 guid: df9b0bbb1a636a94f996eb4fabc9c39b
+========
+guid: 5a710ee54c801d9498ce9d556eaebf18
+>>>>>>>> Simo:Assets/Materials/GlowMat.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

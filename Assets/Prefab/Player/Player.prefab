@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 865338351278033998}
   - component: {fileID: -5620024454732486961}
   - component: {fileID: -6009407505315781166}
+  - component: {fileID: 4666154172232561858}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -291,9 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: ba8a0564125e2b748a275e942c35748a, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &-5620024454732486961
 Rigidbody2D:
   serializedVersion: 5
@@ -367,3 +365,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4666154172232561858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263917700265880030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a873627350c2a854194c8eb2d938663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaintPointer
+  cylinderMaterial: {fileID: 2100000, guid: 84918d7a067f9674389b53fb056c8545, type: 2}
+  paintTexture: {fileID: 8400000, guid: 4899ffeb2f2395047a503870179fea29, type: 2}
+  brushTexture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+  brushSize: 0.1
+  paintDuration: 2

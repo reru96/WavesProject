@@ -95,7 +95,7 @@ public class PlayerWaveController : MonoBehaviour
         for (int i = 0; i < previewPoints; i++)
         {
             float tNorm = i / (float)(previewPoints - 1);
-            float offset = Mathf.Lerp(-halfDist, +halfDist, tNorm);
+            float offset = Mathf.Lerp(previewDistance, 0, tNorm);
 
             Vector3 point = _fixedPlayerPos
                             + transform.right * offset

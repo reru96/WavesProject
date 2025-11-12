@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class CameraManagere : MonoBehaviour
 {
-    [SerializeField] Transform _player;
-    [SerializeField] float _cameraOffset = 5f;
+    [SerializeField] private Transform _cameraPivot; 
+    [SerializeField] private Vector3 _offset = new Vector3(0f, 0f, -10f);
+    [SerializeField] private float _smoothSpeed = 1f;
+
+    private void Start()
+    {
+        GameObject orientation = GameObject.FindGameObjectWithTag("Orientation");
+        _cameraPivot = orientation.transform;
+    }
 
     void LateUpdate()
     {
-        if (_player == null) return;
+        if (_cameraPivot == null) return;
 
-        Vector3 camPos = transform.position;
-        camPos.x = _player.position.x + _cameraOffset;
-        transform.position = camPos;
+        Vector3 targetPos = _cameraPivot.position + _offset;
+        transform.position = Vector3.Lerp(transform.position, targetPos, _smoothSpeed * Time.deltaTime);
     }
 }

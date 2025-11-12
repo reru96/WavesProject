@@ -8,8 +8,9 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     public float spawnRate = 2f;
-    public float yRange = 4f;             // larghezza verticale dello spawn
-    public float spawnOffsetX = 10f;      // distanza davanti al player
+    public float yRange = 4f;             
+    public float xRange = 6f;             
+    public float spawnOffset = 10f;     
     [Range(0f, 1f)] public float obstacleChance = 0.3f;
 
     private float _timer;
@@ -19,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         _timer = 0f;
+
         if (RespawnManager.Instance != null)
             RespawnManager.Instance.OnPlayerReady += OnPlayerReady;
 
@@ -26,11 +28,12 @@ public class EnemySpawner : MonoBehaviour
             OnPlayerReady();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (RespawnManager.Instance != null)
             RespawnManager.Instance.OnPlayerReady -= OnPlayerReady;
     }
+
     private void OnPlayerReady()
     {
         _player = RespawnManager.Instance.GetPlayer()?.transform;
@@ -39,7 +42,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-
         if (!_playerReady) return;
 
         _timer += Time.deltaTime;
@@ -52,17 +54,40 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEntity()
     {
-        // Decidi se spawnare un ostacolo o un nemico
         bool spawnObstacle = Random.value < obstacleChance;
         Object soData = spawnObstacle ? obstacleSO : enemySO;
 
         if (soData == null || soData.prefab == null) return;
 
-        float y = Random.Range(-yRange, yRange);
-        float x = _player.position.x + spawnOffsetX;
+        Vector3 spawnPos = Vector3.zero;
 
-        GameObject go = ObjectPooler.Instance.Spawn(soData, new Vector3(x, y, 0f), Quaternion.identity);
+        int dir = Random.Range(0, 4);
 
+        switch (dir)
+        {
+            case 0: 
+                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
+                                       _player.position.y + yRange + spawnOffset,
+                                       0f);
+                break;
+            case 1: 
+                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
+                                       _player.position.y - yRange - spawnOffset,
+                                       0f);
+                break;
+            case 2: 
+                spawnPos = new Vector3(_player.position.x + xRange + spawnOffset,
+                                       _player.position.y + Random.Range(-yRange, yRange),
+                                       0f);
+                break;
+            case 3:
+                spawnPos = new Vector3(_player.position.x - xRange - spawnOffset,
+                                       _player.position.y + Random.Range(-yRange, yRange),
+                                       0f);
+                break;
+        }
+
+        GameObject go = ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
     }
 }
 

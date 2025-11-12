@@ -5,6 +5,10 @@ public class PlayerControl : MonoBehaviour
 {
     private PlayerWaveController _wave;
 
+    private Rigidbody2D rb;
+
+    [SerializeField] private float speed;
+
     [Header("Controls (Base Rates)")]
     [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
     public float baseAmplitudeStep = 0.6f;
@@ -38,7 +42,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         HandleAmplitude();
         HandleWavelength();
         ApplyInertiaFeedback();

@@ -1246,7 +1246,8 @@ MonoBehaviour:
   obstacleSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
   spawnRate: 2
   yRange: 5
-  spawnOffsetX: 12
+  xRange: 6
+  spawnOffset: 10
   obstacleChance: 0.3
 --- !u!1 &231289039
 GameObject:
@@ -1807,7 +1808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &333474359
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5078,7 +5079,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManagere
   _player: {fileID: 0}
-  _cameraOffset: 7.5
+  _offset: {x: 0, y: 0, z: -40}
+  _smoothSpeed: 5
 --- !u!1 &1079485563
 GameObject:
   m_ObjectHideFlags: 0

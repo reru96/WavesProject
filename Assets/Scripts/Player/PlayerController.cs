@@ -5,6 +5,8 @@ public class PlayerControl : MonoBehaviour
 {
     private PlayerWaveController _wave;
 
+    public float inputThreshold = 0.1f;
+
     [Header("Controls (Base Rates)")]
     [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
     public float baseAmplitudeStep = 0.6f;
@@ -29,6 +31,7 @@ public class PlayerControl : MonoBehaviour
 
     private float _targetAmplitude;
     private float _targetWavelength;
+
 
     void Start()
     {
@@ -56,10 +59,10 @@ public class PlayerControl : MonoBehaviour
         // Sensibilità adattiva (più ampiezza ⇒ meno sensibilità)
         float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
 
-        if (Input.GetKey(KeyCode.Q))
+        if ((Input.mousePosition.y - transform.position.y) > inputThreshold) 
             _targetAmplitude = Mathf.Clamp(_targetAmplitude - sensitivity, minAmplitude, maxAmplitude);
 
-        if (Input.GetKey(KeyCode.E))
+        if ((Input.mousePosition.y - transform.position.y) < -inputThreshold)
             _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
 
         // Ampiezza reattiva ma morbida
@@ -72,8 +75,8 @@ public class PlayerControl : MonoBehaviour
         float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
 
         float dir = 0f;
-        if (Input.GetKey(KeyCode.W)) dir += 1f;
-        if (Input.GetKey(KeyCode.S)) dir -= 1f;
+        if (Input.mousePosition.x - transform.position.x > inputThreshold) dir += 1f;
+        if (Input.mousePosition.x - transform.position.x < -inputThreshold) dir -= 1f;
 
         if (Mathf.Abs(dir) > 0f)
         {

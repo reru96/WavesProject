@@ -26,6 +26,7 @@ public class PlayerWaveController : MonoBehaviour
     [Tooltip("Alpha minimo della linea a massima inerzia (0..1)")]
     public float lineMinAlphaAtMaxInertia   = 0.6f;
 
+<<<<<<< Updated upstream
     private SpriteRenderer _sprite;
     private LineRenderer   _line;
     private Vector3 _startPos;
@@ -37,6 +38,21 @@ public class PlayerWaveController : MonoBehaviour
     {
         _sprite = GetComponent<SpriteRenderer>();
         _line   = GetComponent<LineRenderer>();
+=======
+
+
+    private SpriteRenderer _sprite;
+        private LineRenderer _line;
+        private Vector3 _fixedPlayerPos;
+        private float _time;
+        private float _effectiveWaveLength;
+        private float _inertiaBlend;
+
+        void Start()
+        {
+        _sprite = GetComponent<SpriteRenderer>();
+            _line = GetComponent<LineRenderer>();
+>>>>>>> Stashed changes
 
         // Setup LineRenderer (pattern tratteggiato)
         _line.positionCount = previewPoints;
@@ -59,12 +75,20 @@ public class PlayerWaveController : MonoBehaviour
     {
         _time += Time.deltaTime * speed;
 
+<<<<<<< Updated upstream
         // Slew lineare del valore usato (niente accelerazioni)
         _effectiveWaveLength = Mathf.MoveTowards(
             _effectiveWaveLength, 
             waveLength, 
             wavelengthSlewPerSecond * Time.deltaTime
         );
+=======
+        void Update()
+        {
+        
+
+            _time += Time.deltaTime * speed;
+>>>>>>> Stashed changes
 
         // Movimento: avanza lungo X (verticale visivo), oscilla su Y
         float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
@@ -77,8 +101,22 @@ public class PlayerWaveController : MonoBehaviour
         ApplyInertiaVisuals(); // applica lo stato visivo dell’inerzia (spessore/alpha)
     }
 
+<<<<<<< Updated upstream
     void UpdateTrajectory()
     {
+=======
+            transform.position = new Vector3(_fixedPlayerPos.x, _fixedPlayerPos.y + y, _fixedPlayerPos.z);
+
+            UpdateTrajectory();
+            UpdateColors();
+            ApplyInertiaVisuals();
+        }
+
+
+
+    void UpdateTrajectory()
+        {
+>>>>>>> Stashed changes
         float halfDist = previewDistance * 0.5f;
 
         for (int i = 0; i < previewPoints; i++)

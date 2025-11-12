@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor.Overlays;
 using UnityEngine;
@@ -28,6 +29,11 @@ public static class SaveManager
 
 [System.Serializable] public class SaveData
 {
-    internal int sceneIndex;
-    int score;
+    public List<int> highScores = new List<int>();
+    public int sceneIndex;
+    public float playerX, playerY, playerZ;
+    public int score;
+    public int coins;
+    public float musicVolume;
+    public float sfxVolume;
 }

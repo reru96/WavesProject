@@ -1,25 +1,22 @@
+using System;
 using UnityEngine;
 
 public class SaveController : Singleton<SaveController>
 {
-
     public static SaveData pendingSaveData;
+    public static event Action<int> OnScoreLoaded;
+
+    public void Start()
+    {
+        LoadScore();
+    }
+    public void LoadScore()
+    {
+        OnScoreLoaded?.Invoke(pendingSaveData.score);
+    }
 
     protected override bool ShouldBeDestroyOnLoad() => false;
-    private void Start()
-    {
-        if (pendingSaveData != null)
-        {
 
-            //UIScoreManager scoreManager = FindObjectOfType<UIScoreManager>();
-            //if (scoreManager != null)
-            //{
-            //    scoreManager.SetScore(pendingSaveData.score);
-            //}
-
-            pendingSaveData = null;
-        }
-    }
     public void SaveGame()
     {
         SaveData data = SaveManager.Load();

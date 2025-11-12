@@ -6,75 +6,86 @@ public class PlayerWaveController : MonoBehaviour
     [Header("Wave Parameters")]
     [Range(-5f, 5f)] public float amplitude = 0f;
     [Range(1f, 10f)] public float waveLength = 5f;
-    public float speed = 5f;
+    public float speed = 5f; // velocità di movimento lungo la direzione del player
 
     [Header("Colors")]
     public Gradient colorByWave;
 
     [Header("Line Preview")]
-    public int   previewPoints   = 100;    // più punti = più liscia
-    public float previewDistance = 10f;    // metà dietro + metà davanti
-    public float lineWidthBase   = 0.4f;   // spessore base
+    public int previewPoints = 100;
+    public float previewDistance = 10f;
+    public float lineWidthBase = 0.4f;
 
     [Header("Runtime Smoothing")]
-    public float wavelengthSlewPerSecond = 3f; // velocità con cui l'effettivo segue il target
+    public float wavelengthSlewPerSecond = 3f;
 
-    // Feedback visivo dell'inerzia
     [Header("Inertia Visual Feedback")]
-    [Tooltip("Quanto la linea può diventare più spessa a massima inerzia")]
     public float lineWidthExtraAtMaxInertia = 0.2f;
-    [Tooltip("Alpha minimo della linea a massima inerzia (0..1)")]
-    public float lineMinAlphaAtMaxInertia   = 0.6f;
+    public float lineMinAlphaAtMaxInertia = 0.6f;
+
+    [Header("Rotation")]
+    [SerializeField] private float rotationSpeed = 10f; // velocità interpolazione rotazione
 
     private SpriteRenderer _sprite;
-    private LineRenderer   _line;
-    private Vector3 _startPos;
-    private float   _time;
-    private float   _effectiveWaveLength; // valore usato davvero per la sinusoide
-    private float   _inertiaBlend;        // 0..1 media tra ampiezza/lunghezza (per feedback)
+    private LineRenderer _line;
+    private Vector3 _fixedPlayerPos;
+    private float _time;
+    private float _effectiveWaveLength;
+    private float _inertiaBlend;
 
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
-        _line   = GetComponent<LineRenderer>();
+        _line = GetComponent<LineRenderer>();
 
-        // Setup LineRenderer (pattern tratteggiato)
+        _fixedPlayerPos = transform.position;
+
         _line.positionCount = previewPoints;
-        _line.alignment     = LineAlignment.TransformZ;
-        _line.material      = new Material(Shader.Find("Sprites/Default"));
+        _line.alignment = LineAlignment.TransformZ;
+        _line.material = new Material(Shader.Find("Sprites/Default"));
         _line.widthMultiplier = lineWidthBase;
 
         Texture2D dashTex = new Texture2D(2, 1);
         dashTex.SetPixels(new Color[] { Color.white, Color.clear });
         dashTex.Apply();
-        _line.material.mainTexture      = dashTex;
+        _line.material.mainTexture = dashTex;
         _line.material.mainTextureScale = new Vector2(10f, 1f);
-        _line.textureMode               = LineTextureMode.Tile;
+        _line.textureMode = LineTextureMode.Tile;
 
-        _startPos = transform.position;
         _effectiveWaveLength = waveLength;
     }
 
     void Update()
     {
+        UpdateRotation();
+
+        _fixedPlayerPos += transform.right * speed * Time.deltaTime;
+
         _time += Time.deltaTime * speed;
 
-        // Slew lineare del valore usato (niente accelerazioni)
-        _effectiveWaveLength = Mathf.MoveTowards(
-            _effectiveWaveLength, 
-            waveLength, 
-            wavelengthSlewPerSecond * Time.deltaTime
-        );
+        _effectiveWaveLength = Mathf.MoveTowards(_effectiveWaveLength, waveLength, wavelengthSlewPerSecond * Time.deltaTime);
 
-        // Movimento: avanza lungo X (verticale visivo), oscilla su Y
+        // Oscillazione verticale locale
         float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
-        float x = _startPos.y + _time;
         float y = Mathf.Sin(phase) * amplitude;
-        transform.position = new Vector3(x, y, 0f);
+        transform.position = _fixedPlayerPos + transform.up * y;
 
         UpdateTrajectory();
         UpdateColors();
-        ApplyInertiaVisuals(); // applica lo stato visivo dell’inerzia (spessore/alpha)
+        ApplyInertiaVisuals();
+    }
+
+    void UpdateRotation()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
+        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector3 direction = worldMousePos - transform.position;
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        float angle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     void UpdateTrajectory()
@@ -83,16 +94,14 @@ public class PlayerWaveController : MonoBehaviour
 
         for (int i = 0; i < previewPoints; i++)
         {
-            // da -halfDist (dietro) a +halfDist (davanti), centrato sul player
-            float tNorm  = i / (float)(previewPoints - 1);
-            float offset = Mathf.Lerp(-halfDist, +halfDist, tNorm);
+            float tNorm = i / (float)(previewPoints - 1);
+            float offset = Mathf.Lerp(previewDistance, 0, tNorm);
 
-            float t     = _time + offset;
-            float phase = (2f * Mathf.PI) * (t / _effectiveWaveLength);
-            float x     = _startPos.y + t;
-            float y     = Mathf.Sin(phase) * amplitude;
+            Vector3 point = _fixedPlayerPos
+                            + transform.right * offset
+                            + transform.up * Mathf.Sin((_time + offset) / _effectiveWaveLength * 2f * Mathf.PI) * amplitude;
 
-            _line.SetPosition(i, new Vector3(x, y, 0f));
+            _line.SetPosition(i, point);
         }
     }
 
@@ -100,42 +109,29 @@ public class PlayerWaveController : MonoBehaviour
     {
         float colorFactor = Mathf.InverseLerp(-5f, 5f, amplitude);
         Color c = colorByWave.Evaluate(colorFactor);
-
-        // Alpha regolato da ApplyInertiaVisuals (qui lo lasciamo pieno, lo modificheremo dopo)
         c.a = 1f;
 
-        _sprite.color   = c;
+        _sprite.color = c;
         _line.startColor = c;
-        _line.endColor   = c;
+        _line.endColor = c;
     }
 
-    // Chiamata dal PlayerControl ogni frame:
-    // ampFactor  = 0..1 (0 = ampiezza piccola; 1 = ampiezza grande)
-    // waveFactor = 0..1 (0 = lunghezza piccola; 1 = lunghezza grande)
     public void ApplyInertiaFeedback(float ampFactor, float waveFactor)
     {
         _inertiaBlend = Mathf.Clamp01((ampFactor + waveFactor) * 0.5f);
-        // Non applichiamo subito qui i cambi grafici per evitare doppio set del colore:
-        // mettiamo i dati e poi li usiamo in ApplyInertiaVisuals() a fine Update().
     }
 
     void ApplyInertiaVisuals()
     {
-        // Spessore: più inerzia ⇒ più spesso (come “tensione” dell’onda)
         float width = lineWidthBase + lineWidthExtraAtMaxInertia * _inertiaBlend;
         _line.widthMultiplier = width;
 
-        // Alpha: più inerzia ⇒ meno brillante (un filo “pesante”)
         float alpha = Mathf.Lerp(1f, lineMinAlphaAtMaxInertia, _inertiaBlend);
 
-        // Applica alpha al colore attuale della linea (manteniamo tinta da gradient)
         Color sc = _line.startColor; sc.a = alpha;
-        Color ec = _line.endColor;   ec.a = alpha;
+        Color ec = _line.endColor; ec.a = alpha;
         _line.startColor = sc;
-        _line.endColor   = ec;
-
-        // (facoltativo) anche lo sprite potrebbe calare alpha con inerzia:
-        // Color pc = _sprite.color; pc.a = alpha; _sprite.color = pc;
+        _line.endColor = ec;
     }
 
     public void SetAmplitude(float value) => amplitude = Mathf.Clamp(value, -5f, 5f);

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4333d4ca6f87b5144a4b4e8f6dc71a5f, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::Object
+  maxHp: 1
+  currentHp: 1
+  deathType: 1
+  prefab: {fileID: 1415131233706008856, guid: 28e184dd47cead94c963514586694108, type: 3}
+  hitSound: EnemyHit
+  deathSound: EnemyHit

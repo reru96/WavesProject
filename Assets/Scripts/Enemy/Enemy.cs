@@ -3,46 +3,57 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
+    public int damage = 1;
     public float speed = 2f;
+    public float returnToPoolOffset = 5f;
     private SpriteRenderer _sprite;
+    private Transform player;
+    public string fadeSound;
 
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
         _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+
+        player = RespawnManager.Instance.GetPlayer()?.transform;
     }
 
     void Update()
     {
-        // Muoviti verso sinistra (indietro rispetto al player)
-        transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
+        if (player == null) return;
 
-        // Distruggi se troppo indietro rispetto alla camera
-        if (transform.position.x < Camera.main.transform.position.x - 10f)
-            Destroy(gameObject);
+        // Muoviti costantemente verso sinistra
+        transform.position += Vector3.left * speed * Time.deltaTime;
+
+        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
+        if (transform.position.x < player.position.x - returnToPoolOffset)
+            ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var player = other.GetComponent<PlayerWaveController>();
-        if (player != null)
+        var playerLife = other.GetComponent<LifeController>();
+        var life = gameObject.GetComponent<LifeController>();
+
+        if (playerLife != null)
         {
-            Color playerColor = player.GetComponent<SpriteRenderer>().color;
+            Color playerColor = playerLife.GetComponent<SpriteRenderer>().color;
+
             if (ColorsSimilar(_sprite.color, playerColor))
             {
-                Destroy(gameObject);
-                // Qui potresti aggiungere: GameManager.Instance.AddScore(10);
+                AudioManager.Instance.PlaySfx(fadeSound);
             }
             else
             {
-                Destroy(player.gameObject);
-                // Game Over: puoi chiamare un evento qui
+                playerLife.TakeDamage(damage);
             }
+
+            ObjectPooler.Instance.ReturnToPool(gameObject);
         }
     }
 
-    bool ColorsSimilar(Color a, Color b)
+    bool ColorsSimilar(Color a, Color b, float tolerance = 0.3f)
     {
-        return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.g, b.b)) < 0.3f;
+        return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.g, b.b)) < tolerance;
     }
 }

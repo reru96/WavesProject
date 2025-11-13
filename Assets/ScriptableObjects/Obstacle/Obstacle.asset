@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4333d4ca6f87b5144a4b4e8f6dc71a5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4783666ae16b5854d9aa822e8e2f1e86, type: 3}
   m_Name: Obstacle
-  m_EditorClassIdentifier: Assembly-CSharp::Object
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureSO
   maxHp: 1
-  currentHp: 1
   deathType: 1
   prefab: {fileID: 1375192389643622548, guid: 4be99dd5263630441a6b4e9f8ca1aaab, type: 3}
   hitSound: EnemyHit

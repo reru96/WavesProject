@@ -88,12 +88,12 @@ public class PlayerControl : MonoBehaviour
     //    _wave.waveLength = _targetWavelength;
     //}
 
-    private void ApplyInertiaFeedback()
-    {
-        float maxAmpAbs = Mathf.Max(Mathf.Abs(minAmplitude), Mathf.Abs(maxAmplitude));
-        float ampFactor = Mathf.InverseLerp(0f, maxAmpAbs, Mathf.Abs(_wave.amplitude));
-        float waveFactor = Mathf.InverseLerp(minWavelength, maxWavelength, _wave.waveLength);
+   private void ApplyInertiaFeedback()
+   {
+       float maxAmpAbs = Mathf.Max(Mathf.Abs(minAmplitude), Mathf.Abs(maxAmplitude));
+       float ampFactor = Mathf.InverseLerp(0f, maxAmpAbs, Mathf.Abs(_wave.amplitude));
+       float waveFactor = Mathf.InverseLerp(minWavelength, maxWavelength, _wave.waveLength);
 
-        _wave.ApplyInertiaFeedback(ampFactor, waveFactor);
-    }
+       _wave.ApplyInertiaFeedback(ampFactor, waveFactor);
+   }
 }

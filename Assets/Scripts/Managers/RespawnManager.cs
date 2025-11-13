@@ -8,6 +8,7 @@ public class RespawnManager : Singleton<RespawnManager>
     [SerializeField] private int maxTry = 3;
     private int leftTry;
     public CreatureSO playerSO;
+
     public int LeftTry => leftTry;
     public int MaxTry => maxTry;
 

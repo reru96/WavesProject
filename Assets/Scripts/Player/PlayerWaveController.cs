@@ -82,6 +82,7 @@ public class PlayerWaveController : MonoBehaviour
         Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
         Vector3 direction = worldMousePos - transform.position;
+        direction = -direction.normalized;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         float angle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotationSpeed * Time.deltaTime);

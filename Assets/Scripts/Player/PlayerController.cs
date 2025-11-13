@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerWaveController))]
 public class PlayerControl : MonoBehaviour
@@ -8,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField] private float speed;
+    [SerializeField] private float speedChangeAmplitude = 1f;
 
     [Header("Controls (Base Rates)")]
     [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
@@ -51,23 +54,27 @@ public class PlayerControl : MonoBehaviour
     private void HandleAmplitude()
     {
         float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
-
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) || Input.mousePosition.y > 0.5 * Screen.height)
             _targetAmplitude = Mathf.Clamp(_targetAmplitude - sensitivity, minAmplitude, maxAmplitude);
-
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) || Input.mousePosition.y < 0.5 * Screen.height)
             _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
 
         _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
+
+        // === QUESTE 2 RIGHE FANNO ESATTAMENTE CIÒ CHE VUOI ===
+        float targetWaveLengthFromAmplitude = Mathf.Lerp(minWavelength, maxWavelength, Mathf.Abs(_wave.amplitude) / 5f);
+        _targetWavelength = Mathf.Clamp(targetWaveLengthFromAmplitude, minWavelength, maxWavelength);
+        // =========================================================
     }
 
     private void HandleWavelength()
     {
         float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
-
         float dir = 0f;
-        if (Input.GetKey(KeyCode.W)) dir += 1f;
-        if (Input.GetKey(KeyCode.S)) dir -= 1f;
+        if (Input.GetKey(KeyCode.W)) dir += speedChangeAmplitude;
+        if (Input.GetKey(KeyCode.S)) dir -= speedChangeAmplitude;
+        if (Mouse.current.leftButton.isPressed) dir += speedChangeAmplitude;
+        if (Mouse.current.rightButton.isPressed) dir -= speedChangeAmplitude;
 
         if (Mathf.Abs(dir) > 0f)
         {
@@ -77,7 +84,8 @@ public class PlayerControl : MonoBehaviour
             );
         }
 
-        _wave.waveLength = _targetWavelength;
+        // Smooth finale (già corretto)
+        _wave.waveLength = Mathf.Lerp(_wave.waveLength, _targetWavelength, amplitudeResponse * Time.deltaTime);
     }
 
     private void ApplyInertiaFeedback()

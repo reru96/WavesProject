@@ -10,6 +10,9 @@ public class EnemySpawner : MonoBehaviour
     public ObjectSO enemySO;
     public ObjectSO obstacleSO;
     public ObjectSO enemySpecialSO;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     [Header("Spawn Settings")]
@@ -59,6 +62,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private (Vector3 spawnPos, Vector2 moveDir) RandomDirection()
+<<<<<<< Updated upstream
     {
 <<<<<<< Updated upstream
         bool spawnObstacle = Random.value < obstacleChance;
@@ -122,8 +126,69 @@ public class EnemySpawner : MonoBehaviour
         if (soData == null || soData.prefab == null) return;
 
         var (spawnPos, moveDir) = RandomDirection();
+=======
+    {
+        Vector3 spawnPos = Vector3.zero;
+        Vector2 moveDir = Vector2.zero;
+
+        int dir = Random.Range(0, 4);
+
+        switch (dir)
+        {
+            case 0: // Da su verso giù
+                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
+                                       _player.position.y + yRange + spawnOffset,
+                                       0f);
+                moveDir = Vector2.down;
+                break;
+
+            case 1: // Da giù verso su
+                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
+                                       _player.position.y - yRange - spawnOffset,
+                                       0f);
+                moveDir = Vector2.up;
+                break;
+
+            case 2: // Da Destra verso Sinistra
+                spawnPos = new Vector3(_player.position.x + xRange + spawnOffset,
+                                       _player.position.y + Random.Range(-yRange, yRange),
+                                       0f);
+                moveDir = Vector2.left;
+                break;
+
+            case 3: // Da Sinistra verso Destra
+                spawnPos = new Vector3(_player.position.x - xRange - spawnOffset,
+                                       _player.position.y + Random.Range(-yRange, yRange),
+                                       0f);
+                moveDir = Vector2.right;
+                break;
+        }
+>>>>>>> Stashed changes
+
+        return (spawnPos, moveDir);
+    }
+
+    private void SpawnEntity()
+    {
+        bool spawnObstacle = Random.value < obstacleChance;
+        ObjectSO soData = spawnObstacle ? obstacleSO : enemySO;
+
+        if (soData == null || soData.prefab == null) return;
+
+        var (spawnPos, moveDir) = RandomDirection();
 
         GameObject go = ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
+    }
+
+    public void SpawnSpecialEnemy()
+    {
+        var (spawnPos, moveDir) = RandomDirection();
+
+        GameObject go = ObjectPooler.Instance.Spawn(enemySpecialSO, spawnPos, Quaternion.identity);
+
+        Enemy enemy = go.GetComponent<Enemy>();
+        if (enemy != null)
+            enemy.SetDirection(moveDir);
     }
 
     public void SpawnSpecialEnemy()

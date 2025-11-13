@@ -10,6 +10,11 @@ public class Enemy : MonoBehaviour
     protected Transform player;
     public string fadeSound;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    protected Rigidbody2D _rb;
+    protected Vector2 moveDirection;
+>>>>>>> Stashed changes
 =======
     protected Rigidbody2D _rb;
     protected Vector2 moveDirection;
@@ -24,7 +29,11 @@ public class Enemy : MonoBehaviour
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     void Update()
+=======
+    protected virtual void FixedUpdate()
+>>>>>>> Stashed changes
 =======
     protected virtual void FixedUpdate()
 >>>>>>> Stashed changes
@@ -40,8 +49,11 @@ public class Enemy : MonoBehaviour
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private void OnTriggerEnter2D(Collider2D other)
 =======
+=======
+>>>>>>> Stashed changes
     public virtual void SetDirection(Vector2 dir)
     {
         moveDirection = dir.normalized;
@@ -49,6 +61,9 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     {
         var playerLife = other.GetComponent<LifeController>();

@@ -273,9 +273,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
   speed: 5
-  baseAmplitudeStep: 0.6
+  baseAmplitudeStep: 10.81
   baseWavelengthRate: 0.6
-  amplitudeInertia: 0.2
+  amplitudeInertia: 0.01
   wavelengthInertia: 0.15
   minAmplitude: -5
   maxAmplitude: 5

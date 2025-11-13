@@ -6,11 +6,16 @@ public class Enemy : MonoBehaviour
     public int damage = 1;
     public float speed = 2f;
     public float returnToPoolOffset = 5f;
-    private SpriteRenderer _sprite;
-    private Transform player;
+    protected SpriteRenderer _sprite;
+    protected Transform player;
     public string fadeSound;
+<<<<<<< Updated upstream
+=======
+    protected Rigidbody2D _rb;
+    protected Vector2 moveDirection;
+>>>>>>> Stashed changes
 
-    void Start()
+    protected virtual void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
         _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
@@ -18,7 +23,11 @@ public class Enemy : MonoBehaviour
         player = RespawnManager.Instance.GetPlayer()?.transform;
     }
 
+<<<<<<< Updated upstream
     void Update()
+=======
+    protected virtual void FixedUpdate()
+>>>>>>> Stashed changes
     {
         if (player == null) return;
 
@@ -30,7 +39,17 @@ public class Enemy : MonoBehaviour
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
+<<<<<<< Updated upstream
     private void OnTriggerEnter2D(Collider2D other)
+=======
+    public virtual void SetDirection(Vector2 dir)
+    {
+        moveDirection = dir.normalized;
+        transform.right = dir; 
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+>>>>>>> Stashed changes
     {
         var playerLife = other.GetComponent<LifeController>();
         var life = gameObject.GetComponent<LifeController>();
@@ -52,7 +71,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    bool ColorsSimilar(Color a, Color b, float tolerance = 0.3f)
+    public bool ColorsSimilar(Color a, Color b, float tolerance = 0.3f)
     {
         return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.g, b.b)) < tolerance;
     }

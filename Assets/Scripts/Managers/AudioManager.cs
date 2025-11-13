@@ -21,8 +21,6 @@ public class AudioManager : Singleton<AudioManager>
     private readonly Dictionary<string, AudioClip> audioDict = new();
     private readonly Dictionary<string, string> sceneMusicDict = new();
 
-    private float mainVolume = 1f;
-
     protected override void Awake()
     {
         base.Awake();

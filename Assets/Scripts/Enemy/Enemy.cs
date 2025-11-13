@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Enemy : MonoBehaviour
@@ -9,25 +10,31 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _sprite;
     private Transform player;
     public string fadeSound;
+    private Rigidbody2D _rb;
+    private Vector2 moveDirection;
 
     void Start()
     {
+         _rb = GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
         _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
         player = RespawnManager.Instance.GetPlayer()?.transform;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (player == null) return;
+        if (_rb != null)
+            _rb.linearVelocity = moveDirection * speed;
 
-        // Muoviti costantemente verso sinistra
-        transform.position += Vector3.left * speed * Time.deltaTime;
-
-        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
-        if (transform.position.x < player.position.x - returnToPoolOffset)
+        if (player != null && transform.position.x < player.position.x - returnToPoolOffset * 2)
             ObjectPooler.Instance.ReturnToPool(gameObject);
+    }
+
+    public void SetDirection(Vector2 dir)
+    {
+        moveDirection = dir.normalized;
+        transform.right = dir; 
     }
 
     private void OnTriggerEnter2D(Collider2D other)

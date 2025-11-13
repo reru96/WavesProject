@@ -7,7 +7,7 @@ public class RespawnManager : Singleton<RespawnManager>
 {
     [SerializeField] private int maxTry = 3;
     private int leftTry;
-    public Object playerSO;
+    public ObjectSO playerSO;
     public int LeftTry => leftTry;
     public int MaxTry => maxTry;
 
@@ -28,12 +28,13 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         base.Awake();
         leftTry = maxTry;
-        SpawnPlayer();
     }
 
     private void Start()
-    {
+    { 
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SpawnPlayer();
     }
 
     protected override void OnDestroy()

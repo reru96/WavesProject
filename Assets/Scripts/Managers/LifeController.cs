@@ -4,17 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class LifeController : MonoBehaviour
 {
-    public Object objectSO;
+    public ObjectSO objectSO;
 
+    public int currentHp = 1;
     public event Action OnDeath;
     public event Action OnHit;
 
-    public int GetHp() => objectSO.currentHp;
+    public int GetHp() => currentHp;
     public int GetMaxHp() => objectSO.maxHp;
 
     public void Awake()
     {
-        objectSO.currentHp = objectSO.maxHp;
+        currentHp = objectSO.maxHp;
     }
 
     public void OnEnable()
@@ -47,20 +48,20 @@ public class LifeController : MonoBehaviour
         if (amount > 0)
         {
             OnHit?.Invoke();
-            SetHp(objectSO.currentHp - amount);
+            SetHp(currentHp - amount);
         }
     }
 
     public void SetHp(int hp)
     {
-        int oldHp = objectSO.currentHp;
-        objectSO.currentHp = Mathf.Clamp(hp, 0, objectSO.maxHp);
+        int oldHp = currentHp;
+        currentHp = Mathf.Clamp(hp, 0, objectSO.maxHp);
         
         if (CompareTag("Player"))
             RespawnManager.Instance.NotifyLifeChanged();
 
 
-        if (oldHp > 0 && objectSO.currentHp == 0)
+        if (oldHp > 0 && currentHp == 0)
         {
             OnDeath?.Invoke();
             HandleDeath();

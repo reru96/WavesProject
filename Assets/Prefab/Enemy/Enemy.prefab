@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6752003340368034588}
   - component: {fileID: 132741838927846209}
   - component: {fileID: -5655358860017750366}
+  - component: {fileID: 7929578630466261061}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -144,6 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   damage: 1
   speed: 4
+  returnToPoolOffset: 5
+  fadeSound: 
 --- !u!114 &132741838927846209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +173,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
+  currentHp: 1
+--- !u!50 &7929578630466261061
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415131233706008856}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

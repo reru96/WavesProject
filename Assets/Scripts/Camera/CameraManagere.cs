@@ -14,12 +14,12 @@ public class CameraManagere : MonoBehaviour
         cineMachine.Follow = orientation.transform;
     }
 
-    void LateUpdate()
-    { 
+    //void LateUpdate()
+    //{ 
         
-        //if (_cameraPivot == null) return;
+    //    //if (_cameraPivot == null) return;
        
-        //Vector3 targetPos = _cameraPivot.position + _offset;
-        //transform.position = Vector3.Lerp(transform.position, targetPos, _smoothSpeed * Time.deltaTime);
-    }
+    //    //Vector3 targetPos = _cameraPivot.position + _offset;
+    //    //transform.position = Vector3.Lerp(transform.position, targetPos, _smoothSpeed * Time.deltaTime);
+    //}
 }

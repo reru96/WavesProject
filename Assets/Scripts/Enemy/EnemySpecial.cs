@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class EnemySpecial : MonoBehaviour
+public class EnemySpecial : Enemy
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void FixedUpdate()
     {
-        
+        if (player == null) return;
+
+        // Muoviti costantemente verso sinistra
+        transform.position += (Vector3.left * speed * Time.deltaTime) + (Vector3.down * speed * Time.deltaTime);
+
+        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
+        if (transform.position.x < player.position.x - returnToPoolOffset)
+            ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

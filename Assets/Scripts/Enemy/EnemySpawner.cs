@@ -3,14 +3,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("ScriptableObject Prefabs")]
-<<<<<<< Updated upstream
-    public Object enemySO;
-    public Object obstacleSO;
-=======
-    public ObjectSO enemySO;
-    public ObjectSO obstacleSO;
-    public ObjectSO enemySpecialSO;
->>>>>>> Stashed changes
+    public CreatureSO enemySO;
+    public CreatureSO obstacleSO;
+    public CreatureSO enemySpecialSO;
 
     [Header("Spawn Settings")]
     public float spawnRate = 2f;
@@ -60,15 +55,12 @@ public class EnemySpawner : MonoBehaviour
 
     private (Vector3 spawnPos, Vector2 moveDir) RandomDirection()
     {
-<<<<<<< Updated upstream
+
         bool spawnObstacle = Random.value < obstacleChance;
         Object soData = spawnObstacle ? obstacleSO : enemySO;
 
-        if (soData == null || soData.prefab == null) return;
-
-=======
->>>>>>> Stashed changes
         Vector3 spawnPos = Vector3.zero;
+        Vector2 moveDir = Vector2.zero;
 
         int dir = Random.Range(0, 4);
 
@@ -79,32 +71,17 @@ public class EnemySpawner : MonoBehaviour
                                        _player.position.y + yRange + spawnOffset,
                                        0f);
                 break;
-<<<<<<< Updated upstream
             case 1: 
-=======
-
-            case 1: // Da giù verso su
->>>>>>> Stashed changes
                 spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
                                        _player.position.y - yRange - spawnOffset,
                                        0f);
                 break;
-<<<<<<< Updated upstream
-            case 2: 
-=======
-
             case 2: // Da Destra verso Sinistra
->>>>>>> Stashed changes
                 spawnPos = new Vector3(_player.position.x + xRange + spawnOffset,
                                        _player.position.y + Random.Range(-yRange, yRange),
                                        0f);
                 break;
-<<<<<<< Updated upstream
             case 3:
-=======
-
-            case 3: // Da Sinistra verso Destra
->>>>>>> Stashed changes
                 spawnPos = new Vector3(_player.position.x - xRange - spawnOffset,
                                        _player.position.y + Random.Range(-yRange, yRange),
                                        0f);
@@ -117,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEntity()
     {
         bool spawnObstacle = Random.value < obstacleChance;
-        ObjectSO soData = spawnObstacle ? obstacleSO : enemySO;
+        CreatureSO soData = spawnObstacle ? obstacleSO : enemySO;
 
         if (soData == null || soData.prefab == null) return;
 

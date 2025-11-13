@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName =("Object"), menuName =("SO / Objects"))]
-public class ObjectSO : ScriptableObject
+public class CreatureSO : ScriptableObject
 {
     public int maxHp;
     public DeathAction deathType;

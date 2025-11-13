@@ -9,11 +9,9 @@ public class Enemy : MonoBehaviour
     protected SpriteRenderer _sprite;
     protected Transform player;
     public string fadeSound;
-<<<<<<< Updated upstream
-=======
+
     protected Rigidbody2D _rb;
     protected Vector2 moveDirection;
->>>>>>> Stashed changes
 
     protected virtual void Start()
     {
@@ -23,11 +21,7 @@ public class Enemy : MonoBehaviour
         player = RespawnManager.Instance.GetPlayer()?.transform;
     }
 
-<<<<<<< Updated upstream
-    void Update()
-=======
     protected virtual void FixedUpdate()
->>>>>>> Stashed changes
     {
         if (player == null) return;
 
@@ -38,10 +32,6 @@ public class Enemy : MonoBehaviour
         if (transform.position.x < player.position.x - returnToPoolOffset)
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
-
-<<<<<<< Updated upstream
-    private void OnTriggerEnter2D(Collider2D other)
-=======
     public virtual void SetDirection(Vector2 dir)
     {
         moveDirection = dir.normalized;
@@ -49,7 +39,6 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
->>>>>>> Stashed changes
     {
         var playerLife = other.GetComponent<LifeController>();
         var life = gameObject.GetComponent<LifeController>();

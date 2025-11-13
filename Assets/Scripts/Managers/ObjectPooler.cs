@@ -6,8 +6,8 @@ public class ObjectPooler : Singleton<ObjectPooler>
 {
     [SerializeField] private List<PoolEntry> poolEntries = new List<PoolEntry>();
 
-    private Dictionary<ObjectSO, Queue<GameObject>> poolDictionary =
-        new Dictionary<ObjectSO, Queue<GameObject>>();
+    private Dictionary<CreatureSO, Queue<GameObject>> poolDictionary =
+        new Dictionary<CreatureSO, Queue<GameObject>>();
 
     protected override void Awake()
     {
@@ -24,7 +24,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
             foreach (var obj in entry.objectSo)
             {
-                if (obj is ObjectSO data && data.prefab != null)
+                if (obj is CreatureSO data && data.prefab != null)
                 {
                     AddToPool(data, entry.poolsize);
                 }
@@ -36,7 +36,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
         }
     }
 
-    public void AddToPool(ObjectSO data, int size)
+    public void AddToPool(CreatureSO data, int size)
     {
         if (data == null || data.prefab == null) return;
 
@@ -58,7 +58,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
         }
     }
 
-    public GameObject Spawn(ObjectSO data, Vector3 position, Quaternion rotation)
+    public GameObject Spawn(CreatureSO data, Vector3 position, Quaternion rotation)
     {
         if (data == null)
         {
@@ -80,7 +80,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
         return obj;
     }
 
-    public T Spawn<T>(ObjectSO data, Vector3 position, Quaternion rotation) where T : Component
+    public T Spawn<T>(CreatureSO data, Vector3 position, Quaternion rotation) where T : Component
     {
         var go = Spawn(data, position, rotation);
         return go != null ? go.GetComponent<T>() : null;
@@ -107,5 +107,5 @@ public class ObjectPooler : Singleton<ObjectPooler>
 {
     public string name;
     public int poolsize = 10;
-    public List<ObjectSO> objectSo;
+    public List<CreatureSO> objectSo;
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LifeController : MonoBehaviour
 {
-    public ObjectSO objectSO;
+    public CreatureSO objectSO;
 
     public int currentHp = 1;
     public event Action OnDeath;

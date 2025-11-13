@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     { 
         HandleAmplitude();
-        HandleWavelength();
+        //HandleWavelength();
         ApplyInertiaFeedback();
     }
 
@@ -52,33 +52,41 @@ public class PlayerControl : MonoBehaviour
     {
         float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
 
-        if (Input.GetKey(KeyCode.Q))
-            _targetAmplitude = Mathf.Clamp(_targetAmplitude - sensitivity, minAmplitude, maxAmplitude);
+        // Leggi la rotellina del mouse
+        float rotellina = Input.GetAxis("Mouse ScrollWheel");
 
-        if (Input.GetKey(KeyCode.E))
-            _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
-
-        _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
-    }
-
-    private void HandleWavelength()
-    {
-        float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
-
-        float dir = 0f;
-        if (Input.GetKey(KeyCode.W)) dir += 1f;
-        if (Input.GetKey(KeyCode.S)) dir -= 1f;
-
-        if (Mathf.Abs(dir) > 0f)
+        // Modifica l'ampiezza in base al movimento della rotellina
+        if (Mathf.Abs(rotellina) > 0.001f) // evita piccole fluttuazioni
         {
-            _targetWavelength = Mathf.Clamp(
-                _targetWavelength + dir * sensitivity * Time.deltaTime,
-                minWavelength, maxWavelength
+            _targetAmplitude = Mathf.Clamp(
+                _targetAmplitude + (rotellina * sensitivity),
+                minAmplitude,
+                maxAmplitude
             );
         }
 
-        _wave.waveLength = _targetWavelength;
+        // Transizione fluida verso il valore target
+        _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
     }
+
+    //private void HandleWavelength()
+    //{
+    //    float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
+
+    //    float dir = 0f;
+    //    if (Input.GetKey(KeyCode.W)) dir += 1f;
+    //    if (Input.GetKey(KeyCode.S)) dir -= 1f;
+
+    //    if (Mathf.Abs(dir) > 0f)
+    //    {
+    //        _targetWavelength = Mathf.Clamp(
+    //            _targetWavelength + dir * sensitivity * Time.deltaTime,
+    //            minWavelength, maxWavelength
+    //        );
+    //    }
+
+    //    _wave.waveLength = _targetWavelength;
+    //}
 
     private void ApplyInertiaFeedback()
     {

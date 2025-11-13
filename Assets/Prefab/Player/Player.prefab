@@ -31,14 +31,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263917700265880030}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000026481985, y: 0.0000002648131, z: 0.70710576, w: -0.70710784}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3519148756348882578}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1513279610826458990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -252,13 +252,19 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 7
     m_NumAlphaKeys: 2
-  previewPoints: 100
-  previewDistance: 20
+  trailMaxLength: 10
+  minDistanceBetweenPoints: 0.1
+  alphaOverLength:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   lineWidthBase: 0.4
-  wavelengthSlewPerSecond: 3
   lineWidthExtraAtMaxInertia: 0.2
   lineMinAlphaAtMaxInertia: 0.6
   rotationSpeed: 10
+  minMouseDistance: 0.4
 --- !u!114 &1471973178889230750
 MonoBehaviour:
   m_ObjectHideFlags: 0

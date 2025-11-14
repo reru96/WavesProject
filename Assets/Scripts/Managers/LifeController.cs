@@ -58,7 +58,7 @@ public class LifeController : MonoBehaviour
         currentHp = Mathf.Clamp(hp, 0, objectSO.maxHp);
         
         if (CompareTag("Player"))
-            RespawnManager.Instance.NotifyLifeChanged();
+            RespawnManager.Instance.NotifyLivesChanged();
 
 
         if (oldHp > 0 && currentHp == 0)

@@ -30,7 +30,7 @@ public class UpdateLivesUI : MonoBehaviour
         var manager = RespawnManager.Instance;
         if (manager == null) return;
 
-        var player = manager.GetPlayer();
+        var player = manager.Player;
         if (player == null) return;
 
         var life = player.GetComponent<LifeController>();

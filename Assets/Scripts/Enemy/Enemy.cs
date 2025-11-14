@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
-        player = RespawnManager.Instance.GetPlayer()?.transform;
+        player = RespawnManager.Instance.Player.transform;
     }
 
     protected virtual void FixedUpdate()
@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.CompareTag("Player")) return;
         var playerLife = other.GetComponent<LifeController>();
         var life = gameObject.GetComponent<LifeController>();
 

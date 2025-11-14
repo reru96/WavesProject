@@ -11,7 +11,7 @@ public class Obstacle : MonoBehaviour
 
     void Start()
     {
-        player = RespawnManager.Instance.GetPlayer()?.transform;
+        player = RespawnManager.Instance.Player.transform;
     }
 
     void Update()

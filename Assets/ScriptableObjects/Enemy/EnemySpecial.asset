@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4783666ae16b5854d9aa822e8e2f1e86, type: 3}
   m_Name: EnemySpecial
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSO
-  maxHp: 1
+  maxHp: 3
   deathType: 1
-  prefab: {fileID: 0}
-  hitSound: 
-  deathSound: 
+  prefab: {fileID: 1415131233706008856, guid: 9919e54f4c05f994ea6806735b053bdc, type: 3}
+  hitSound: EnemyHit
+  deathSound: EnemyHit

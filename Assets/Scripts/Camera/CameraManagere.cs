@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -5,14 +6,19 @@ public class CameraManagere : MonoBehaviour
 {
     [SerializeField] private Transform _cameraPivot; 
     [SerializeField] private Vector3 _offset = new Vector3(0f, 0f, -10f);
-    [SerializeField] private float _smoothSpeed = 1f;
     public CinemachineCamera cineMachine;
 
     private void Start()
     {
+        RespawnManager.Instance.OnPlayerReady += FindPlayer;
+    }
+
+    private void FindPlayer()
+    {
         GameObject orientation = GameObject.FindGameObjectWithTag("Orientation");
         cineMachine.Follow = orientation.transform;
     }
+
 
     //void LateUpdate()
     //{ 

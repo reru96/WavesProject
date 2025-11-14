@@ -259,6 +259,11 @@ MonoBehaviour:
   lineWidthExtraAtMaxInertia: 0.2
   lineMinAlphaAtMaxInertia: 0.6
   rotationSpeed: 10
+  tailFollowSpeed: 5
+  amplitudeStep: 0.2
+  amplitudeLerpSpeed: 5
+  minAmplitude: 0
+  maxAmplitude: 5
 --- !u!114 &1471973178889230750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
-  objectSO: {fileID: 11400000, guid: ba8a0564125e2b748a275e942c35748a, type: 2}
+  objectSO: {fileID: 11400000, guid: d63438de6aea0874994161a05fd51b45, type: 2}
   currentHp: 1
 --- !u!50 &-5620024454732486961
 Rigidbody2D:

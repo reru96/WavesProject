@@ -5,84 +5,81 @@ using UnityEngine.SceneManagement;
 
 public class RespawnManager : Singleton<RespawnManager>
 {
+    [Header("Lives")]
     [SerializeField] private int maxTry = 3;
     private int leftTry;
-    public CreatureSO playerSO;
 
-    public int LeftTry => leftTry;
-    public int MaxTry => maxTry;
-
-    [Header("Respawn Settings")]
-    [SerializeField] private Transform puntoRespawn;
+    [Header("Player Setup")]
+    [SerializeField] private CreatureSO playerSO;
+    [SerializeField] private Transform spawnPoint;
     [SerializeField] private float respawnDelay = 2f;
 
     private GameObject player;
-    public GameObject GetPlayer() => player;
 
     public event Action OnPlayerReady;
+    public event Action OnLivesChanged;
 
-    private UpdateLivesUI livesUI;
-
-    protected override bool ShouldBeDestroyOnLoad() => false;
+    public int LeftTry => leftTry;
+    public int MaxTry => maxTry;
+    public GameObject Player => player;
 
     protected override void Awake()
     {
         base.Awake();
         leftTry = maxTry;
     }
-
     private void Start()
-    { 
-        
-        SceneManager.sceneLoaded += OnSceneLoaded;
+    {
+        SceneManager.sceneLoaded += HandleSceneLoaded;
         SpawnPlayer();
+        NotifyLivesChanged();
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        livesUI = FindAnyObjectByType<UpdateLivesUI>();
-        NotifyLifeChanged();
+        NotifyLivesChanged();
     }
 
     private void SpawnPlayer()
     {
         if (playerSO == null || playerSO.prefab == null)
         {
-            Debug.LogWarning("[RespawnManager] PlayerSO o prefab mancante.");
+            Debug.LogError("[RespawnManager] PlayerSO o Prefab mancante.");
             return;
         }
 
-        if (player == null)
+        if (spawnPoint == null)
         {
-            player = Instantiate(playerSO.prefab, puntoRespawn.position, Quaternion.identity);
-            OnPlayerReady?.Invoke();
+            Debug.LogError("[RespawnManager] SpawnPoint mancante!");
+            return;
         }
+
+        player = Instantiate(playerSO.prefab, spawnPoint.position, Quaternion.identity);
+
+        OnPlayerReady?.Invoke();
     }
 
-    public void NotifyLifeChanged()
+    public void NotifyLivesChanged()
     {
-        if (livesUI == null)
-            livesUI = FindAnyObjectByType<UpdateLivesUI>();
-
-        livesUI?.UpdateLives();
+        OnLivesChanged?.Invoke();
     }
 
     public void ResetTries()
     {
         leftTry = maxTry;
-        NotifyLifeChanged();
+        NotifyLivesChanged();
     }
 
     public void PlayerDied()
     {
         leftTry--;
-        NotifyLifeChanged();
+        NotifyLivesChanged();
 
         if (leftTry > 0)
             StartCoroutine(RespawnRoutine());
@@ -94,23 +91,28 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         if (player == null) yield break;
 
-        bool done = false;
-        ScreenFader.Instance.FadeOut(() => done = true);
-        while (!done) yield return null;
+        bool fadeDone = false;
+        ScreenFader.Instance.FadeOut(() => fadeDone = true);
+
+        while (!fadeDone) yield return null;
 
         player.SetActive(false);
+
         yield return new WaitForSeconds(respawnDelay);
 
         var life = player.GetComponent<LifeController>();
-        life?.SetHp(life.GetMaxHp());
-        player.transform.position = puntoRespawn.position;
+        if (life != null)
+        {
+            life.SetHp(life.GetMaxHp());
+        }
+
+        player.transform.position = spawnPoint.position;
         player.SetActive(true);
 
-        NotifyLifeChanged();
+        fadeDone = false;
+        ScreenFader.Instance.FadeIn(() => fadeDone = true);
 
-        done = false;
-        ScreenFader.Instance.FadeIn(() => done = true);
-        while (!done) yield return null;
+        while (!fadeDone) yield return null;
     }
 
     private void GameOver()

@@ -15,8 +15,6 @@ public class SaveController : Singleton<SaveController>
         OnScoreLoaded?.Invoke(pendingSaveData.score);
     }
 
-    protected override bool ShouldBeDestroyOnLoad() => false;
-
     public void SaveGame()
     {
         SaveData data = SaveManager.Load();

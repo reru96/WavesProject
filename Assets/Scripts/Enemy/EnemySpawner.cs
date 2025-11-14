@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,24 +11,25 @@ public class EnemySpawner : MonoBehaviour
     public CreatureSO enemySpecialSO;
 
     [Header("Spawn Settings")]
-    public float spawnRate = 2f;
-    public float yRange = 4f;             
-    public float xRange = 6f;             
-    public float spawnOffset = 10f;     
+    public float spawnRate = 10f;
+    public float spawnSpecialRate = 5f;
+    public float yRange = 4f;
+    public float xRange = 6f;
+    public float spawnOffset = 10f;
     [Range(0f, 1f)] public float obstacleChance = 0.3f;
 
-    private float _timer;
-    private Transform _player;
     private bool _playerReady = false;
+    private Transform _player;
+
+    private Coroutine _normalSpawnCoroutine;
+    private Coroutine _specialSpawnCoroutine;
 
     private void Start()
     {
-        _timer = 0f;
-
         if (RespawnManager.Instance != null)
             RespawnManager.Instance.OnPlayerReady += OnPlayerReady;
 
-        if (RespawnManager.Instance.GetPlayer() != null)
+        if (RespawnManager.Instance.Player != null)
             OnPlayerReady();
     }
 
@@ -37,54 +41,52 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnPlayerReady()
     {
-        _player = RespawnManager.Instance.GetPlayer()?.transform;
+        _player = RespawnManager.Instance.Player.transform;
         _playerReady = _player != null;
+
+        if (_playerReady)
+        {
+            _normalSpawnCoroutine ??= StartCoroutine(SpawnRoutine(spawnRate, SpawnEntity));
+            _specialSpawnCoroutine ??= StartCoroutine(SpawnRoutine(spawnSpecialRate, SpawnSpecialEnemy));
+        }
     }
 
-    void Update()
+    private IEnumerator SpawnRoutine(float rate, Action spawnAction)
     {
-        if (!_playerReady) return;
-
-        _timer += Time.deltaTime;
-        if (_timer >= spawnRate)
+        while (_playerReady)
         {
-            _timer = 0f;
-            SpawnEntity();
+            spawnAction?.Invoke();
+            yield return new WaitForSeconds(rate);
         }
     }
 
     private (Vector3 spawnPos, Vector2 moveDir) RandomDirection()
     {
-
-        bool spawnObstacle = Random.value < obstacleChance;
-        Object soData = spawnObstacle ? obstacleSO : enemySO;
+        bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
+        CreatureSO soData = spawnObstacle ? obstacleSO : enemySO;
 
         Vector3 spawnPos = Vector3.zero;
         Vector2 moveDir = Vector2.zero;
 
-        int dir = Random.Range(0, 4);
+        int dir = UnityEngine.Random.Range(0, 4);
 
         switch (dir)
         {
-            case 0: 
-                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
-                                       _player.position.y + yRange + spawnOffset,
-                                       0f);
+            case 0:
+                spawnPos = new Vector3(_player.position.x + UnityEngine.Random.Range(-xRange, xRange),
+                                       _player.position.y + yRange + spawnOffset, 0f);
                 break;
-            case 1: 
-                spawnPos = new Vector3(_player.position.x + Random.Range(-xRange, xRange),
-                                       _player.position.y - yRange - spawnOffset,
-                                       0f);
+            case 1:
+                spawnPos = new Vector3(_player.position.x + UnityEngine.Random.Range(-xRange, xRange),
+                                       _player.position.y - yRange - spawnOffset, 0f);
                 break;
-            case 2: // Da Destra verso Sinistra
+            case 2:
                 spawnPos = new Vector3(_player.position.x + xRange + spawnOffset,
-                                       _player.position.y + Random.Range(-yRange, yRange),
-                                       0f);
+                                       _player.position.y + UnityEngine.Random.Range(-yRange, yRange), 0f);
                 break;
             case 3:
                 spawnPos = new Vector3(_player.position.x - xRange - spawnOffset,
-                                       _player.position.y + Random.Range(-yRange, yRange),
-                                       0f);
+                                       _player.position.y + UnityEngine.Random.Range(-yRange, yRange), 0f);
                 break;
         }
 
@@ -93,18 +95,20 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEntity()
     {
-        bool spawnObstacle = Random.value < obstacleChance;
+        bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
         CreatureSO soData = spawnObstacle ? obstacleSO : enemySO;
 
         if (soData == null || soData.prefab == null) return;
 
         var (spawnPos, moveDir) = RandomDirection();
 
-        GameObject go = ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
+        ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
     }
 
     public void SpawnSpecialEnemy()
     {
+        if (enemySpecialSO == null || enemySpecialSO.prefab == null) return;
+
         var (spawnPos, moveDir) = RandomDirection();
 
         GameObject go = ObjectPooler.Instance.Spawn(enemySpecialSO, spawnPos, Quaternion.identity);
@@ -113,5 +117,6 @@ public class EnemySpawner : MonoBehaviour
         if (enemy != null)
             enemy.SetDirection(moveDir);
     }
+
 }
 

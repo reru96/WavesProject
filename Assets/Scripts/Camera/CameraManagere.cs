@@ -1,31 +1,47 @@
 using System.Collections;
+using JetBrains.Annotations;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraManagere : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraPivot; 
-    [SerializeField] private Vector3 _offset = new Vector3(0f, 0f, -10f);
+    [Header("Offset")]
+    [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
+
+    [Header("Smoothing")]
+    [SerializeField, Range(0f, 1f)] private float smoothTime = 0.1f;
+
     public CinemachineCamera cineMachine;
+    private GameObject target;
+    private Vector3 currentVelocity;
 
-    private void Start()
+    private void OnEnable()
     {
-        RespawnManager.Instance.OnPlayerReady += FindPlayer;
+        cineMachine = GetComponent<CinemachineCamera>();
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerReady += () => OnPlayerSpawned(target);
     }
 
-    private void FindPlayer()
+    private void OnDisable()
     {
-        GameObject orientation = GameObject.FindGameObjectWithTag("Orientation");
-        cineMachine.Follow = orientation.transform;
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerReady -= () => OnPlayerSpawned(target);
     }
 
+    private void LateUpdate()
+    {
+        if (target == null) return;
 
-    //void LateUpdate()
-    //{ 
-        
-    //    //if (_cameraPivot == null) return;
-       
-    //    //Vector3 targetPos = _cameraPivot.position + _offset;
-    //    //transform.position = Vector3.Lerp(transform.position, targetPos, _smoothSpeed * Time.deltaTime);
-    //}
+        cineMachine.Follow = target.transform;
+    }
+
+    private void OnPlayerSpawned(GameObject player)
+    {
+        if (player != null)
+            target = player;
+    }
+    public void SetTarget(Transform newTarget)
+    {
+       newTarget  = target.transform;
+    }
 }

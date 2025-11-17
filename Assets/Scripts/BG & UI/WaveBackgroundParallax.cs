@@ -27,6 +27,7 @@ public class WaveBackgroundField : MonoBehaviour
 
     void Start()
     {
+        player = RespawnManager.Instance.Player.GetComponent<PlayerWaveController>();
         GenerateField();
     }
 

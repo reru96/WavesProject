@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1955456364830564052}
   - component: {fileID: 62514011960851083}
   - component: {fileID: 2783763052009137537}
-  - component: {fileID: 6752003340368034588}
   - component: {fileID: 132741838927846209}
   - component: {fileID: -5655358860017750366}
   - component: {fileID: 7929578630466261061}
+  - component: {fileID: 2646535354499836342}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: EnemyShooter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,22 +131,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &6752003340368034588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1415131233706008856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9dbda6dd2fcaa241a1c981853e85402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  damage: 1
-  speed: 4
-  returnToPoolOffset: 5
-  fadeSound: 
 --- !u!114 &132741838927846209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0662a1373a52914ca917fea28fb96dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PooledMarker
-  data: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  data: {fileID: 11400000, guid: c4626b1b857acb44f9b5888c51afdbfb, type: 2}
 --- !u!114 &-5655358860017750366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
-  objectSO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  objectSO: {fileID: 11400000, guid: c4626b1b857acb44f9b5888c51afdbfb, type: 2}
   currentHp: 1
 --- !u!50 &7929578630466261061
 Rigidbody2D:
@@ -201,3 +185,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2646535354499836342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415131233706008856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197f193ba4e2e464f89e4703cbcc7e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShooter
+  damage: 1
+  speed: 2
+  returnToPoolOffset: 5
+  fadeSound: 
+  bullet: {fileID: 0}
+  shootInterval: 1.5

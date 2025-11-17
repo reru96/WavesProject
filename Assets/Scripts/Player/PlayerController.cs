@@ -6,81 +6,85 @@ public class PlayerControl : MonoBehaviour
     private PlayerWaveController _wave;
 
     [Header("Movement")]
-
     [Tooltip("Velocità orizzontale del giocatore")]
     public float speed = 5f;
 
-    [Header("Controls (Base Rates)")]
-    [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
-    public float baseAmplitudeStep = 0.6f;
-    [Tooltip("Velocità base di variazione della lunghezza d'onda (unità al secondo)")]
-    public float baseWavelengthRate = 0.6f;
+    [Header("Amplitude Controls (Feel)")]
+    [Tooltip("Quanto velocemente sale l'onda quando premi W/S")]
+    public float amplitudeSensitivity = 2.0f;
+    [Tooltip("Quanto velocemente l'onda torna a 0 se lasci i tasti")]
+    public float amplitudeDecay = 1.5f;
 
-    [Header("Adaptive Sensitivity")]
-    [Tooltip("Riduce la sensibilità quando l'ampiezza cresce")]
-    public float amplitudeInertia = 0.2f;
-    [Tooltip("Riduce la sensibilità quando la lunghezza cresce")]
-    public float wavelengthInertia = 0.15f;
+    [Header("Wavelength Controls")]
+    public float wavelengthSensitivity = 2.0f;
+    public float minWavelength = 1f;
+    public float maxWavelength = 10f;
+
+    [Header("Adaptive Difficulty")]
+    [Tooltip("Riduce la sensibilità quando l'ampiezza è alta (più difficile manovrare onde grandi)")]
+    public float inertiaFactor = 0.2f;
 
     [Header("Limits")]
     public float minAmplitude = -5f;
     public float maxAmplitude = 5f;
-    public float minWavelength = 1f;
-    public float maxWavelength = 10f;
-
-    [Header("Smoothness")]
-    [Tooltip("Reattività con cui l'ampiezza raggiunge il target")]
-    public float amplitudeResponse = 10f;
-
-    private float _targetAmplitude;
-    private float _targetWavelength;
 
     void Start()
     {
         _wave = GetComponent<PlayerWaveController>();
-        _targetAmplitude = _wave.amplitude;
-        _targetWavelength = _wave.waveLength;
     }
 
     void Update()
     {
-
         transform.position += Vector3.right * speed * Time.deltaTime;
-        HandleAmplitude();
+        HandleAmplitudePhysics();
         HandleWavelength();
         ApplyInertiaFeedback();
     }
 
-    private void HandleAmplitude()
+    private void HandleAmplitudePhysics()
     {
-        float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
+        bool isPressing = false;
+
+        float currentInertia = 1f + (Mathf.Abs(_wave.amplitude) * inertiaFactor);
+        float effectiveSensitivity = amplitudeSensitivity / currentInertia;
 
         if (Input.GetKey(KeyCode.W))
-            _targetAmplitude = Mathf.Clamp(_targetAmplitude - sensitivity, minAmplitude, maxAmplitude);
+        {
+            _wave.amplitude += effectiveSensitivity * Time.deltaTime;
+            isPressing = true;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            _wave.amplitude -= effectiveSensitivity * Time.deltaTime;
+            isPressing = true;
+        }
 
-        if (Input.GetKey(KeyCode.S))
-            _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
+        if (!isPressing)
+        {
+            if (Mathf.Abs(_wave.amplitude) > 0.01f)
+            {
+                _wave.amplitude = Mathf.MoveTowards(_wave.amplitude, 0f, amplitudeDecay * Time.deltaTime);
+            }
+            else
+            {
+                _wave.amplitude = 0f;
+            }
+        }
 
-        _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
+        _wave.amplitude = Mathf.Clamp(_wave.amplitude, minAmplitude, maxAmplitude);
     }
 
     private void HandleWavelength()
     {
-        float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
-
         float dir = 0f;
-        if (Input.GetKey(KeyCode.A)) dir += 1f;
-        if (Input.GetKey(KeyCode.D)) dir -= 1f;
+        if (Input.GetKey(KeyCode.D)) dir += 1f; // D allarga l'onda
+        if (Input.GetKey(KeyCode.A)) dir -= 1f; // A stringe l'onda
 
         if (Mathf.Abs(dir) > 0f)
         {
-            _targetWavelength = Mathf.Clamp(
-                _targetWavelength + dir * sensitivity * Time.deltaTime,
-                minWavelength, maxWavelength
-            );
+            _wave.waveLength += dir * wavelengthSensitivity * Time.deltaTime;
+            _wave.waveLength = Mathf.Clamp(_wave.waveLength, minWavelength, maxWavelength);
         }
-
-        _wave.waveLength = _targetWavelength;
     }
 
     private void ApplyInertiaFeedback()

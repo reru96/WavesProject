@@ -270,15 +270,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
   speed: 2
-  baseAmplitudeStep: 0.2
-  baseWavelengthRate: 0.8
-  amplitudeInertia: 0.2
-  wavelengthInertia: 0.15
-  minAmplitude: -5
-  maxAmplitude: 5
+  amplitudeSensitivity: 2.5
+  amplitudeDecay: 1.5
+  wavelengthSensitivity: 2
   minWavelength: 5
   maxWavelength: 6
-  amplitudeResponse: 10
+  inertiaFactor: 0.2
+  minAmplitude: -5
+  maxAmplitude: 5
 --- !u!114 &865338351278033998
 MonoBehaviour:
   m_ObjectHideFlags: 0

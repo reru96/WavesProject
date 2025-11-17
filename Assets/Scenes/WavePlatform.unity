@@ -1070,7 +1070,7 @@ MonoBehaviour:
   xRange: 6
   spawnOffset: 10
   obstacleChance: 0.3
-  sceneType: 1
+  sceneType: 0
 --- !u!1 &231289039
 GameObject:
   m_ObjectHideFlags: 0

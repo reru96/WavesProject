@@ -22,6 +22,8 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private UpdateLivesUI livesUI;
 
+    private EnemySpawner enemySpawner;
+
     protected override bool ShouldBeDestroyOnLoad() => false;
 
     protected override void Awake()
@@ -38,11 +40,12 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        enemySpawner = FindFirstObjectByType<EnemySpawner>();
     }
 
     private void Update()
     {
-        if (GetPlayer().GetComponent<SpriteFollower>() == null)
+        if (GetPlayer().GetComponent<SpriteFollower>() == null && enemySpawner.sceneType == SceneType.Simo)
         {
             player = GetPlayer().GetComponentInChildren<SpriteFollower>().gameObject;
         }

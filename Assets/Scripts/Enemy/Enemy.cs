@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
         if (player == null) return;
 
         // Muoviti costantemente verso sinistra
-        transform.position += Vector3.left * speed * Time.deltaTime;
+        //transform.position += Vector3.left * speed * Time.deltaTime;
 
         // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
         if (transform.position.x < player.position.x - returnToPoolOffset)

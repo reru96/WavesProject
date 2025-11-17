@@ -7,7 +7,11 @@ public class CameraManagere : MonoBehaviour
 
     void LateUpdate()
     {
-        if (_player == null) return;
+        if (_player == null)
+        {
+            _player = RespawnManager.Instance.GetPlayer()?.transform;
+        }
+        
 
         Vector3 camPos = transform.position;
         camPos.x = _player.position.x + _cameraOffset;

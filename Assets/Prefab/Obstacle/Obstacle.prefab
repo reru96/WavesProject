@@ -119,9 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!61 &8504236126855578184
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -182,3 +179,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   speed: 2
   returnToPoolOffset: 2
+  obstacleSound: 

@@ -5,6 +5,11 @@ public class PlayerControl : MonoBehaviour
 {
     private PlayerWaveController _wave;
 
+    [Header("Movement")]
+
+    [Tooltip("Velocità orizzontale del giocatore")]
+    public float speed = 5f;
+
     [Header("Controls (Base Rates)")]
     [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
     public float baseAmplitudeStep = 0.6f;
@@ -39,6 +44,8 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+
+        transform.position += Vector3.right * speed * Time.deltaTime;
         HandleAmplitude();
         HandleWavelength();
         ApplyInertiaFeedback();
@@ -48,10 +55,10 @@ public class PlayerControl : MonoBehaviour
     {
         float sensitivity = baseAmplitudeStep / (1f + Mathf.Abs(_wave.amplitude) * amplitudeInertia);
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.W))
             _targetAmplitude = Mathf.Clamp(_targetAmplitude - sensitivity, minAmplitude, maxAmplitude);
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.S))
             _targetAmplitude = Mathf.Clamp(_targetAmplitude + sensitivity, minAmplitude, maxAmplitude);
 
         _wave.amplitude = Mathf.Lerp(_wave.amplitude, _targetAmplitude, amplitudeResponse * Time.deltaTime);
@@ -62,8 +69,8 @@ public class PlayerControl : MonoBehaviour
         float sensitivity = baseWavelengthRate / (1f + (_wave.waveLength - 1f) * wavelengthInertia);
 
         float dir = 0f;
-        if (Input.GetKey(KeyCode.W)) dir += 1f;
-        if (Input.GetKey(KeyCode.S)) dir -= 1f;
+        if (Input.GetKey(KeyCode.A)) dir += 1f;
+        if (Input.GetKey(KeyCode.D)) dir -= 1f;
 
         if (Mathf.Abs(dir) > 0f)
         {

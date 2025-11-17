@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1471973178889230750}
   - component: {fileID: 865338351278033998}
   - component: {fileID: -5620024454732486961}
-  - component: {fileID: -6009407505315781166}
+  - component: {fileID: 3645069863363183009}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -269,14 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286b3a68b3e0a6b4a8df46db243fc0e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
-  baseAmplitudeStep: 0.6
-  baseWavelengthRate: 0.6
+  speed: 2
+  baseAmplitudeStep: 0.2
+  baseWavelengthRate: 0.8
   amplitudeInertia: 0.2
   wavelengthInertia: 0.15
   minAmplitude: -5
   maxAmplitude: 5
-  minWavelength: 1
-  maxWavelength: 10
+  minWavelength: 5
+  maxWavelength: 6
   amplitudeResponse: 10
 --- !u!114 &865338351278033998
 MonoBehaviour:
@@ -291,9 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: ba8a0564125e2b748a275e942c35748a, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &-5620024454732486961
 Rigidbody2D:
   serializedVersion: 5
@@ -321,8 +319,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &-6009407505315781166
-BoxCollider2D:
+--- !u!60 &3645069863363183009
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -351,11 +349,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -365,5 +363,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5773587}
+      - {x: -0.5, y: -0.28866667}
+      - {x: 0.5, y: -0.28866667}
+  m_UseDelaunayMesh: 0

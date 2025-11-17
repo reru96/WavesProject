@@ -13,7 +13,7 @@ public class PathManager : MonoBehaviour
 
     [Header("Path Parameters")]
     [SerializeField] private float timerInterval = 5f;
-    
+
     [SerializeField] private float defaultAmplitude = 2f;
     [SerializeField] private float defaultWavelength = 5f;
     [SerializeField] private int pointsPerSegment = 100;
@@ -24,15 +24,15 @@ public class PathManager : MonoBehaviour
     [Range(10, 100)][SerializeField] private float maxSegmentLength = 50f;
 
     [Header("Amplitude")]
-    [Range(-10,10)][SerializeField] public float minAmplitude = 0.5f;
-    [Range(-50,50)][SerializeField] public float maxAmplitude = 5f;
+    [Range(-10, 10)][SerializeField] public float minAmplitude = 0.5f;
+    [Range(-50, 50)][SerializeField] public float maxAmplitude = 5f;
 
     [Header("Wavelength")]
-    [Range(-10,10)][SerializeField] public float minWavelength = 2f;
-    [Range(-50,50)][SerializeField] public float maxWavelength = 10f;
+    [Range(-10, 10)][SerializeField] public float minWavelength = 2f;
+    [Range(-50, 50)][SerializeField] public float maxWavelength = 10f;
 
-    public float CurrentAmplitude;
-    public float CurrentWavelength;
+    [HideInInspector] public float CurrentAmplitude;
+    [HideInInspector] public float CurrentWavelength;
 
     public List<Vector3> CommittedPoints { get; private set; } = new List<Vector3>();
     public List<Vector3> PreviewPoints { get; private set; } = new List<Vector3>();
@@ -62,6 +62,12 @@ public class PathManager : MonoBehaviour
         // Aggiorna il preview in tempo reale quando i parametri cambiano
         UpdatePreview();
         AppendPreviewToCommitted();
+
+        if (CurrentAmplitude == 0f || CurrentWavelength == 0f)
+        {
+            if (CurrentAmplitude  == 0f) CurrentAmplitude = minAmplitude;
+            if (CurrentWavelength == 0f) CurrentWavelength = minWavelength;
+        }
     }
 
     IEnumerator TimerCoroutine()
@@ -97,6 +103,7 @@ public class PathManager : MonoBehaviour
 
     void UpdateCommittedLine()
     {
+        Debug.Log($"Updating committed line with {CommittedPoints.Count} points.");
         committedLine.positionCount = CommittedPoints.Count;
         committedLine.SetPositions(CommittedPoints.ToArray());
         OnSegmentCommitted?.Invoke(CommittedPoints[CommittedPoints.Count - 1]);

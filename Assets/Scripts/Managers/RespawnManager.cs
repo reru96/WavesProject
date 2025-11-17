@@ -28,12 +28,23 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         base.Awake();
         leftTry = maxTry;
+
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
         SpawnPlayer();
     }
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        if (GetPlayer().GetComponent<SpriteFollower>() == null)
+        {
+            player = GetPlayer().GetComponentInChildren<SpriteFollower>().gameObject;
+        }
     }
 
     protected override void OnDestroy()
@@ -50,6 +61,16 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void SpawnPlayer()
     {
+        if (puntoRespawn == null)
+        {
+            puntoRespawn = GetPlayer()?.transform;
+            if (puntoRespawn == null)
+            {
+                Debug.LogWarning("[RespawnManager] Punto di respawn non assegnato e nessun player trovato nella scena.");
+                return;
+            }
+        }
+
         if (playerSO == null || playerSO.prefab == null)
         {
             Debug.LogWarning("[RespawnManager] PlayerSO o prefab mancante.");

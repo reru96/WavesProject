@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Audio Library
   m_EditorClassIdentifier: Assembly-CSharp::AudioLibrary
   clips:
-  - key: MainMenu
-    clip: {fileID: 8300000, guid: 07c2a0f5d87d2414e873ff2771f1210b, type: 3}
+  - key: 'Level1 '
+    clip: {fileID: 0}
   - key: EnemyHit
     clip: {fileID: 8300000, guid: 2186f65a800fa0743a41191459aeec29, type: 3}

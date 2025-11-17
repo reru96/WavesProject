@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1471973178889230750}
   - component: {fileID: 865338351278033998}
   - component: {fileID: -5620024454732486961}
-  - component: {fileID: -6009407505315781166}
+  - component: {fileID: 3645069863363183009}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -35,8 +35,7 @@ Transform:
   m_LocalPosition: {x: -8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3519148756348882578}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &1513279610826458990
@@ -258,12 +257,6 @@ MonoBehaviour:
   wavelengthSlewPerSecond: 3
   lineWidthExtraAtMaxInertia: 0.2
   lineMinAlphaAtMaxInertia: 0.6
-  rotationSpeed: 10
-  tailFollowSpeed: 5
-  amplitudeStep: 0.2
-  amplitudeLerpSpeed: 5
-  minAmplitude: 0
-  maxAmplitude: 5
 --- !u!114 &1471973178889230750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,16 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286b3a68b3e0a6b4a8df46db243fc0e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
-  speed: 5
-  baseAmplitudeStep: 10.81
-  baseWavelengthRate: 0.6
-  amplitudeInertia: 0.01
-  wavelengthInertia: 0.15
+  speed: 2
+  amplitudeSensitivity: 2.5
+  amplitudeDecay: 1.5
+  wavelengthSensitivity: 2
+  minWavelength: 5
+  maxWavelength: 6
+  inertiaFactor: 0.2
   minAmplitude: -5
   maxAmplitude: 5
-  minWavelength: 1
-  maxWavelength: 10
-  amplitudeResponse: 10
 --- !u!114 &865338351278033998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,8 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
-  objectSO: {fileID: 11400000, guid: d63438de6aea0874994161a05fd51b45, type: 2}
-  currentHp: 1
+  objectSO: {fileID: 11400000, guid: ba8a0564125e2b748a275e942c35748a, type: 2}
 --- !u!50 &-5620024454732486961
 Rigidbody2D:
   serializedVersion: 5
@@ -327,8 +318,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &-6009407505315781166
-BoxCollider2D:
+--- !u!60 &3645069863363183009
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -357,11 +348,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -371,49 +362,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!1 &7925615738221276182
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3519148756348882578}
-  - component: {fileID: 1398118359016049334}
-  m_Layer: 0
-  m_Name: CameraPivot
-  m_TagString: Orientation
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3519148756348882578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7925615738221276182}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1579946823437177515}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1398118359016049334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7925615738221276182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffb6d0cd6e7d8e04cb89548d6087b382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5773587}
+      - {x: -0.5, y: -0.28866667}
+      - {x: 0.5, y: -0.28866667}
+  m_UseDelaunayMesh: 0

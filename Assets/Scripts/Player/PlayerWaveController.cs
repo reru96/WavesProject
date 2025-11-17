@@ -3,11 +3,10 @@
 [RequireComponent(typeof(SpriteRenderer), typeof(LineRenderer))]
 public class PlayerWaveController : MonoBehaviour
 {
-
     [Header("Wave Parameters")]
     [Range(-5f, 5f)] public float amplitude = 0f;
     [Range(1f, 10f)] public float waveLength = 5f;
-    public float speed = 5f; // velocità di propagazione della testa
+    public float speed = 5f;
 
     [Header("Colors")]
     public Gradient colorByWave;
@@ -24,27 +23,12 @@ public class PlayerWaveController : MonoBehaviour
     public float lineWidthExtraAtMaxInertia = 0.2f;
     public float lineMinAlphaAtMaxInertia = 0.6f;
 
-    [Header("Rotation")]
-    [SerializeField] private float rotationSpeed = 10f;
-
-    [Header("Tail Follow")]
-    public float tailFollowSpeed = 5f;
-
-    [Header("Amplitude Control")]
-    public float amplitudeStep = 0.2f;
-    public float amplitudeLerpSpeed = 5f;
-    public float minAmplitude = 0f;
-    public float maxAmplitude = 5f;
-
     private SpriteRenderer _sprite;
     private LineRenderer _line;
-    private Vector3 _fixedPlayerPos; // posizione della coda (player)
-    private Vector3 _waveHeadPos;    // posizione della testa
-    private Vector3 _waveDir = Vector3.right;
-    private Vector3 _waveUp = Vector3.up;
+    //private Vector3 _fixedPlayerPos;
+    private float _baseY;
     private float _time;
     private float _effectiveWaveLength;
-    private float _targetAmplitude;
     private float _inertiaBlend;
 
     void Start()
@@ -52,8 +36,8 @@ public class PlayerWaveController : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         _line = GetComponent<LineRenderer>();
 
-        _fixedPlayerPos = transform.position;
-        _waveHeadPos = transform.position;
+        //_fixedPlayerPos = transform.position;
+        _baseY = transform.position.y;
 
         _line.positionCount = previewPoints;
         _line.alignment = LineAlignment.TransformZ;
@@ -68,80 +52,62 @@ public class PlayerWaveController : MonoBehaviour
         _line.textureMode = LineTextureMode.Tile;
 
         _effectiveWaveLength = waveLength;
-        _targetAmplitude = amplitude;
     }
 
     void Update()
     {
-        UpdateRotation();
-        UpdateAmplitude();
-        MoveHead();
-        MoveTail();
+        _time += Time.deltaTime * speed;
+
+        _effectiveWaveLength = Mathf.MoveTowards(
+            _effectiveWaveLength,
+            waveLength,
+            wavelengthSlewPerSecond * Time.deltaTime
+        );
+
+        float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
+        float y = Mathf.Sin(phase) * amplitude;
+
+        // prendo la posizione ATTUALE (che può essere stata spostata da PlayerControl)
+        Vector3 pos = transform.position;
+
+        // modifico solo la Y: X e Z rimangono come sono
+        pos.y = _baseY + y;
+
+        transform.position = pos;
         UpdateTrajectory();
         UpdateColors();
         ApplyInertiaVisuals();
     }
 
-    void UpdateRotation()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
-        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        Vector3 direction = (worldMousePos - _waveHeadPos).normalized;
-        _waveDir = Vector3.Lerp(_waveDir, direction, rotationSpeed * Time.deltaTime);
-        _waveUp = new Vector3(-_waveDir.y, _waveDir.x, 0f); // perpendicolare alla direzione
-    }
-
-    void UpdateAmplitude()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (Mathf.Abs(scroll) > 0.001f)
-            _targetAmplitude = Mathf.Clamp(_targetAmplitude + scroll * amplitudeStep, minAmplitude, maxAmplitude);
-
-        amplitude = Mathf.Lerp(amplitude, _targetAmplitude, amplitudeLerpSpeed * Time.deltaTime);
-    }
-
-    void MoveHead()
-    {
-        _waveHeadPos += _waveDir * speed * Time.deltaTime;
-        _effectiveWaveLength = Mathf.MoveTowards(_effectiveWaveLength, waveLength, wavelengthSlewPerSecond * Time.deltaTime);
-        _time += Time.deltaTime * speed;
-    }
-
-    void MoveTail()
-    {
-        // la coda segue la testa
-        _fixedPlayerPos = Vector3.Lerp(_fixedPlayerPos, _waveHeadPos, tailFollowSpeed * Time.deltaTime);
-
-        // oscillazione verticale per la coda
-        float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
-        float y = Mathf.Sin(phase) * amplitude;
-        transform.position = _fixedPlayerPos + _waveUp * y;
-    }
-
     void UpdateTrajectory()
     {
+        float halfDist = previewDistance * 0.5f;
+
+        // baseX = posizione attuale del player
+        float baseX = transform.position.x;
+
         for (int i = 0; i < previewPoints; i++)
         {
             float tNorm = i / (float)(previewPoints - 1);
-            float offset = Mathf.Lerp(previewDistance, 0, tNorm);
+            float offset = Mathf.Lerp(-halfDist, +halfDist, tNorm);
 
-            Vector3 point = _fixedPlayerPos
-                            + _waveDir * offset
-                            + _waveUp * Mathf.Sin((_time + offset) / _effectiveWaveLength * 2f * Mathf.PI) * amplitude;
+            float xPos = baseX + offset;      // ora la curva "segue" il player sulla X
+            float t = _time + offset;
+            float phase = (2f * Mathf.PI) * (t / _effectiveWaveLength);
+            float yPos = _baseY + Mathf.Sin(phase) * amplitude;
 
-            _line.SetPosition(i, point);
+            _line.SetPosition(i, new Vector3(xPos, yPos, 0f));
         }
     }
 
+
     void UpdateColors()
     {
-        float colorFactor = Mathf.InverseLerp(minAmplitude, maxAmplitude, amplitude);
+        float colorFactor = Mathf.InverseLerp(-5f, 5f, amplitude);
         Color c = colorByWave.Evaluate(colorFactor);
         c.a = 1f;
 
-        if (_sprite != null) _sprite.color = c;
+        _sprite.color = c;
         _line.startColor = c;
         _line.endColor = c;
     }

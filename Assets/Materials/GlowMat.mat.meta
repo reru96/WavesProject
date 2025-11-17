@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Materials/GlowMat.mat.meta
-guid: 5a710ee54c801d9498ce9d556eaebf18
+<<<<<<<< HEAD:Assets/Canvas.mat.meta
+guid: a099460b22859514ab63c006a03ebb9d
 ========
-guid: df9b0bbb1a636a94f996eb4fabc9c39b
->>>>>>>> Renato2:Assets/BrushMaterial.mat.meta
+guid: 5a710ee54c801d9498ce9d556eaebf18
+>>>>>>>> ProveSalvo:Assets/Materials/GlowMat.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

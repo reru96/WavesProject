@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefab/BG.meta
 guid: 0d4f6b21430431f4e806e1108f5d9b18
+========
+guid: df811bebfe2ae684f81566c7f7ea1a11
+>>>>>>>> ProveSalvo:Assets/FMOD.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

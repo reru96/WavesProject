@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefab/Enemy.meta
 guid: 10a1c3429118a224d9d3d33598aa6bca
+========
+guid: d8178c8a33899494d800ebb55e4da7f5
+>>>>>>>> ProveSalvo:Assets/Plugins/FMOD/Cache.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -37,6 +37,7 @@ public class RespawnManager : Singleton<RespawnManager>
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
 
     private void Update()
@@ -79,7 +80,7 @@ public class RespawnManager : Singleton<RespawnManager>
 
         if (player == null)
         {
-            player = Instantiate(playerSO.prefab, puntoRespawn.position, Quaternion.identity);
+            player = Instantiate(playerSO.prefab, puntoRespawn.position, Quaternion.identity);  
             OnPlayerReady?.Invoke();
         }
     }
@@ -100,6 +101,10 @@ public class RespawnManager : Singleton<RespawnManager>
 
     public void PlayerDied()
     {
+        if(GetPlayer().GetComponent<LifeController>() != null && GetPlayer().GetComponent<LifeController>().isInvincible)        
+            return;
+        
+
         leftTry--;
         NotifyLifeChanged();
 
@@ -113,6 +118,8 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         if (player == null) yield break;
 
+        Debug.Log("Coroutine di respawn avviata.");
+
         bool done = false;
         ScreenFader.Instance.FadeOut(() => done = true);
         while (!done) yield return null;
@@ -121,6 +128,14 @@ public class RespawnManager : Singleton<RespawnManager>
         yield return new WaitForSeconds(respawnDelay);
 
         var life = player.GetComponent<LifeController>();
+        if (life == null) life = player.GetComponentInChildren<LifeController>();
+        if (life == null)
+        {
+            Debug.LogWarning("[RespawnManager] LifeController non trovato sul player.");
+            leftTry = maxTry;
+            yield break;
+        }
+
         life?.SetHp(life.GetMaxHp());
         player.transform.position = puntoRespawn.position;
         player.SetActive(true);

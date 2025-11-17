@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Simo
   m_EditorClassIdentifier: Assembly-CSharp::Object
   maxHp: 3
-  currentHp: 0
+  currentHp: 3
   deathType: 3
   prefab: {fileID: 2613437397771044522, guid: c293f4f4fa98a2a449c3ed10e1ad9908, type: 3}
   hitSound: EnemyHit

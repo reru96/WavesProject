@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] private float horizontalOffset = 2f;
+
     private Transform player;
-    [SerializeField] private PathManager pathManager;
-    [SerializeField] private SpriteFollower playerSprite;
+    private PathManager pathManager;
+    private SpriteFollower playerSprite;
 
     private float followSpeed;
-    [SerializeField] private float horizontalOffset = 2f;
 
     private bool _isFollowing = false;
 
     private Vector3 _targetPosition;
-
-    private Transform _lastCommittedPoint;
 
     private void Start()
     {
@@ -55,7 +54,7 @@ public class CameraFollow : MonoBehaviour
 
         followSpeed = playerSprite.Speed;
 
-        Debug.Log($"{player.gameObject.name}");
+        //Debug.Log($"{player.gameObject.name}");
     }
 
     private void LateUpdate()

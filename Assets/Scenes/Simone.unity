@@ -207,11 +207,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemySO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
   obstacleSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
-  spawnRate: 2
+  spawnRate: 1
   yRange: 4
   xRange: 6
   spawnOffset: 10
   obstacleChance: 0.3
+  sceneType: 1
 --- !u!4 &436537611
 Transform:
   m_ObjectHideFlags: 0
@@ -227,6 +228,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &628314135
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.67737
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.05198
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156266096650125944, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7973520363819060043, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 740bd93302f49964a9d261c4feefd61d, type: 3}
 --- !u!1001 &660181594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -442,8 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cd737e6df34494ea9d80c1c321e40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  pathManager: {fileID: 0}
-  playerSprite: {fileID: 0}
   horizontalOffset: -25
 --- !u!1 &1263513968
 GameObject:
@@ -544,3 +600,4 @@ SceneRoots:
   - {fileID: 294948909}
   - {fileID: 660181594}
   - {fileID: 1263513970}
+  - {fileID: 628314135}

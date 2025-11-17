@@ -12,6 +12,8 @@ public class LifeController : MonoBehaviour
     public int GetHp() => objectSO.currentHp;
     public int GetMaxHp() => objectSO.maxHp;
 
+    public bool isInvincible = false;
+
     public void Awake()
     {
         objectSO.currentHp = objectSO.maxHp;
@@ -42,6 +44,8 @@ public class LifeController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (isInvincible) return;
+
         if (amount <= 0) return;
 
         if (amount > 0)

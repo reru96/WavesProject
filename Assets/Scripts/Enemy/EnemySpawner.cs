@@ -13,9 +13,12 @@ public class EnemySpawner : MonoBehaviour
     public float spawnOffset = 10f;     
     [Range(0f, 1f)] public float obstacleChance = 0.3f;
 
+    [Header("EnumSettings")]
+    public SceneType sceneType = SceneType.Simo;
+
     private float _timer;
     private Transform _player;
-    private bool _playerReady = false;
+    public bool playerReady => _player != null;
 
     private void Start()
     {
@@ -36,13 +39,44 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnPlayerReady()
     {
-        _player = RespawnManager.Instance.GetPlayer()?.transform;
-        _playerReady = _player != null;
+        switch (sceneType)
+        {
+            case SceneType.Normal:
+                _player = RespawnManager.Instance.GetPlayer().transform;
+                break;
+            case SceneType.Simo:
+                Debug.Log("EnemySpawner: Getting player transform for Simo scene.");
+                _player = RespawnManager.Instance.GetPlayer().GetComponentInChildren<SpriteFollower>().gameObject.transform;
+                break;
+        }
     }
+
+    private void TryGetPlayer()
+    {
+        if (playerReady) return;
+
+        Debug.Log("EnemySpawner: Trying to get player transform.");
+        switch (sceneType)
+        {
+            case SceneType.Normal:
+                _player = RespawnManager.Instance.GetPlayer().transform;
+                break;
+            case SceneType.Simo:
+                _player = RespawnManager.Instance.GetPlayer().GetComponentInChildren<SpriteFollower>().gameObject.transform;
+                break;
+        }
+    }
+
 
     void Update()
     {
-        if (!_playerReady) return;
+        Debug.Log($"EnemySpawner: Player ready: {playerReady}");
+
+        if (!playerReady) 
+        {
+            TryGetPlayer();
+            return;
+        }
 
         _timer += Time.deltaTime;
         if (_timer >= spawnRate)
@@ -89,5 +123,11 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject go = ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
     }
+}
+
+public enum SceneType
+{
+    Normal, 
+    Simo
 }
 

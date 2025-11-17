@@ -103,7 +103,7 @@ public class PathManager : MonoBehaviour
 
     void UpdateCommittedLine()
     {
-        Debug.Log($"Updating committed line with {CommittedPoints.Count} points.");
+        //Debug.Log($"Updating committed line with {CommittedPoints.Count} points.");
         committedLine.positionCount = CommittedPoints.Count;
         committedLine.SetPositions(CommittedPoints.ToArray());
         OnSegmentCommitted?.Invoke(CommittedPoints[CommittedPoints.Count - 1]);

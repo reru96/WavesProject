@@ -201,5 +201,5 @@ MonoBehaviour:
   speed: 2
   returnToPoolOffset: 5
   fadeSound: 
-  bullet: {fileID: 0}
+  bullet: {fileID: 11400000, guid: c7087d34541ff8d4e90f3cdb5ba2c5de, type: 2}
   shootInterval: 1.5

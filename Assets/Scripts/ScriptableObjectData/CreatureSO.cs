@@ -8,7 +8,7 @@ public class CreatureSO : ScriptableObject
     public GameObject prefab;
     public string hitSound;
     public string deathSound;
-    public EnemyColor colorID;
+    public ColorType colorID;
     public Color SpriteColor;
 }
 

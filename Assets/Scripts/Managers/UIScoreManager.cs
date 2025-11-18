@@ -9,6 +9,7 @@ public class UIScoreManager : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI distanceText;
+    public CanvasGroup leaderBoard;
 
     [Header("Parametri Punteggio")]
     public float pointsPerMeter = 1f;
@@ -26,11 +27,12 @@ public class UIScoreManager : MonoBehaviour
 
     public void Start()
     {
+        player = RespawnManager.Instance.Player.transform;
         startX = player.position.x;
         score = 0;
         distanceTravelled = 0f;
         timeAlive = 0f;
-
+        Hide();
         UpdateLeaderboard();
     }
     private void OnEnable()
@@ -72,6 +74,12 @@ public class UIScoreManager : MonoBehaviour
             scoreText.text = $": {score}\n: x{multiplier:F2}";
     }
 
+    public void Hide()
+    {
+        leaderBoard.alpha = 0f;
+        leaderBoard.interactable = false;
+        leaderBoard.blocksRaycasts = false;
+    }
 
     public void SaveAndUpdateLeaderboard()
     {

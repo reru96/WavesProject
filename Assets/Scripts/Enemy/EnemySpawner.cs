@@ -129,24 +129,24 @@ public class EnemySpawner : MonoBehaviour
             enemy.Initialize(soData.SpriteColor);
         }
     }
-    private float GetYPositionForColor(EnemyColor color, float centerY)
+    private float GetYPositionForColor(ColorType color, float centerY)
     {
 
         switch (color)
         {
-            case EnemyColor.Red:   
-            case EnemyColor.Purple:
+            case ColorType.Red:   
+            case ColorType.Purple:
                 return centerY + yRange;
 
-            case EnemyColor.Green: 
-            case EnemyColor.Orange:
+            case ColorType.Green: 
+            case ColorType.Orange:
                 return centerY;
 
-            case EnemyColor.Blue: 
-            case EnemyColor.Cyan:
+            case ColorType.Blue: 
+            case ColorType.Cyan:
                 return centerY - yRange;
 
-            case EnemyColor.Yellow: 
+            case ColorType.Yellow: 
                                     
                                     
                 return centerY + UnityEngine.Random.Range(-yRange, yRange);
@@ -174,7 +174,7 @@ public class EnemySpawner : MonoBehaviour
 }
 
 [Serializable]
-public enum EnemyColor
+public enum ColorType
 {
     Red,
     Green,

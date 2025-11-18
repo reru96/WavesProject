@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
+using static ParryController;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(LineRenderer))]
 public class PlayerWaveController : MonoBehaviour
 {
     [Header("Wave Parameters")]
-    [Range(-5f, 5f)] public float amplitude = 0f;
+    [Range(-50f, 50f)] public float amplitude = 0f;
     [Range(1f, 10f)] public float waveLength = 5f;
     public float speed = 5f;
 
     [Header("Colors")]
+    public WaveStateMapping[] stateMappings;
     public Gradient colorByWave;
+
+    [Header("Parry System")] 
+    public KeyCode parryKey = KeyCode.Space;
+    public float parryDuration = 0.25f;
+    public Color parryColor = Color.white;
 
     [Header("Line Preview")]
     public int previewPoints = 100;
@@ -25,18 +32,20 @@ public class PlayerWaveController : MonoBehaviour
 
     private SpriteRenderer _sprite;
     private LineRenderer _line;
-    //private Vector3 _fixedPlayerPos;
     private float _baseY;
     private float _time;
     private float _effectiveWaveLength;
     private float _inertiaBlend;
+
+    private float _parryTimer = 0f;
+    private ColorOverride _currentColorOverride = ColorOverride.None;
+
 
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
         _line = GetComponent<LineRenderer>();
 
-        //_fixedPlayerPos = transform.position;
         _baseY = transform.position.y;
 
         _line.positionCount = previewPoints;
@@ -67,23 +76,44 @@ public class PlayerWaveController : MonoBehaviour
         float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
         float y = Mathf.Sin(phase) * amplitude;
 
-        // prendo la posizione ATTUALE (che può essere stata spostata da PlayerControl)
         Vector3 pos = transform.position;
-
-        // modifico solo la Y: X e Z rimangono come sono
         pos.y = _baseY + y;
 
         transform.position = pos;
+
+        HandleParryState(); 
         UpdateTrajectory();
-        UpdateColors();
+        UpdateColors();     
         ApplyInertiaVisuals();
+    }
+
+    void HandleParryState()
+    {
+        if (Input.GetKeyDown(parryKey) && _currentColorOverride == ColorOverride.None)
+        {
+            _parryTimer = parryDuration;
+            _currentColorOverride = ColorOverride.Parry;
+            Debug.Log("Parry Attivato!");
+        }
+
+        if (_parryTimer > 0f)
+        {
+            _parryTimer -= Time.deltaTime;
+            if (_parryTimer <= 0f)
+            {
+                _currentColorOverride = ColorOverride.None; 
+            }
+        }
+    }
+
+    public bool IsParryActive()
+    {
+        return _currentColorOverride == ColorOverride.Parry;
     }
 
     void UpdateTrajectory()
     {
         float halfDist = previewDistance * 0.5f;
-
-        // baseX = posizione attuale del player
         float baseX = transform.position.x;
 
         for (int i = 0; i < previewPoints; i++)
@@ -91,7 +121,7 @@ public class PlayerWaveController : MonoBehaviour
             float tNorm = i / (float)(previewPoints - 1);
             float offset = Mathf.Lerp(-halfDist, +halfDist, tNorm);
 
-            float xPos = baseX + offset;      // ora la curva "segue" il player sulla X
+            float xPos = baseX + offset;
             float t = _time + offset;
             float phase = (2f * Mathf.PI) * (t / _effectiveWaveLength);
             float yPos = _baseY + Mathf.Sin(phase) * amplitude;
@@ -103,13 +133,33 @@ public class PlayerWaveController : MonoBehaviour
 
     void UpdateColors()
     {
-        float colorFactor = Mathf.InverseLerp(-5f, 5f, amplitude);
-        Color c = colorByWave.Evaluate(colorFactor);
-        c.a = 1f;
+        Color c;
+
+        if (_currentColorOverride == ColorOverride.Parry)
+        {
+            c = parryColor;
+        }
+        else
+        {
+            float activeThreshold = 0f;
+            float currentAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, 5f);
+
+            foreach (var mapping in stateMappings)
+            {
+                if (currentAmplitude >= mapping.threshold)
+                {
+                    activeThreshold = mapping.threshold;
+                }
+            }
+            float colorFactor = Mathf.InverseLerp(0f, 5f, activeThreshold);
+            c = colorByWave.Evaluate(colorFactor);
+        }
 
         _sprite.color = c;
-        _line.startColor = c;
-        _line.endColor = c;
+        Color sc = c; sc.a = _line.startColor.a;
+        Color ec = c; ec.a = _line.endColor.a;
+        _line.startColor = sc;
+        _line.endColor = ec;
     }
 
     public void ApplyInertiaFeedback(float ampFactor, float waveFactor)
@@ -129,6 +179,12 @@ public class PlayerWaveController : MonoBehaviour
         _line.startColor = sc;
         _line.endColor = ec;
     }
+    public void SetAmplitude(float value) => amplitude = Mathf.Clamp(value, -50f, 50f);
+}
 
-    public void SetAmplitude(float value) => amplitude = Mathf.Clamp(value, -5f, 5f);
+[System.Serializable]
+public struct WaveStateMapping
+{
+    public ColorType state;
+    public float threshold;
 }

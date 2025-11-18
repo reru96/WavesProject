@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 865338351278033998}
   - component: {fileID: -5620024454732486961}
   - component: {fileID: 3645069863363183009}
+  - component: {fileID: 5438614227278362591}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -221,22 +222,37 @@ MonoBehaviour:
   amplitude: 1
   waveLength: 5
   speed: 5
+  stateMappings:
+  - state: 0
+    threshold: -5
+  - state: 6
+    threshold: -3.33
+  - state: 3
+    threshold: -1.67
+  - state: 1
+    threshold: 0
+  - state: 5
+    threshold: 1.67
+  - state: 2
+    threshold: 3.33
+  - state: 4
+    threshold: 5
   colorByWave:
     serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 0.69475615, g: 0, b: 0.5088235, a: 1}
-    key2: {r: 0.4000988, g: 0, b: 1, a: 0}
-    key3: {r: 0.2285066, g: 0.6150208, b: 0.745283, a: 0}
-    key4: {r: 0.39215687, g: 0.6392157, b: 0.48437995, a: 0}
-    key5: {r: 0.5443399, g: 0.7921569, b: 0.27058822, a: 0}
-    key6: {r: 1, g: 0.41162294, b: 0, a: 0}
+    key0: {r: 1, g: 0.13418192, b: 0, a: 1}
+    key1: {r: 1, g: 0.6776955, b: 0, a: 1}
+    key2: {r: 0.9933436, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 1, b: 0.13855124, a: 0}
+    key4: {r: 0.2784314, g: 1, b: 0.99724174, a: 0}
+    key5: {r: 0, g: 0.13752675, b: 1, a: 0}
+    key6: {r: 1, g: 0, b: 1, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 10023
-    ctime2: 18697
-    ctime3: 28334
-    ctime4: 37586
-    ctime5: 50308
+    ctime0: 3277
+    ctime1: 11951
+    ctime2: 21627
+    ctime3: 32125
+    ctime4: 43712
+    ctime5: 54394
     ctime6: 65535
     ctime7: 0
     atime0: 0
@@ -247,10 +263,13 @@ MonoBehaviour:
     atime5: 0
     atime6: 0
     atime7: 0
-    m_Mode: 0
+    m_Mode: 2
     m_ColorSpace: -1
     m_NumColorKeys: 7
     m_NumAlphaKeys: 2
+  parryKey: 32
+  parryDuration: 0.25
+  parryColor: {r: 1, g: 1, b: 1, a: 1}
   previewPoints: 100
   previewDistance: 20
   lineWidthBase: 0.4
@@ -369,3 +388,65 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &5438614227278362591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263917700265880030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41973938c0109149b6610363b483589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParryController
+  _sprite: {fileID: 1513279610826458990}
+  _line: {fileID: 3241812213070224310}
+  parryKey: 32
+  parryDuration: 0.25
+  parryColor: {r: 1, g: 1, b: 1, a: 1}
+  colorByWave:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.15192151, b: 0, a: 1}
+    key1: {r: 1, g: 0.6857999, b: 0, a: 1}
+    key2: {r: 0.9916408, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 1, b: 0.1688757, a: 0}
+    key4: {r: 0, g: 0.8845155, b: 1, a: 0}
+    key5: {r: 0, g: 0.32292652, b: 1, a: 0}
+    key6: {r: 0.72672796, g: 0, b: 1, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 3277
+    ctime1: 10944
+    ctime2: 21823
+    ctime3: 32768
+    ctime4: 43646
+    ctime5: 55377
+    ctime6: 62194
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2
+  stateMappings:
+  - state: 0
+    threshold: -5
+  - state: 6
+    threshold: -3.3
+  - state: 3
+    threshold: -1.67
+  - state: 1
+    threshold: 0
+  - state: 5
+    threshold: 1.67
+  - state: 2
+    threshold: 3.3
+  - state: 4
+    threshold: 5

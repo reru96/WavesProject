@@ -6,9 +6,9 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("ScriptableObject Prefabs")]
-    public CreatureSO enemySO;
+    public CreatureSO[] enemySO;
     public CreatureSO obstacleSO;
-    public CreatureSO enemySpecialSO;
+    public CreatureSO[] enemySpecialSO;
 
     [Header("Spawn Settings")]
     public float spawnRate = 10f;
@@ -17,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
     public float xRange = 6f;
     public float spawnOffset = 10f;
     [Range(0f, 1f)] public float obstacleChance = 0.3f;
+
+    public int specialEnemyIndex = 0;
 
     private bool _playerReady = false;
     private Transform _player;
@@ -62,9 +64,6 @@ public class EnemySpawner : MonoBehaviour
 
     private (Vector3 spawnPos, Vector2 moveDir) RandomDirection()
     {
-        bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
-        CreatureSO soData = spawnObstacle ? obstacleSO : enemySO;
-
         Vector3 spawnPos = Vector3.zero;
         Vector2 moveDir = Vector2.zero;
 
@@ -95,28 +94,93 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEntity()
     {
+        if (_player == null) return;
+
         bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
-        CreatureSO soData = spawnObstacle ? obstacleSO : enemySO;
 
-        if (soData == null || soData.prefab == null) return;
+        CreatureSO soData;
 
-        var (spawnPos, moveDir) = RandomDirection();
+        if (spawnObstacle)
+        {
+            soData = obstacleSO;
+            if (soData == null || soData.prefab == null) return;
+        }
+        else
+        {
+        
+            CreatureSO[] soArray = enemySO;
+            if (soArray == null || soArray.Length == 0) return;
 
-        ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
+            soData = soArray[UnityEngine.Random.Range(0, soArray.Length)];
+            if (soData == null || soData.prefab == null) return;
+        }
+
+
+        float yPos = GetYPositionForColor(soData.colorID, _player.position.y);
+        float xPos = _player.position.x + spawnOffset;
+        Vector3 spawnPos = new Vector3(xPos, yPos, 0f);
+
+        GameObject go = ObjectPooler.Instance.Spawn(soData, spawnPos, Quaternion.identity);
+
+        Enemy enemy = go.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+           
+            enemy.Initialize(soData.SpriteColor);
+        }
+    }
+    private float GetYPositionForColor(EnemyColor color, float centerY)
+    {
+
+        switch (color)
+        {
+            case EnemyColor.Red:   
+            case EnemyColor.Purple:
+                return centerY + yRange;
+
+            case EnemyColor.Green: 
+            case EnemyColor.Orange:
+                return centerY;
+
+            case EnemyColor.Blue: 
+            case EnemyColor.Cyan:
+                return centerY - yRange;
+
+            case EnemyColor.Yellow: 
+                                    
+                                    
+                return centerY + UnityEngine.Random.Range(-yRange, yRange);
+
+            default:
+                return centerY; 
+        }
     }
 
     public void SpawnSpecialEnemy()
     {
-        if (enemySpecialSO == null || enemySpecialSO.prefab == null) return;
+        if (enemySpecialSO == null || enemySpecialSO.Length == 0) return;
 
         var (spawnPos, moveDir) = RandomDirection();
-
-        GameObject go = ObjectPooler.Instance.Spawn(enemySpecialSO, spawnPos, Quaternion.identity);
+        
+        GameObject go = ObjectPooler.Instance.Spawn(enemySpecialSO[specialEnemyIndex], spawnPos, Quaternion.identity);
+        specialEnemyIndex = (specialEnemyIndex + 1) % enemySpecialSO.Length;
 
         Enemy enemy = go.GetComponent<Enemy>();
         if (enemy != null)
             enemy.SetDirection(moveDir);
+
     }
 
 }
 
+[Serializable]
+public enum EnemyColor
+{
+    Red,
+    Green,
+    Blue,
+    Yellow,
+    Purple,
+    Cyan,
+    Orange
+}

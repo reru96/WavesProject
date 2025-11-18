@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4783666ae16b5854d9aa822e8e2f1e86, type: 3}
-  m_Name: Enemy
-  m_EditorClassIdentifier: Assembly-CSharp::Object
+  m_Name: Purple_Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureSO
   maxHp: 1
   deathType: 1
   prefab: {fileID: 1415131233706008856, guid: 28e184dd47cead94c963514586694108, type: 3}
   hitSound: EnemyHit
   deathSound: EnemyHit
+  colorID: 4
+  SpriteColor: {r: 0.8422508, g: 0, b: 1, a: 1}

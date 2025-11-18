@@ -9,10 +9,9 @@ public class CameraManagere : MonoBehaviour
     {
         if (_player == null)
         {
-            _player = RespawnManager.Instance.GetPlayer()?.transform;
+            _player = RespawnManager.Instance.Player.transform;
         }
         
-
         Vector3 camPos = transform.position;
         camPos.x = _player.position.x + _cameraOffset;
         transform.position = camPos;

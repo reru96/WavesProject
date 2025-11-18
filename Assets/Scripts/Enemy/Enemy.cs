@@ -6,18 +6,19 @@ public class Enemy : MonoBehaviour
     public int damage = 1;
     public float speed = 2f;
     public float returnToPoolOffset = 5f;
+    public string fadeSound;
     protected SpriteRenderer _sprite;
     protected Transform player;
-    public string fadeSound;
-
     protected Rigidbody2D _rb;
-    protected Vector2 moveDirection;
+    protected Vector2 moveDirection; 
+
+    protected virtual void Awake()
+    {
+        _sprite = GetComponent<SpriteRenderer>();
+    }
 
     protected virtual void Start()
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _sprite.color = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
-
         player = RespawnManager.Instance.Player.transform;
     }
 
@@ -25,24 +26,31 @@ public class Enemy : MonoBehaviour
     {
         if (player == null) return;
 
-        // Muoviti costantemente verso sinistra
-        transform.position += Vector3.left * speed * Time.deltaTime;
+        transform.position += Vector3.left * (speed * Time.deltaTime);
 
-        // Se l'ostacolo è troppo indietro rispetto al player, torna alla pool
         if (transform.position.x < player.position.x - returnToPoolOffset)
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
+
+    public virtual void Initialize(Color colorToSet)
+    {
+        if (_sprite == null)
+            _sprite = GetComponent<SpriteRenderer>();
+
+        _sprite.color = colorToSet;
+    }
+
     public virtual void SetDirection(Vector2 dir)
     {
         moveDirection = dir.normalized;
-        transform.right = dir; 
+        transform.right = dir;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+
         var playerLife = other.GetComponent<LifeController>();
-        var life = gameObject.GetComponent<LifeController>();
 
         if (playerLife != null)
         {
@@ -63,6 +71,6 @@ public class Enemy : MonoBehaviour
 
     public bool ColorsSimilar(Color a, Color b, float tolerance = 0.3f)
     {
-        return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.g, b.b)) < tolerance;
+        return Vector3.Distance(new Vector3(a.r, a.g, a.b), new Vector3(b.r, b.b, a.b)) < tolerance;
     }
 }

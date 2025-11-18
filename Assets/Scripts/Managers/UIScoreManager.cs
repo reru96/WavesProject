@@ -18,7 +18,7 @@ public class UIScoreManager : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private List<TMP_Text> scoreTexts;
 
-    private float startZ;
+    private float startX;
     private float distanceTravelled;
     private float timeAlive;
     private int score;
@@ -26,7 +26,7 @@ public class UIScoreManager : MonoBehaviour
 
     public void Start()
     {
-        startZ = player.position.z;
+        startX = player.position.x;
         score = 0;
         distanceTravelled = 0f;
         timeAlive = 0f;
@@ -45,7 +45,7 @@ public class UIScoreManager : MonoBehaviour
 
     void Update()
     {
-        distanceTravelled = player.position.z - startZ;
+        distanceTravelled = player.position.x - startX;
         if (distanceTravelled < 0) distanceTravelled = 0;
 
         timeAlive += Time.deltaTime;

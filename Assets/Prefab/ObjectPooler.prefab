@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &921796559654167230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6056500574369798421}
+  - component: {fileID: 6799110502107040605}
+  m_Layer: 0
+  m_Name: ObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6056500574369798421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921796559654167230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.71224, y: -1.33436, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6799110502107040605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921796559654167230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc9e500347b69947b1da90a951e6b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
+  poolEntries:
+  - name: Enemy
+    poolsize: 5
+    objectSo:
+    - {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+    - {fileID: 11400000, guid: bae28bec4721bd342982cd1158f9e6e6, type: 2}
+    - {fileID: 11400000, guid: 7157f2405975f8246b5afe3ed04c045c, type: 2}
+    - {fileID: 11400000, guid: 4ec78239e0d80b64c8ed98b67088f81b, type: 2}
+    - {fileID: 11400000, guid: d251b1c072f004046bfdbb026f17952b, type: 2}
+    - {fileID: 11400000, guid: fa99dbad4f7bba54ca0f58f855958091, type: 2}
+    - {fileID: 11400000, guid: 8cf1f6db551ff734e8c8518cb3a22ab8, type: 2}
+  - name: EnemySpecial
+    poolsize: 5
+    objectSo:
+    - {fileID: 11400000, guid: c4626b1b857acb44f9b5888c51afdbfb, type: 2}
+    - {fileID: 11400000, guid: 6f82e6c474d097c42a4b59c43218eceb, type: 2}
+    - {fileID: 11400000, guid: a3676798beb7d3f438e2d7a9e7960f95, type: 2}
+  - name: Bullet
+    poolsize: 20
+    objectSo:
+    - {fileID: 11400000, guid: c7087d34541ff8d4e90f3cdb5ba2c5de, type: 2}
+  - name: Obstale
+    poolsize: 10
+    objectSo:
+    - {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}

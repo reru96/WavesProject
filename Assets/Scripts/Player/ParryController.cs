@@ -4,11 +4,14 @@ public class ParryController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private LineRenderer _line;
+    public PlayerWaveController waveController;
     public enum ColorOverride
     {
         None,
         Parry
     }
+
+    public const float MAX_AMPLITUDE_FOR_COLOR = 5f;
 
     [Header("Parry Settings")]
     public KeyCode parryKey = KeyCode.Space;
@@ -20,7 +23,12 @@ public class ParryController : MonoBehaviour
 
     private float _parryTimer = 0f;
     private bool _isParryActive = false;
-    private float _currentAmplitude = 0f; 
+    private float _currentAmplitude = 0f;
+
+    public void Awake()
+    {
+        waveController = this.gameObject.GetComponent<PlayerWaveController>();  
+    }
 
     public void SetCurrentAmplitude(float amplitude)
     {
@@ -36,7 +44,7 @@ public class ParryController : MonoBehaviour
     {
         HandleParryInput();
         HandleParryStateTimer();
-        UpdateColors(); 
+        UpdateColors();
     }
 
     void HandleParryInput()
@@ -67,34 +75,23 @@ public class ParryController : MonoBehaviour
     {
         Color c;
 
-        if (_isParryActive)
+        if (waveController.CurrentColorOverride == ColorOverride.Parry)
         {
             c = parryColor;
         }
         else
         {
-            float activeThreshold = 0f;
-            float amplitude = Mathf.Clamp(Mathf.Abs(_currentAmplitude), 0f, 5f);
-            foreach (var mapping in stateMappings)
-            {
-                if (amplitude >= mapping.threshold)
-                {
-                    activeThreshold = mapping.threshold;
-                }
-            }
-
-            float colorFactor = Mathf.InverseLerp(0f, 5f, activeThreshold);
+            float currentAmplitude = Mathf.Clamp(Mathf.Abs(waveController.amplitude), 0f, MAX_AMPLITUDE_FOR_COLOR);
+            float colorFactor = Mathf.InverseLerp(0f, MAX_AMPLITUDE_FOR_COLOR, currentAmplitude);
             c = colorByWave.Evaluate(colorFactor);
         }
 
         _sprite.color = c;
-
         Color sc = c; sc.a = _line.startColor.a;
         Color ec = c; ec.a = _line.endColor.a;
         _line.startColor = sc;
         _line.endColor = ec;
     }
-
 
     public void Initialize(SpriteRenderer sprite, LineRenderer line)
     {

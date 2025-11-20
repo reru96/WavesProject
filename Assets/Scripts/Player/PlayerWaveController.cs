@@ -12,8 +12,9 @@ public class PlayerWaveController : MonoBehaviour
     [Header("Colors")]
     public WaveStateMapping[] stateMappings;
     public Gradient colorByWave;
+    public const float MAX_AMPLITUDE_FOR_COLOR = 5f; 
 
-    [Header("Parry System")] 
+    [Header("Parry System")]
     public KeyCode parryKey = KeyCode.Space;
     public float parryDuration = 0.25f;
     public Color parryColor = Color.white;
@@ -39,6 +40,8 @@ public class PlayerWaveController : MonoBehaviour
 
     private float _parryTimer = 0f;
     private ColorOverride _currentColorOverride = ColorOverride.None;
+
+    public ColorOverride CurrentColorOverride => _currentColorOverride;
 
 
     void Start()
@@ -81,9 +84,9 @@ public class PlayerWaveController : MonoBehaviour
 
         transform.position = pos;
 
-        HandleParryState(); 
+        HandleParryState();
         UpdateTrajectory();
-        UpdateColors();     
+        UpdateColors();
         ApplyInertiaVisuals();
     }
 
@@ -101,7 +104,7 @@ public class PlayerWaveController : MonoBehaviour
             _parryTimer -= Time.deltaTime;
             if (_parryTimer <= 0f)
             {
-                _currentColorOverride = ColorOverride.None; 
+                _currentColorOverride = ColorOverride.None;
             }
         }
     }
@@ -141,17 +144,8 @@ public class PlayerWaveController : MonoBehaviour
         }
         else
         {
-            float activeThreshold = 0f;
-            float currentAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, 5f);
-
-            foreach (var mapping in stateMappings)
-            {
-                if (currentAmplitude >= mapping.threshold)
-                {
-                    activeThreshold = mapping.threshold;
-                }
-            }
-            float colorFactor = Mathf.InverseLerp(0f, 5f, activeThreshold);
+            float currentAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, MAX_AMPLITUDE_FOR_COLOR);
+            float colorFactor = Mathf.InverseLerp(0f, MAX_AMPLITUDE_FOR_COLOR, currentAmplitude);
             c = colorByWave.Evaluate(colorFactor);
         }
 

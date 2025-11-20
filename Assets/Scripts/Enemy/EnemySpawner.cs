@@ -131,25 +131,29 @@ public class EnemySpawner : MonoBehaviour
     }
     private float GetYPositionForColor(ColorType color, float centerY)
     {
-
         switch (color)
         {
-            case ColorType.Red:   
+            case ColorType.Red:
+                return centerY;
             case ColorType.Purple:
                 return centerY + yRange;
-
-            case ColorType.Green: 
+            case ColorType.Green:
+                float chosen = UnityEngine.Random.value < 0.5f ? -2f: 2f ;
+                return centerY + chosen;
+                
             case ColorType.Orange:
-                return centerY;
+                float chosen2 = UnityEngine.Random.value < 0.5f ? -1f : 1f;
+                return centerY + chosen2;
 
-            case ColorType.Blue: 
+            case ColorType.Blue:
+                float chosen3 = UnityEngine.Random.value < 0.5f ? -4f : 4f;
+                return centerY + chosen3;
+
             case ColorType.Cyan:
                 return centerY - yRange;
 
             case ColorType.Yellow: 
-                                    
-                                    
-                return centerY + UnityEngine.Random.Range(-yRange, yRange);
+                return centerY + 2f;
 
             default:
                 return centerY; 

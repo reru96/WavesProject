@@ -297,6 +297,7 @@ MonoBehaviour:
   inertiaFactor: 0.2
   minAmplitude: -5
   maxAmplitude: 5
+  standardwave: 1.1
 --- !u!114 &865338351278033998
 MonoBehaviour:
   m_ObjectHideFlags: 0

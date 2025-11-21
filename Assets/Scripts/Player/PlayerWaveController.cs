@@ -25,6 +25,7 @@ public class PlayerWaveController : MonoBehaviour
     public WaveStateMapping[] stateMappings;
 
     public Gradient colorByWave;
+    public const float MAX_AMPLITUDE_FOR_COLOR = 5f; 
 
 
 
@@ -79,6 +80,8 @@ public class PlayerWaveController : MonoBehaviour
     private float _parryTimer = 0f;
 
     private ColorOverride _currentColorOverride = ColorOverride.None;
+
+    public ColorOverride CurrentColorOverride => _currentColorOverride;
 
 
 
@@ -167,13 +170,9 @@ public class PlayerWaveController : MonoBehaviour
         transform.position = pos;
 
 
-
         HandleParryState();
-
         UpdateTrajectory();
-
         UpdateColors();
-
         ApplyInertiaVisuals();
 
     }
@@ -209,6 +208,7 @@ public class PlayerWaveController : MonoBehaviour
             {
 
                 _currentColorOverride = ColorOverride.None;
+
 
             }
 
@@ -309,7 +309,6 @@ public class PlayerWaveController : MonoBehaviour
             }
 
             float colorFactor = Mathf.InverseLerp(0f, 5f, activeThreshold);
-
             c = colorByWave.Evaluate(colorFactor);
 
         }

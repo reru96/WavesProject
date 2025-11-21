@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Limits")]
     public float minAmplitude = -5f;
     public float maxAmplitude = 5f;
+    [Range(0, 1.1f)]public float standardwave = 0.3f;
 
     void Start()
     {
@@ -61,16 +62,9 @@ public class PlayerControl : MonoBehaviour
 
         if (!isPressing)
         {
-            if (Mathf.Abs(_wave.amplitude) > 0.01f)
-            {
-                _wave.amplitude = Mathf.MoveTowards(_wave.amplitude, 0f, amplitudeDecay * Time.deltaTime);
-            }
-            else
-            {
-                _wave.amplitude = 0f;
-            }
+            float targetAmplitude = (_wave.amplitude >= 0) ? Mathf.Abs(standardwave) : -Mathf.Abs(standardwave);
+            _wave.amplitude = Mathf.MoveTowards(_wave.amplitude, targetAmplitude, amplitudeDecay * Time.deltaTime);
         }
-
         _wave.amplitude = Mathf.Clamp(_wave.amplitude, minAmplitude, maxAmplitude);
     }
 

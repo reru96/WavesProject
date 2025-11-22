@@ -1,8 +1,13 @@
+using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class Obstacle : MonoBehaviour
 {
+    [SerializeField] private GameObject WavePrefab;
+    [SerializeField] private float waveLife = 3f;
+    [SerializeField] private float waveSpeed = 100f;
 
     public float speed = 2f;
     private Transform player;
@@ -30,15 +35,47 @@ public class Obstacle : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            var life = other.GetComponent<LifeController>();
-            if (life != null)
-                life.TakeDamage(1);
+            if (other.GetComponent<ParryController>().IsParryActive())
+            {
+                TransfromInWaves();
+            }
+            else
+            {
+                var life = other.GetComponent<LifeController>();
+                if (life != null)
+                    life.TakeDamage(1);
+            }
             AudioManager.Instance.PlaySfx(obstacleSound);
             ObjectPooler.Instance.ReturnToPool(gameObject);
         }
     }
+
+    private void TransfromInWaves()
+    {
+        GameObject wave = Instantiate(WavePrefab, transform.position, Quaternion.identity);
+        StartCoroutine(MoveWave(waveLife, wave));
+    }
+    private IEnumerator MoveWave(float wavelife, GameObject waveobj)
+    {
+        float timer = 0f;
+        float direction = Mathf.Sign(player.localScale.x);
+        Vector3 moveDirection = Vector3.right * direction;
+
+        while (timer < wavelife)
+        {
+            // Muovi l’onda usando la direzione costante calcolata e la velocità definita
+            waveobj.transform.Translate(moveDirection * waveSpeed * Time.deltaTime, Space.World);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Dopo waveLife secondi distruggi l’onda
+        Destroy(waveobj);
+    }
+
 }
 
-    
+
 
 

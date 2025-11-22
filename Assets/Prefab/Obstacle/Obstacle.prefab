@@ -119,9 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: 1bd81d04e6f60354782009890f3587dc, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
+  currentHp: 1
 --- !u!61 &8504236126855578184
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -180,5 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2dd32e94e42e94581d6ce81ee58f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  WavePrefab: {fileID: 5367995484753457152, guid: 7e8e3301bb2ef114492340ae3e64c4d4, type: 3}
+  waveLife: 3
+  waveSpeed: 100
   speed: 2
   returnToPoolOffset: 2
+  obstacleSound: 

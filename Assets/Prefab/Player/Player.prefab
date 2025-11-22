@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -5620024454732486961}
   - component: {fileID: 3645069863363183009}
   - component: {fileID: 5438614227278362591}
+  - component: {fileID: 8189778316337874691}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -85,13 +86,13 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: 6331609056727667426, guid: a422f740f56114943810c78039b158b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.001676, y: 0.001468}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -294,10 +295,11 @@ MonoBehaviour:
   wavelengthSensitivity: 2
   minWavelength: 5
   maxWavelength: 6
+  wavelengthIncrease: 1
   inertiaFactor: 0.2
   minAmplitude: -5
   maxAmplitude: 5
-  standardwave: 1.1
+  standardwave: 0.25
 --- !u!114 &865338351278033998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,9 +378,9 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.3966666, y: 1.2233334}
+    newSize: {x: 0.001676, y: 0.001468}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -452,3 +454,24 @@ MonoBehaviour:
     threshold: 3.3
   - state: 4
     threshold: 5
+--- !u!114 &8189778316337874691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263917700265880030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3f078457796a94697114bfe2b3510b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpriteController
+  _playerColors:
+  - {fileID: 1602096178281777136, guid: f109069e93315ea499d1ca5757036bec, type: 3}
+  - {fileID: 2971664281789464088, guid: 4322c62015bfd1541b14df9151396276, type: 3}
+  - {fileID: 9171559817528551878, guid: f930ab0fc93aa7e4b8c908fb23281363, type: 3}
+  - {fileID: 45075300443267218, guid: 785ea73c893a06148b5fa2ceaf641ed2, type: 3}
+  - {fileID: -6012975081006302496, guid: ef8cff298a6e8cd4d8f21bde8187e5da, type: 3}
+  - {fileID: 6331609056727667426, guid: a422f740f56114943810c78039b158b7, type: 3}
+  - {fileID: -1883158811680806814, guid: 950a0b869aed34c429d5b6f3050689a8, type: 3}
+  - {fileID: -5134940433188487267, guid: 636a0258e833bfe49a86be7cdad6c843, type: 3}

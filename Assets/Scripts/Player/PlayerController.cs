@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     public float wavelengthSensitivity = 2.0f;
     public float minWavelength = 1f;
     public float maxWavelength = 10f;
+    [Range(0.1f, 3f)]public float wavelengthIncrease = 1f;
 
     [Header("Adaptive Difficulty")]
     [Tooltip("Riduce la sensibilità quando l'ampiezza è alta (più difficile manovrare onde grandi)")]
@@ -71,8 +72,8 @@ public class PlayerControl : MonoBehaviour
     private void HandleWavelength()
     {
         float dir = 0f;
-        if (Input.GetKey(KeyCode.D)) dir += 1f; // D allarga l'onda
-        if (Input.GetKey(KeyCode.A)) dir -= 1f; // A stringe l'onda
+        if (Input.GetKey(KeyCode.D)) dir += wavelengthIncrease; // D allarga l'onda
+        if (Input.GetKey(KeyCode.A)) dir -= wavelengthIncrease; // A stringe l'onda
 
         if (Mathf.Abs(dir) > 0f)
         {

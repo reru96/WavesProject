@@ -32,12 +32,12 @@ public class Enemy : MonoBehaviour
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
-    public virtual void Initialize(Color colorToSet)
+    public virtual void Initialize(Sprite colorToSet)
     {
         if (_sprite == null)
             _sprite = GetComponent<SpriteRenderer>();
 
-        _sprite.color = colorToSet;
+        _sprite.sprite = colorToSet;
     }
 
     public virtual void SetDirection(Vector2 dir)

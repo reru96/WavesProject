@@ -9,7 +9,8 @@ public class CreatureSO : ScriptableObject
     public string hitSound;
     public string deathSound;
     public ColorType colorID;
-    public Color SpriteColor;
+    //public Color SpriteColor;
+    public Sprite EnemySprite;
 }
 
 public enum DeathAction { None, Disable, Destroy, Respawn, SceneReload, Die }

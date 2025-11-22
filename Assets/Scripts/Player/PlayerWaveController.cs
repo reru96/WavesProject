@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 using static ParryController;
 
@@ -86,6 +87,10 @@ public class PlayerWaveController : MonoBehaviour
 
 
     public void SetColorOverride(ColorOverride newColor) => _currentColorOverride = newColor;
+
+    public ColorType CurrentWaveColor { get; private set; }
+
+    public Action<ColorType> OnColorChanged;
 
 
 
@@ -269,62 +274,52 @@ public class PlayerWaveController : MonoBehaviour
 
 
     void UpdateColors()
-
     {
-
         Color c;
 
-
-
+        // 1. Gestione Override (es. Parry)
         if (_currentColorOverride == ColorOverride.Parry)
-
         {
-
             c = parryColor;
-
+            // Se hai uno sprite specifico per il Parry, dovrai aggiungere 'Parry' al tuo ColorType 
+            // o gestirlo separatamente nello SpriteController.
+            // Per ora, assumiamo che Parry non cambi lo sprite del colore base.
         }
-
         else
-
         {
-
+            float currentAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, MAX_AMPLITUDE_FOR_COLOR);
             float activeThreshold = 0f;
 
-            float currentAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, 5f);
-
-
-
+            // 2. Trova il Mappaggio Attivo
             foreach (var mapping in stateMappings)
-
             {
-
                 if (currentAmplitude >= mapping.threshold)
-
                 {
-
+                    // ✨ Ecco la magia: salviamo il tipo di colore associato alla soglia
+                    CurrentWaveColor = mapping.state;
                     activeThreshold = mapping.threshold;
-
                 }
-
             }
 
-            float colorFactor = Mathf.InverseLerp(0f, 5f, activeThreshold);
+            // 3. Calcola il Colore (Per il LineRenderer/SpriteRenderer)
+            // Questa logica rimane per colorare la wave e il corpo del player con la Gradient.
+            float colorFactor = Mathf.InverseLerp(0f, MAX_AMPLITUDE_FOR_COLOR, activeThreshold);
             c = colorByWave.Evaluate(colorFactor);
-
         }
 
-
-
+        // 4. Applica il Colore
         _sprite.color = c;
-
         Color sc = c; sc.a = _line.startColor.a;
-
         Color ec = c; ec.a = _line.endColor.a;
-
         _line.startColor = sc;
-
         _line.endColor = ec;
 
+        // 📢 5. Notifica lo Sprite Controller
+        // Inviamo il TIPO di colore esatto che è stato attivato dalla soglia
+        if (_currentColorOverride != ColorOverride.Parry) 
+            OnColorChanged?.Invoke(CurrentWaveColor);
+
+        else OnColorChanged?.Invoke(ColorType.white);
     }
 
 

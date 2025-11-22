@@ -18,4 +18,4 @@ MonoBehaviour:
   hitSound: EnemyHit
   deathSound: EnemyHit
   colorID: 1
-  SpriteColor: {r: 0.008417368, g: 1, b: 0, a: 1}
+  EnemySprite: {fileID: -5223890700290795521, guid: d31e04114ebb36645ab6edcd425d49f2, type: 3}

@@ -126,7 +126,7 @@ public class EnemySpawner : MonoBehaviour
         if (enemy != null)
         {
            
-            enemy.Initialize(soData.SpriteColor);
+            enemy.Initialize(soData.EnemySprite);
         }
     }
     private float GetYPositionForColor(ColorType color, float centerY)
@@ -186,5 +186,7 @@ public enum ColorType
     Yellow,
     Purple,
     Cyan,
-    Orange
+    Orange,
+
+    white
 }

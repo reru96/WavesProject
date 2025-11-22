@@ -115,3 +115,7 @@ InitTestScene*.unity*
 # If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
 # Log files can be ignored.
 fmod_editor.log
+*.ai
+Assets/Sprites/Enemies/Enemy.ai.meta
+Assets/Sprites/Player/Player.ai.meta
+Assets/Sprites/Obstacle/Obstacle.ai.meta

@@ -5,15 +5,12 @@ public class PlayerControl : MonoBehaviour
 {
     private PlayerWaveController _wave;
 
-<<<<<<< Updated upstream
+
     [Header("Movement")]
 
     [Tooltip("Velocità orizzontale del giocatore")]
     public float speed = 5f;
-=======
-    [Header ("Movement")]
-    [SerializeField] private float speed = 5f;
->>>>>>> Stashed changes
+
 
     [Header("Controls (Base Rates)")]
     [Tooltip("Variazione base per l'ampiezza ad ogni 'step' di input")]
@@ -49,14 +46,9 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-<<<<<<< Updated upstream
 
         transform.position += Vector3.right * speed * Time.deltaTime;
-=======
-        transform.position += Vector3.right * speed * Time.deltaTime;
 
-
->>>>>>> Stashed changes
         HandleAmplitude();
         HandleWavelength();
         ApplyInertiaFeedback();

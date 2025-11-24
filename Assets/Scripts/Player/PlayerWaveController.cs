@@ -25,27 +25,39 @@ public class PlayerWaveController : MonoBehaviour
 
     private SpriteRenderer _sprite;
     private LineRenderer _line;
-<<<<<<< Updated upstream
-    //private Vector3 _fixedPlayerPos;
-=======
->>>>>>> Stashed changes
+
     private float _baseY;
     private float _time;
     private float _effectiveWaveLength;
     private float _inertiaBlend;
+
+
+    //private float _parryTimer = 0f;
+    //private ColorOverride _currentColorOverride = ColorOverride.None;
+    //public ColorOverride CurrentColorOverride => _currentColorOverride;
+    //public ColorType CurrentWaveColor { get; private set; }
+    //public Action<ColorType> OnColorChanged;
+
+    private void Awake()
+    {
+        if (_line.material == null) _line.material = new Material(Shader.Find("Sprites/Default"));
+        
+    }
+
 
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
         _line = GetComponent<LineRenderer>();
 
-<<<<<<< Updated upstream
         //_fixedPlayerPos = transform.position;
         _baseY = transform.position.y;
 
         _line.positionCount = previewPoints;
         _line.alignment = LineAlignment.TransformZ;
+
         _line.material = new Material(Shader.Find("Sprites/Default"));
+
         _line.widthMultiplier = lineWidthBase;
 
         Texture2D dashTex = new Texture2D(2, 1);
@@ -78,7 +90,7 @@ public class PlayerWaveController : MonoBehaviour
         pos.y = _baseY + y;
 
         transform.position = pos;
-=======
+
         _baseY = transform.position.y;
         _line.positionCount = previewPoints;
         _line.alignment = LineAlignment.TransformZ;
@@ -117,15 +129,12 @@ public class PlayerWaveController : MonoBehaviour
         transform.position = pos;
 
 
->>>>>>> Stashed changes
+
         UpdateTrajectory();
         UpdateColors();
         ApplyInertiaVisuals();
     }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     void UpdateTrajectory()
     {
         float halfDist = previewDistance * 0.5f;

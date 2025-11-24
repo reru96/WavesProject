@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.strings.bank
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
@@ -21,6 +22,27 @@ MonoBehaviour:
     Value: 834
   Exists: 1
 --- !u!114 &-6139240795766062140
+=======
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
+  EditorBanks:
+  - {fileID: 6991930118360313544}
+  - {fileID: 7829345893361819501}
+  EditorEvents:
+  - {fileID: 919924480233389966}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 7829345893361819501}
+  StringsBanks:
+  - {fileID: 6991930118360313544}
+  cacheVersion: 131856
+  cacheTime: 638995896125963896
+  SerializableEventsDict:
+  - key: event:/Music_NeonRunner
+    index: 0
+--- !u!114 &919924480233389966
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +121,31 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+<<<<<<< Updated upstream
 --- !u!114 &8032305742816804496
+=======
+--- !u!114 &6991930118360313544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: Assets/FMOD/NeonRunner_Audio/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638995896125963896
+  FileSizes:
+  - Name: Desktop
+    Value: 834
+  Exists: 1
+--- !u!114 &7829345893361819501
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +160,11 @@ MonoBehaviour:
   Path: Assets/FMOD/NeonRunner_Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
+<<<<<<< Updated upstream
   lastModified: 638990194119306332
+=======
+  lastModified: 638995896125953885
+>>>>>>> Stashed changes
   FileSizes:
   - Name: Desktop
     Value: 1078304

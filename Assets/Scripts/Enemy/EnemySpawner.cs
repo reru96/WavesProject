@@ -176,17 +176,3 @@ public class EnemySpawner : MonoBehaviour
     }
 
 }
-
-[Serializable]
-public enum ColorType
-{
-    Red,
-    Green,
-    Blue,
-    Yellow,
-    Purple,
-    Cyan,
-    Orange,
-
-    white
-}

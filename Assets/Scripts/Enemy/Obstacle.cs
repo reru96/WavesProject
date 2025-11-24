@@ -35,7 +35,7 @@ public class Obstacle : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<ParryController>().IsParryActive())
+            if (other.GetComponent<PlayerWaveController>().IsParryActive())
             {
                 TransfromInWaves();
             }

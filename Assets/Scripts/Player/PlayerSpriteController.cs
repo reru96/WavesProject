@@ -51,7 +51,7 @@ public class PlayerSpriteController : MonoBehaviour
             case ColorType.Purple: UpdatePlayerColor(_playerColors[6]);
                 break;
 
-            case ColorType.white:  UpdatePlayerColor(_playerColors[7]);
+            case ColorType.White:  UpdatePlayerColor(_playerColors[7]);
                     break;
         }
     }

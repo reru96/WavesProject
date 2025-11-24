@@ -622,6 +622,7 @@ MonoBehaviour:
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
   EventLinkage: 0
+  SerializeGUIDsOnly: 0
   LoggingLevel: 2
   SpeakerModeSettings: []
   SampleRateSettings: []
@@ -644,8 +645,8 @@ MonoBehaviour:
   EnableErrorCallback: 0
   SharedLibraryUpdateStage: 1
   SharedLibraryTimeSinceStart: 0
-  CurrentVersion: 131634
-  HideSetupWizard: 1
+  CurrentVersion: 131857
+  HideSetupWizard: 0
   LastEventReferenceScanVersion: 131633
   Platforms:
   - {fileID: -8802440798201305907}

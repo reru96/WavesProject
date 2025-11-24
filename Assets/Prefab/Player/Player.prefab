@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWaveController
   amplitude: 1
   waveLength: 5
-  speed: 5
+  speed: 6
   colorByWave:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -270,14 +270,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
   speed: 2
+<<<<<<< Updated upstream
   baseAmplitudeStep: 0.2
   baseWavelengthRate: 0.8
+=======
+  baseAmplitudeStep: 0.1
+  baseWavelengthRate: 0.75
+>>>>>>> Stashed changes
   amplitudeInertia: 0.2
   wavelengthInertia: 0.15
   minAmplitude: -5
   maxAmplitude: 5
   minWavelength: 5
+<<<<<<< Updated upstream
   maxWavelength: 6
+=======
+  maxWavelength: 7
+>>>>>>> Stashed changes
   amplitudeResponse: 10
 --- !u!114 &865338351278033998
 MonoBehaviour:

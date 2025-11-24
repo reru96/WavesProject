@@ -25,7 +25,10 @@ public class PlayerWaveController : MonoBehaviour
 
     private SpriteRenderer _sprite;
     private LineRenderer _line;
+<<<<<<< Updated upstream
     //private Vector3 _fixedPlayerPos;
+=======
+>>>>>>> Stashed changes
     private float _baseY;
     private float _time;
     private float _effectiveWaveLength;
@@ -36,6 +39,7 @@ public class PlayerWaveController : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         _line = GetComponent<LineRenderer>();
 
+<<<<<<< Updated upstream
         //_fixedPlayerPos = transform.position;
         _baseY = transform.position.y;
 
@@ -74,11 +78,54 @@ public class PlayerWaveController : MonoBehaviour
         pos.y = _baseY + y;
 
         transform.position = pos;
+=======
+        _baseY = transform.position.y;
+        _line.positionCount = previewPoints;
+        _line.alignment = LineAlignment.TransformZ;
+        _line.material = new Material(Shader.Find("Sprites/Default"));
+        _line.widthMultiplier = lineWidthBase;
+
+        Texture2D dashTex = new Texture2D(2, 1);
+        dashTex.SetPixels(new Color[] { Color.white, Color.clear });
+        dashTex.Apply();
+        _line.material.mainTexture = dashTex;
+        _line.material.mainTextureScale = new Vector2(10f, 1f);
+        _line.textureMode = LineTextureMode.Tile;
+
+        _effectiveWaveLength = waveLength;
+    }
+
+    void Update()
+    {
+        _time += Time.deltaTime * speed;
+
+        _effectiveWaveLength = Mathf.MoveTowards(
+            _effectiveWaveLength,
+            waveLength,
+            wavelengthSlewPerSecond * Time.deltaTime
+        );
+
+        float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
+        float y = Mathf.Sin(phase) * amplitude;
+
+        // prendo la posizione ATTUALE (che può essere stata spostata da PlayerControl)
+        Vector3 pos = transform.position;
+
+        // modifico solo la Y: X e Z rimangono come sono
+        pos.y = _baseY + y;
+
+        transform.position = pos;
+
+
+>>>>>>> Stashed changes
         UpdateTrajectory();
         UpdateColors();
         ApplyInertiaVisuals();
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     void UpdateTrajectory()
     {
         float halfDist = previewDistance * 0.5f;

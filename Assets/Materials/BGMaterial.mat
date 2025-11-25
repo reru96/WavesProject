@@ -68,7 +68,7 @@ Material:
     m_Floats:
     - _ColorMask: 15
     - _EnableExternalAlpha: 0
-    - _GlowIntensity: 57.68
+    - _GlowIntensity: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -76,13 +76,13 @@ Material:
     - _StencilWriteMask: 255
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
-    - _WaveAmplitude: 0.3
-    - _WaveFrequency: 5.74
-    - _WaveSpeed: 1.52
+    - _WaveAmplitude: 0.1
+    - _WaveFrequency: 9.18
+    - _WaveSpeed: 1
     - _ZWrite: 0
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.45770007, g: 1, b: 0.043000042, a: 1}
+    - _Color: {r: 0.099358365, g: 0.582, b: 0.025105882, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

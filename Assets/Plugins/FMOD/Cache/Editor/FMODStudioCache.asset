@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/FMOD/NeonRunner_Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638996013933602616
+  lastModified: 638995944141527065
   FileSizes:
   - Name: Desktop
     Value: 1078304
@@ -87,7 +87,7 @@ MonoBehaviour:
   Path: Assets/FMOD/NeonRunner_Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638996013933616815
+  lastModified: 638995944141547021
   FileSizes:
   - Name: Desktop
     Value: 834
@@ -115,7 +115,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -408594797773272342}
   cacheVersion: 131857
-  cacheTime: 638996013933616815
+  cacheTime: 638995944141547021
   SerializableEventsDict:
   - key: event:/Music_NeonRunner
     index: 0

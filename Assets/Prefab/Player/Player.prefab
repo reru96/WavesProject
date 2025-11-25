@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 865338351278033998}
   - component: {fileID: -5620024454732486961}
   - component: {fileID: 3645069863363183009}
-  - component: {fileID: 8189778316337874691}
+  - component: {fileID: 550082961289218447}
+  - component: {fileID: 7728506431637238419}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -222,51 +223,6 @@ MonoBehaviour:
   amplitude: 1
   waveLength: 5
   speed: 5
-  stateMappings:
-  - state: 0
-    threshold: -5
-  - state: 6
-    threshold: -3.33
-  - state: 3
-    threshold: -1.67
-  - state: 1
-    threshold: 0
-  - state: 5
-    threshold: 1.67
-  - state: 2
-    threshold: 3.33
-  - state: 4
-    threshold: 5
-  colorByWave:
-    serializedVersion: 2
-    key0: {r: 1, g: 0.13418192, b: 0, a: 1}
-    key1: {r: 1, g: 0.6776955, b: 0, a: 1}
-    key2: {r: 0.9933436, g: 1, b: 0, a: 0}
-    key3: {r: 0, g: 1, b: 0.13855124, a: 0}
-    key4: {r: 0.2784314, g: 1, b: 0.99724174, a: 0}
-    key5: {r: 0, g: 0.13752675, b: 1, a: 0}
-    key6: {r: 1, g: 0, b: 1, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 3277
-    ctime1: 11951
-    ctime2: 21627
-    ctime3: 32125
-    ctime4: 43712
-    ctime5: 54394
-    ctime6: 65535
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 2
-    m_ColorSpace: -1
-    m_NumColorKeys: 7
-    m_NumAlphaKeys: 2
   parryKey: 32
   parryDuration: 0.25
   parryColor: {r: 1, g: 1, b: 1, a: 1}
@@ -276,6 +232,7 @@ MonoBehaviour:
   wavelengthSlewPerSecond: 3
   lineWidthExtraAtMaxInertia: 0.2
   lineMinAlphaAtMaxInertia: 0.6
+  CurrentWaveUnityColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1471973178889230750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +347,7 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
---- !u!114 &8189778316337874691
+--- !u!114 &550082961289218447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,11 +360,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpriteController
   _playerColors:
-  - {fileID: 1602096178281777136, guid: f109069e93315ea499d1ca5757036bec, type: 3}
-  - {fileID: 2971664281789464088, guid: 4322c62015bfd1541b14df9151396276, type: 3}
   - {fileID: 9171559817528551878, guid: f930ab0fc93aa7e4b8c908fb23281363, type: 3}
+  - {fileID: 2971664281789464088, guid: 4322c62015bfd1541b14df9151396276, type: 3}
+  - {fileID: 1602096178281777136, guid: f109069e93315ea499d1ca5757036bec, type: 3}
   - {fileID: 45075300443267218, guid: 785ea73c893a06148b5fa2ceaf641ed2, type: 3}
+  - {fileID: 1602096178281777136, guid: f109069e93315ea499d1ca5757036bec, type: 3}
   - {fileID: -6012975081006302496, guid: ef8cff298a6e8cd4d8f21bde8187e5da, type: 3}
-  - {fileID: 6331609056727667426, guid: a422f740f56114943810c78039b158b7, type: 3}
   - {fileID: -1883158811680806814, guid: 950a0b869aed34c429d5b6f3050689a8, type: 3}
-  - {fileID: -5134940433188487267, guid: 636a0258e833bfe49a86be7cdad6c843, type: 3}
+  - {fileID: 1602096178281777136, guid: f109069e93315ea499d1ca5757036bec, type: 3}
+--- !u!114 &7728506431637238419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263917700265880030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd1b17371d88d04598ce7b3e72fd415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaveColorResolver
+  mappings:
+  - state: 1
+    threshold: -5
+  - state: 2
+    threshold: -3.33
+  - state: 3
+    threshold: -1.67
+  - state: 4
+    threshold: 0
+  - state: 5
+    threshold: 1.67
+  - state: 6
+    threshold: 3.33
+  - state: 7
+    threshold: 5
+  gradientByWave:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.61526555, b: 0, a: 1}
+    key2: {r: 1, g: 0.9987117, b: 0, a: 0}
+    key3: {r: 0, g: 1, b: 0.018707752, a: 0}
+    key4: {r: 0, g: 0.94116735, b: 1, a: 0}
+    key5: {r: 0, g: 0.13512635, b: 1, a: 0}
+    key6: {r: 0.42775097, g: 0, b: 0.5345911, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 3277
+    ctime1: 10944
+    ctime2: 21823
+    ctime3: 32768
+    ctime4: 43646
+    ctime5: 56926
+    ctime6: 65535
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2

@@ -15,11 +15,6 @@ public class PlayerWaveController : MonoBehaviour
     [Range(1f, 10f)] public float waveLength = 5f;
     public float speed = 5f;
 
-    [Header("Colors")]
-    public WaveStateMapping[] stateMappings;
-    public Gradient colorByWave;
-    public const float MAX_AMPLITUDE_FOR_COLOR = 5f;
-
     [Header("Parry System")]
     public KeyCode parryKey = KeyCode.Space;
     public float parryDuration = 0.25f;
@@ -39,6 +34,7 @@ public class PlayerWaveController : MonoBehaviour
 
     private SpriteRenderer _sprite;
     private LineRenderer _line;
+    private WaveColorResolver _colorResolver;
 
     private float _baseY;
     private float _time;
@@ -47,24 +43,37 @@ public class PlayerWaveController : MonoBehaviour
 
     private float _parryTimer = 0f;
     private ColorOverride _currentColorOverride = ColorOverride.None;
+
     public ColorOverride CurrentColorOverride => _currentColorOverride;
+
     public ColorType CurrentWaveColor { get; private set; }
+
+    public Color CurrentWaveUnityColor;
+
     public Action<ColorType> OnColorChanged;
 
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
         _line = GetComponent<LineRenderer>();
+        _colorResolver = GetComponent<WaveColorResolver>();
+
+        _colorResolver.OnResolvedColor += ReceiveResolvedColor;
+
         _baseY = transform.position.y;
 
         _line.positionCount = previewPoints;
         _line.alignment = LineAlignment.TransformZ;
-        if (_line.material == null) _line.material = new Material(Shader.Find("Sprites/Default"));
+
+        if (_line.material == null)
+            _line.material = new Material(Shader.Find("Sprites/Default"));
+
         _line.widthMultiplier = lineWidthBase;
 
         Texture2D dashTex = new Texture2D(2, 1);
         dashTex.SetPixels(new Color[] { Color.white, Color.clear });
         dashTex.Apply();
+
         _line.material.mainTexture = dashTex;
         _line.material.mainTextureScale = new Vector2(10f, 1f);
         _line.textureMode = LineTextureMode.Tile;
@@ -82,16 +91,34 @@ public class PlayerWaveController : MonoBehaviour
             wavelengthSlewPerSecond * Time.deltaTime
         );
 
+        UpdateVerticalMovement();
+        HandleParryState();
+        UpdateTrajectory();
+
+        _colorResolver.ResolveColor(amplitude);
+
+        UpdateVisuals();
+    }
+
+    void UpdateVerticalMovement()
+    {
         float phase = (2f * Mathf.PI) * (_time / _effectiveWaveLength);
         float y = Mathf.Sin(phase) * amplitude;
+
         Vector3 pos = transform.position;
         pos.y = _baseY + y;
         transform.position = pos;
+    }
 
-        HandleParryState();
-        UpdateTrajectory();
-        UpdateVisuals();
+    private void ReceiveResolvedColor(ColorType type, Color resolvedColor)
+    {
+        CurrentWaveColor = type;
+        CurrentWaveUnityColor = resolvedColor;
 
+        if (_currentColorOverride == ColorOverride.None)
+        {
+            OnColorChanged?.Invoke(type);
+        }
     }
 
     void HandleParryState()
@@ -106,6 +133,7 @@ public class PlayerWaveController : MonoBehaviour
         if (_parryTimer > 0f)
         {
             _parryTimer -= Time.deltaTime;
+
             if (_parryTimer <= 0f)
             {
                 SetColorOverride(ColorOverride.None);
@@ -136,6 +164,7 @@ public class PlayerWaveController : MonoBehaviour
 
             float xPos = baseX + offset;
             float t = _time + offset;
+
             float phase = (2f * Mathf.PI) * (t / _effectiveWaveLength);
             float yPos = _baseY + Mathf.Sin(phase) * amplitude;
 
@@ -145,52 +174,29 @@ public class PlayerWaveController : MonoBehaviour
 
     void UpdateVisuals()
     {
-        Color baseColor;
+        Color finalColor;
 
         if (_currentColorOverride == ColorOverride.Parry)
-        {
-            baseColor = parryColor;
-        }
+            finalColor = parryColor;
         else
-        {
-            float currentAbsAmplitude = Mathf.Clamp(Mathf.Abs(amplitude), 0f, MAX_AMPLITUDE_FOR_COLOR);
-            float activeThreshold = 0f;
-            if (stateMappings != null)
-            {
-                foreach (var mapping in stateMappings)
-                {
-                    if (currentAbsAmplitude >= mapping.threshold)
-                    {
-                        CurrentWaveColor = mapping.state;
-                        activeThreshold = mapping.threshold;
-                    }
-                }
-            }
+            finalColor = CurrentWaveUnityColor;
 
-            float colorFactor = Mathf.InverseLerp(0f, MAX_AMPLITUDE_FOR_COLOR, activeThreshold);
-            baseColor = colorByWave.Evaluate(colorFactor);
-
-            if (_currentColorOverride != ColorOverride.Parry)
-                OnColorChanged?.Invoke(CurrentWaveColor);
-        }
-
-        float targetWidth = lineWidthBase + lineWidthExtraAtMaxInertia * _inertiaBlend;
-        _line.widthMultiplier = targetWidth;
-
-        float targetAlpha = Mathf.Lerp(1f, lineMinAlphaAtMaxInertia, _inertiaBlend);
-
-        Color spriteColor = baseColor;
-        spriteColor.a = 1f; 
+        Color spriteColor = finalColor;
+        spriteColor.a = 1f;
         _sprite.color = spriteColor;
 
-        Color lineColor = baseColor;
-        lineColor.a = targetAlpha; 
+        float targetWidth = lineWidthBase + lineWidthExtraAtMaxInertia * _inertiaBlend;
+        float targetAlpha = Mathf.Lerp(1f, lineMinAlphaAtMaxInertia, _inertiaBlend);
+
+        _line.widthMultiplier = targetWidth;
+
+        Color lineColor = finalColor;
+        lineColor.a = targetAlpha;
 
         _line.startColor = lineColor;
         _line.endColor = lineColor;
+        _line.material.color = lineColor;
     }
-
-
     public void ApplyInertiaFeedback(float ampFactor, float waveFactor)
     {
         _inertiaBlend = Mathf.Clamp01((ampFactor + waveFactor) * 0.5f);

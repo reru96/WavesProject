@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class MainMenuWave : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainMenuWave : MonoBehaviour
     [SerializeField] private float _maxAmplitude = 5f;
     [SerializeField] private float _frequency = 1f;
 
+    [SerializeField] private float _changeColorTime = 5f;
+
     private float _leftX;
     private float _rightX;
 
@@ -21,7 +24,7 @@ public class MainMenuWave : MonoBehaviour
 
     private void Awake()
     {
-        _bgWaveRenderer = GetComponent<LineRenderer>();
+        if (_bgWaveRenderer == null) GetComponent<LineRenderer>();
         _currentAmplitude = _amplitude;
         _resetAmplitude = _amplitude;
 
@@ -31,9 +34,15 @@ public class MainMenuWave : MonoBehaviour
         _rightX = cam.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 10f)).x;
     }
 
+    private void Start()
+    {
+        StartCoroutine(ChangeColorCorutine());
+    }
+
     private void Update()
     {
         DrawWave();
+        
     }
 
     private void DrawWave()
@@ -80,5 +89,29 @@ public class MainMenuWave : MonoBehaviour
             0.5f
         ).SetEase(Ease.OutQuad);
     }
+
+    public IEnumerator ChangeColorCorutine()
+    {
+        while (true)
+        {
+        
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.red, 2f);
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.blue, 2f);
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.green, 2f);
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.magenta, 2f);
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.cyan, 2f);
+        yield return new WaitForSeconds(_changeColorTime);
+        _bgWaveRenderer.material.DOColor(Color.red, 2f);
+
+        }
+
+
+    }
+
 }
 

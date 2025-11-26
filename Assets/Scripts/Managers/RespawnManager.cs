@@ -119,7 +119,7 @@ public class RespawnManager : Singleton<RespawnManager>
     {
         ScreenFader.Instance.FadeOut(() =>
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("StartMenu");
             ScreenFader.Instance.FadeIn();
         });
 

@@ -200,4 +200,4 @@ MonoBehaviour:
   damage: 1
   speed: 2
   returnToPoolOffset: 5
-  fadeSound: 
+  enemyData: {fileID: 11400000, guid: 6f82e6c474d097c42a4b59c43218eceb, type: 2}

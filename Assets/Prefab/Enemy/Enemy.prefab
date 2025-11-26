@@ -146,7 +146,7 @@ MonoBehaviour:
   damage: 1
   speed: 4
   returnToPoolOffset: 5
-  fadeSound: 
+  enemyData: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
 --- !u!114 &132741838927846209
 MonoBehaviour:
   m_ObjectHideFlags: 0

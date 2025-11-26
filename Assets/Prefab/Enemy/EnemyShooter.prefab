@@ -200,6 +200,6 @@ MonoBehaviour:
   damage: 1
   speed: 2
   returnToPoolOffset: 5
-  fadeSound: 
+  enemyData: {fileID: 11400000, guid: c4626b1b857acb44f9b5888c51afdbfb, type: 2}
   bullet: {fileID: 11400000, guid: c7087d34541ff8d4e90f3cdb5ba2c5de, type: 2}
   shootInterval: 1.5

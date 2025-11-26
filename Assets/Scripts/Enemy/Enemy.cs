@@ -6,7 +6,8 @@ public class Enemy : MonoBehaviour
     public int damage = 1;
     public float speed = 2f;
     public float returnToPoolOffset = 5f;
-    public string fadeSound;
+    public string deathSound = "EnemyDeathSound";
+    public string hitSound = "EnemyHit";
     protected SpriteRenderer _sprite;
     protected Transform player;
     protected Rigidbody2D _rb;
@@ -58,10 +59,11 @@ public class Enemy : MonoBehaviour
 
             if (ColorsSimilar(_sprite.color, playerColor))
             {
-                AudioManager.Instance.PlaySfx(fadeSound);
+                AudioManager.Instance.PlaySfx(hitSound);
             }
             else
             {
+                AudioManager.Instance.PlaySfx(deathSound);
                 playerLife.TakeDamage(damage);
             }
 

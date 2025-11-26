@@ -230,15 +230,15 @@ MonoBehaviour:
   - name: Red
     type: 1
     minAmplitude: 0
-    color: {r: 1, g: 0, b: 0, a: 0}
+    color: {r: 1, g: 0, b: 0, a: 1}
   - name: Orange
     type: 2
     minAmplitude: 1
-    color: {r: 1, g: 0.70198053, b: 0, a: 0}
+    color: {r: 1, g: 0.70198053, b: 0, a: 1}
   - name: Yellow
     type: 3
     minAmplitude: 1.5
-    color: {r: 0.99402523, g: 1, b: 0, a: 0}
+    color: {r: 0.99402523, g: 1, b: 0, a: 1}
   - name: Green
     type: 4
     minAmplitude: 2
@@ -246,7 +246,7 @@ MonoBehaviour:
   - name: Cyan
     type: 5
     minAmplitude: 2.5
-    color: {r: 0, g: 0.9842982, b: 1, a: 0}
+    color: {r: 0, g: 0.9842982, b: 1, a: 1}
   - name: Blue
     type: 6
     minAmplitude: 3

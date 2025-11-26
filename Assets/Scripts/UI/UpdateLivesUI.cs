@@ -18,6 +18,7 @@ public class UpdateLivesUI : MonoBehaviour
     {
         UpdateLives();
     }
+
     private void OnEnable()
     {
         if (RespawnManager.Instance != null)

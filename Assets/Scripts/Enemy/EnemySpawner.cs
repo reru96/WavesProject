@@ -154,7 +154,8 @@ public class EnemySpawner : MonoBehaviour
 
             case ColorType.Yellow:
                 return centerY + 2f;
-
+            case ColorType.White:
+                return centerY + UnityEngine.Random.Range(-yRange, yRange);
             default:
                 return centerY;
         }

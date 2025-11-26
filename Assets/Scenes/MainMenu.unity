@@ -665,7 +665,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0, b: 0, a: 1}
-      key1: {r: 0.23529413, g: 0.23529413, b: 0.23529413, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -689,7 +689,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -736,6 +736,7 @@ MonoBehaviour:
   _amplitudeOffset: 1
   _maxAmplitude: 5
   _frequency: 3
+  _changeColorTime: 1
 --- !u!1 &1035602782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,6 +1837,7 @@ MonoBehaviour:
   _amplitudeOffset: 0.5
   _maxAmplitude: 5
   _frequency: 1
+  _changeColorTime: 5
 --- !u!1 &1721473236
 GameObject:
   m_ObjectHideFlags: 0

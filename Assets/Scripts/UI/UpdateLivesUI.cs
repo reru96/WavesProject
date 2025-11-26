@@ -13,6 +13,11 @@ public class UpdateLivesUI : MonoBehaviour
     {
         UpdateLives();
     }
+
+    private void Update()
+    {
+        UpdateLives();
+    }
     private void OnEnable()
     {
         if (RespawnManager.Instance != null)
@@ -27,15 +32,9 @@ public class UpdateLivesUI : MonoBehaviour
 
     public void UpdateLives()
     {
-        var manager = RespawnManager.Instance;
-        if (manager == null) return;
 
-        var player = manager.Player;
-        if (player == null) return;
-
-        var life = player.GetComponent<LifeController>();
+        var life = RespawnManager.Instance.Player.GetComponent<LifeController>();
         if (life == null) return;
-
         int hp = life.GetHp();
 
         foreach (var icon in icons)

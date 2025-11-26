@@ -11,6 +11,7 @@ public class CreatureSO : ScriptableObject
     public ColorType colorID;
     //public Color SpriteColor;
     public Sprite EnemySprite;
+    public ParticleSystem particle;
 }
 
 public enum DeathAction { None, Disable, Destroy, Respawn, SceneReload, Die }

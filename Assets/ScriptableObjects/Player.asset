@@ -17,3 +17,6 @@ MonoBehaviour:
   prefab: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
   hitSound: EnemyHit
   deathSound: EnemyHit
+  colorID: 0
+  EnemySprite: {fileID: 0}
+  particle: {fileID: 7009843566832188273, guid: f3d706429af7b6549b679f3f48dbb597, type: 3}

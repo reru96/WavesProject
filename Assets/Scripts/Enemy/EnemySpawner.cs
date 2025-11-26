@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("ScriptableObject Prefabs")]
     public CreatureSO[] enemySO;
-    public CreatureSO obstacleSO;
+    //public CreatureSO obstacleSO;
     public CreatureSO[] enemySpecialSO;
 
     [Header("Spawn Settings")]
@@ -96,24 +96,24 @@ public class EnemySpawner : MonoBehaviour
     {
         if (_player == null) return;
 
-        bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
+        //bool spawnObstacle = UnityEngine.Random.value < obstacleChance;
 
         CreatureSO soData;
 
-        if (spawnObstacle)
-        {
-            soData = obstacleSO;
-            if (soData == null || soData.prefab == null) return;
-        }
-        else
-        {
-        
-            CreatureSO[] soArray = enemySO;
-            if (soArray == null || soArray.Length == 0) return;
+        //if (spawnObstacle)
+        //{
+        //    soData = obstacleSO;
+        //    if (soData == null || soData.prefab == null) return;
+        //}
+        //else
+        //{
 
-            soData = soArray[UnityEngine.Random.Range(0, soArray.Length)];
-            if (soData == null || soData.prefab == null) return;
-        }
+        CreatureSO[] soArray = enemySO;
+        if (soArray == null || soArray.Length == 0) return;
+
+        soData = soArray[UnityEngine.Random.Range(0, soArray.Length)];
+        if (soData == null || soData.prefab == null) return;
+
 
 
         float yPos = GetYPositionForColor(soData.colorID, _player.position.y);
@@ -125,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = go.GetComponent<Enemy>();
         if (enemy != null)
         {
-           
+
             enemy.Initialize(soData.EnemySprite);
         }
     }
@@ -138,9 +138,9 @@ public class EnemySpawner : MonoBehaviour
             case ColorType.Purple:
                 return centerY + yRange;
             case ColorType.Green:
-                float chosen = UnityEngine.Random.value < 0.5f ? -2f: 2f ;
+                float chosen = UnityEngine.Random.value < 0.5f ? -2f : 2f;
                 return centerY + chosen;
-                
+
             case ColorType.Orange:
                 float chosen2 = UnityEngine.Random.value < 0.5f ? -1f : 1f;
                 return centerY + chosen2;
@@ -152,11 +152,11 @@ public class EnemySpawner : MonoBehaviour
             case ColorType.Cyan:
                 return centerY - yRange;
 
-            case ColorType.Yellow: 
+            case ColorType.Yellow:
                 return centerY + 2f;
 
             default:
-                return centerY; 
+                return centerY;
         }
     }
 
@@ -165,7 +165,7 @@ public class EnemySpawner : MonoBehaviour
         if (enemySpecialSO == null || enemySpecialSO.Length == 0) return;
 
         var (spawnPos, moveDir) = RandomDirection();
-        
+
         GameObject go = ObjectPooler.Instance.Spawn(enemySpecialSO[specialEnemyIndex], spawnPos, Quaternion.identity);
         specialEnemyIndex = (specialEnemyIndex + 1) % enemySpecialSO.Length;
 

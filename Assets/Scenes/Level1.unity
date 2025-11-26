@@ -3972,7 +3972,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734082098}
-  - component: {fileID: 734082099}
   m_Layer: 0
   m_Name: BGmanager
   m_TagString: Untagged
@@ -4095,27 +4094,6 @@ Transform:
   - {fileID: 1173170737}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &734082099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734082097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cce07a85ddddb24ba5fd3421bb19be9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaveBackgroundField
-  player: {fileID: 0}
-  squarePrefab: {fileID: 1116406980357941664, guid: 841be6c1265fa97488d9cdb0a10e4a02, type: 3}
-  squareCount: 100
-  fieldSize: {x: 30, y: 15}
-  scaleRange: {x: 0.5, y: 6}
-  zRange: {x: -10, y: 10}
-  scaleVariation: 0.5
-  lerpSpeed: 3
-  rotationSpeed: 5
 --- !u!1 &735680707
 GameObject:
   m_ObjectHideFlags: 0
@@ -7144,6 +7122,7 @@ MonoBehaviour:
     Path: event:/Music_NeonRunner
   parameterName: Wave_Intensity
   playerWave: {fileID: 0}
+  volume: 0.5
 --- !u!1 &1268974485
 GameObject:
   m_ObjectHideFlags: 0
@@ -11458,6 +11437,10 @@ PrefabInstance:
     - target: {fileID: 6056500574369798421, guid: 6e70b3d668416334abb485f409766b44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110502107040605, guid: 6e70b3d668416334abb485f409766b44, type: 3}
+      propertyPath: poolEntries.Array.size
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

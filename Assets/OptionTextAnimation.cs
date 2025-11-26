@@ -7,10 +7,7 @@ public class OptionTextAnimation : MonoBehaviour
 
     [SerializeField] private float _offsetAmount = 0.5f;
 
-    [SerializeField] private float _exitDelay = 0.2f;
-
     private float _phaseOffset;
-    private Coroutine _exitRoutine;
 
     private void Start()
     {

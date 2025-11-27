@@ -17,7 +17,7 @@ public class MainMenuWave : MonoBehaviour
     private float _leftX;
     private float _rightX;
 
-    private float _currentAmplitude;   // per DOTween
+    private float _currentAmplitude;    
     private float _resetAmplitude;
 
     public float CurrentAmplitude => _currentAmplitude;
@@ -30,19 +30,28 @@ public class MainMenuWave : MonoBehaviour
 
         Camera cam = Camera.main;
 
-        _leftX = cam.ScreenToWorldPoint(new Vector3(0f, 0f, 10f)).x;
-        _rightX = cam.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 10f)).x;
+        if (cam != null)
+        {
+            _leftX = cam.ScreenToWorldPoint(new Vector3(0f, 0f, 10f)).x;
+            _rightX = cam.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 10f)).x;
+        }
     }
 
     private void Start()
     {
-        StartCoroutine(ChangeColorCorutine());
+
+        if (_bgWaveRenderer != null)
+        {
+            StartCoroutine(ChangeColorCorutine());
+        }
     }
 
     private void Update()
     {
-        DrawWave();
-        
+        if (_bgWaveRenderer != null)
+        {
+            DrawWave();
+        }
     }
 
     private void DrawWave()
@@ -92,26 +101,31 @@ public class MainMenuWave : MonoBehaviour
 
     public IEnumerator ChangeColorCorutine()
     {
+        Material sharedMat = _bgWaveRenderer.sharedMaterial;
+
         while (true)
         {
-        
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.red, 2f);
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.blue, 2f);
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.green, 2f);
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.magenta, 2f);
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.cyan, 2f);
-        yield return new WaitForSeconds(_changeColorTime);
-        _bgWaveRenderer.material.DOColor(Color.red, 2f);
+            if (sharedMat == null) yield break; 
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.red, 2f);
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.blue, 2f);
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.green, 2f);
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.magenta, 2f);
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.cyan, 2f);
+
+            yield return new WaitForSeconds(_changeColorTime);
+            sharedMat.DOColor(Color.red, 2f); 
 
         }
-
-
     }
-
 }
 

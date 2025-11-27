@@ -49,7 +49,7 @@ public class PlayerWaveController : MonoBehaviour
     public float lineWidthExtraAtMaxInertia = 0.2f;
     public float lineMinAlphaAtMaxInertia = 0.6f;
     private MaterialPropertyBlock _mpb;
-    public ColorType CurrentColorType => _currentType;
+    public ColorType CurrentColorType => _currentType; 
 
     void Start()
     {

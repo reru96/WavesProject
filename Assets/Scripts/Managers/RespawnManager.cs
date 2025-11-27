@@ -17,6 +17,7 @@ public class RespawnManager : Singleton<RespawnManager>
     private GameObject player;
 
     public static event Action OnGameOver;
+    public event Action OnPlayerReady;
     public event Action<int> OnLivesChanged;
     public event Action<GameObject> OnPlayerSpawned;
 
@@ -33,6 +34,11 @@ public class RespawnManager : Singleton<RespawnManager>
         SpawnPlayer();
     }
 
+    public void Start()
+    {
+        OnPlayerSpawned.Invoke(player);
+    }
+
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SpawnPlayer();
@@ -46,7 +52,7 @@ public class RespawnManager : Singleton<RespawnManager>
         if (player != null) Destroy(player);
 
         player = Instantiate(playerSO.prefab, spawnPoint.position, Quaternion.identity);
-        OnPlayerSpawned?.Invoke(player);
+        OnPlayerReady?.Invoke();
     }
 
     public void NotifyLivesChanged()

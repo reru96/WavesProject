@@ -10,6 +10,7 @@ public class SaveController : Singleton<SaveController>
     {
         LoadScore();
     }
+
     public void LoadScore()
     {
         OnScoreLoaded?.Invoke(pendingSaveData.score);

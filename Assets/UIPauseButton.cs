@@ -5,10 +5,21 @@ public class UIPauseButton : MonoBehaviour
 {
     private Button buttonComponent;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup buttoncanvas;
 
     void Awake()
     {
         buttonComponent = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        RespawnManager.OnGameOver += DisableButton;
+    }
+
+    private void OnDisable()
+    {
+        RespawnManager.OnGameOver += DisableButton;
     }
 
     void Start()
@@ -19,6 +30,12 @@ public class UIPauseButton : MonoBehaviour
         HideCanvasGroup();
     }
 
+    public void DisableButton()
+    {
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+    }
     private void ShowCanvasGroup()
     {
       canvasGroup.alpha = 1f;

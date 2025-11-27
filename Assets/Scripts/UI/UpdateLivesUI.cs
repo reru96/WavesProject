@@ -9,38 +9,30 @@ public class UpdateLivesUI : MonoBehaviour
 
     private List<GameObject> icons = new List<GameObject>();
 
-    private void Start()
-    {
-        UpdateLives();
-    }
-
-    private void Update()
-    {
-        UpdateLives();
-    }
-
     private void OnEnable()
     {
         if (RespawnManager.Instance != null)
-            RespawnManager.Instance.OnPlayerReady += UpdateLives;
+            RespawnManager.Instance.OnLivesChanged += UpdateLives;
     }
 
     private void OnDisable()
     {
         if (RespawnManager.Instance != null)
-            RespawnManager.Instance.OnPlayerReady -= UpdateLives;
+            RespawnManager.Instance.OnLivesChanged -= UpdateLives;
     }
 
-    public void UpdateLives()
+    private void Start()
     {
+        UpdateLives(RespawnManager.Instance != null ? RespawnManager.Instance.LeftTry : 0);
+    }
 
-        int life = RespawnManager.Instance.LeftTry;
-
+    private void UpdateLives(int lifeCount)
+    {
         foreach (var icon in icons)
             Destroy(icon);
         icons.Clear();
 
-        for (int i = 0; i < life; i++)
+        for (int i = 0; i < lifeCount; i++)
         {
             GameObject newIcon = Instantiate(lifeIcon, lifeParent);
             newIcon.SetActive(true);

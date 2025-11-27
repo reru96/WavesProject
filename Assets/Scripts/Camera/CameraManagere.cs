@@ -1,19 +1,34 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraManagere : MonoBehaviour
 {
-    [SerializeField] Transform _player;
-    [SerializeField] float _cameraOffset = 5f;
+    [SerializeField] private float cameraOffset = 5f;
+    private Transform player;
 
-    void LateUpdate()
+    private void OnEnable()
     {
-        if (_player == null)
-        {
-            _player = RespawnManager.Instance.Player.transform;
-        }
-        
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerSpawned += SetPlayer;
+    }
+
+    private void OnDisable()
+    {
+        if (RespawnManager.Instance != null)
+            RespawnManager.Instance.OnPlayerSpawned -= SetPlayer;
+    }
+
+    private void SetPlayer(GameObject newPlayer)
+    {
+        player = newPlayer.transform;
+    }
+
+    private void LateUpdate()
+    {
+        if (player == null) return;
+
         Vector3 camPos = transform.position;
-        camPos.x = _player.position.x + _cameraOffset;
+        camPos.x = player.position.x + cameraOffset;
         transform.position = camPos;
     }
 }

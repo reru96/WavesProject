@@ -16,58 +16,42 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private GameObject player;
 
-    public event Action OnPlayerReady;
-    public event Action OnLivesChanged;
-    public event Action OnGameOver;
+    public static event Action OnGameOver;
+    public event Action<int> OnLivesChanged;
+    public event Action<GameObject> OnPlayerSpawned;
+
     public GameObject Player => player;
     public int LeftTry => leftTry;
 
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);  
+
         ResetTries();
-    }
-  
-    private void Start()
-    {
         SceneManager.sceneLoaded += HandleSceneLoaded;
         SpawnPlayer();
-        NotifyLivesChanged();
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        SpawnPlayer();
         NotifyLivesChanged();
     }
 
     private void SpawnPlayer()
     {
-        if (playerSO == null || playerSO.prefab == null)
-        {
-            Debug.LogError("[RespawnManager] PlayerSO o Prefab mancante.");
-            return;
-        }
+        if (playerSO == null || playerSO.prefab == null || spawnPoint == null) return;
 
-        if (spawnPoint == null)
-        {
-            Debug.LogError("[RespawnManager] SpawnPoint mancante!");
-            return;
-        }
+        if (player != null) Destroy(player);
 
         player = Instantiate(playerSO.prefab, spawnPoint.position, Quaternion.identity);
-
-        OnPlayerReady?.Invoke();
+        OnPlayerSpawned?.Invoke(player);
     }
 
     public void NotifyLivesChanged()
     {
-        OnLivesChanged?.Invoke();
+        OnLivesChanged?.Invoke(leftTry);
     }
 
     public void ResetTries()
@@ -84,34 +68,34 @@ public class RespawnManager : Singleton<RespawnManager>
         if (leftTry > 0)
             StartCoroutine(RespawnRoutine());
         else
-            OnGameOver?.Invoke();
+            GameOver();
     }
 
     private IEnumerator RespawnRoutine()
     {
         if (player == null) yield break;
 
-        bool fadeDone = false;
-        ScreenFader.Instance.FadeOut(() => fadeDone = true);
-
-        while (!fadeDone) yield return null;
-
         player.SetActive(false);
-
         yield return new WaitForSeconds(respawnDelay);
 
         var life = player.GetComponent<LifeController>();
-        if (life != null)
-        {
-            life.SetHp(life.GetMaxHp());
-        }
+        if (life != null) life.SetHp(life.GetMaxHp());
 
         player.transform.position = spawnPoint.position;
         player.SetActive(true);
 
-        fadeDone = false;
-        ScreenFader.Instance.FadeIn(() => fadeDone = true);
+        OnPlayerSpawned?.Invoke(player);
+    }
 
-        while (!fadeDone) yield return null;
+    private void GameOver()
+    {
+        OnGameOver?.Invoke();
+        ResetTries();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 }

@@ -18,16 +18,15 @@ public class RespawnManager : Singleton<RespawnManager>
 
     public event Action OnPlayerReady;
     public event Action OnLivesChanged;
-
-    public int LeftTry => leftTry;
-    public int MaxTry => maxTry;
+    public event Action OnGameOver;
     public GameObject Player => player;
 
     protected override void Awake()
     {
         base.Awake();
-        leftTry = maxTry;
+        ResetTries();
     }
+  
     private void Start()
     {
         SceneManager.sceneLoaded += HandleSceneLoaded;
@@ -84,7 +83,7 @@ public class RespawnManager : Singleton<RespawnManager>
         if (leftTry > 0)
             StartCoroutine(RespawnRoutine());
         else
-            GameOver();
+            OnGameOver?.Invoke();
     }
 
     private IEnumerator RespawnRoutine()
@@ -113,16 +112,5 @@ public class RespawnManager : Singleton<RespawnManager>
         ScreenFader.Instance.FadeIn(() => fadeDone = true);
 
         while (!fadeDone) yield return null;
-    }
-
-    private void GameOver()
-    {
-        ScreenFader.Instance.FadeOut(() =>
-        {
-            SceneManager.LoadScene("StartMenu");
-            ScreenFader.Instance.FadeIn();
-        });
-
-        ResetTries();
     }
 }

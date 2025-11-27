@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4783666ae16b5854d9aa822e8e2f1e86, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::CreatureSO
-  maxHp: 3
+  maxHp: 1
   deathType: 3
   prefab: {fileID: 1263917700265880030, guid: de00b55ba94fc434a8a13b56bcfc1b89, type: 3}
   hitSound: EnemyHit

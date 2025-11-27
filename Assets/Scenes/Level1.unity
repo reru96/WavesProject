@@ -6618,8 +6618,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.93949157, y: 0.9324984}
   m_AnchorMax: {x: 0.93949157, y: 0.9683311}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: 31.62, y: -13}
+  m_AnchoredPosition: {x: 50, y: 3}
+  m_SizeDelta: {x: 31.62, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799211184
 MonoBehaviour:
@@ -11270,7 +11270,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1480225533}
   m_HandleRect: {fileID: 1480225532}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12919,6 +12919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac2e4a58fe899245aa4e873a2a3899e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  canvasGroup: {fileID: 1688197709}
 --- !u!225 &1688197709
 CanvasGroup:
   m_ObjectHideFlags: 0

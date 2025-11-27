@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
   objectSO: {fileID: 11400000, guid: fa99dbad4f7bba54ca0f58f855958091, type: 2}
+  maxHp: 1
   currentHp: 1
 --- !u!50 &7929578630466261061
 Rigidbody2D:

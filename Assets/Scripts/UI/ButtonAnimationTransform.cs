@@ -12,6 +12,10 @@ public class ButtonAnimationTransform : MonoBehaviour, IPointerEnterHandler, IPo
 
     [SerializeField] private float _exitDelay = 0.2f;
 
+    [Range(1.1f,3f)][SerializeField] private float _scaleIncrement = 1.25f;
+
+    private Vector3 _originalScale;
+
     private float _phaseOffset;
     private Coroutine _exitRoutine;
 
@@ -22,6 +26,7 @@ public class ButtonAnimationTransform : MonoBehaviour, IPointerEnterHandler, IPo
 
 
         _phaseOffset = index * _offsetAmount;
+        _originalScale = transform.localScale;
     }
 
     private void Update()
@@ -45,12 +50,15 @@ public class ButtonAnimationTransform : MonoBehaviour, IPointerEnterHandler, IPo
             _exitRoutine = null;
         }
         _mainMenuWave.ImproveAmplitude();
+        transform.localScale = _originalScale * _scaleIncrement;
         Debug.Log("BUTTON ENTER");
     }
+
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _exitRoutine = StartCoroutine(DelayedExit());
+        transform.localScale = _originalScale;
         Debug.Log("BUTTON EXIT");
     }
 

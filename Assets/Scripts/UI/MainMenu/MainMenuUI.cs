@@ -21,7 +21,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
-
     private void Start()
     {
         SetupResolutions();
@@ -125,6 +124,10 @@ public class MainMenuUI : MonoBehaviour
         SceneManager.LoadScene("Level1");
     }
 
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
     public void QuitGame()
     {
         Application.Quit();

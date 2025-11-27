@@ -62,7 +62,6 @@ public class LifeController : MonoBehaviour
         if (CompareTag("Player"))
             RespawnManager.Instance.NotifyLivesChanged();
 
-
         if (oldHp > 0 && currentHp == 0)
         {
             OnDeath?.Invoke();

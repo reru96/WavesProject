@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     protected Transform player;
     protected Rigidbody2D _rb;
     protected Vector2 moveDirection; 
+    [SerializeField]protected ParticleSystem _particleSystem;
 
     protected virtual void Awake()
     {
@@ -64,6 +65,8 @@ public class Enemy : MonoBehaviour
             else
             {
                 AudioManager.Instance.PlaySfx(deathSound);
+                TimeSetter.Instance.SlowMotionForImpact(0.1f);
+                ParticleSystem.Instantiate(_particleSystem, Vector2.right, Quaternion.identity);
                 playerLife.TakeDamage(damage);
             }
 

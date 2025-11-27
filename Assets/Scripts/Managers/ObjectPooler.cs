@@ -2,16 +2,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectPooler : Singleton<ObjectPooler>
+public class ObjectPooler : MonoBehaviour
 {
     [SerializeField] private List<PoolEntry> poolEntries = new List<PoolEntry>();
 
+    public static ObjectPooler Instance;
     private Dictionary<CreatureSO, Queue<GameObject>> poolDictionary =
         new Dictionary<CreatureSO, Queue<GameObject>>();
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        Instance = this;
         InitializePools();
     }
 
@@ -47,7 +48,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
         for (int i = 0; i < size; i++)
         {
-            GameObject obj = Instantiate(data.prefab);
+            GameObject obj = Instantiate(data.prefab, transform);
             obj.SetActive(false);
 
             var marker = obj.GetComponent<PooledMarker>();
@@ -58,6 +59,17 @@ public class ObjectPooler : Singleton<ObjectPooler>
         }
     }
 
+    private GameObject CreateNewObject(CreatureSO data, Vector3 position, Quaternion rotation)
+    {
+        GameObject newObj = Instantiate(data.prefab, position, rotation, transform);
+
+        var marker = newObj.GetComponent<PooledMarker>();
+        if (marker == null) marker = newObj.AddComponent<PooledMarker>();
+        marker.data = data;
+
+        return newObj;
+    }
+
     public GameObject Spawn(CreatureSO data, Vector3 position, Quaternion rotation)
     {
         if (data == null)
@@ -66,18 +78,34 @@ public class ObjectPooler : Singleton<ObjectPooler>
             return null;
         }
 
-        if (!poolDictionary.ContainsKey(data) || poolDictionary[data].Count == 0)
+        if (!poolDictionary.ContainsKey(data))
         {
-            Debug.LogWarning($"[ObjectPooler] Nessun pool disponibile per {data.name}");
-            return null;
+            Debug.LogWarning($"[ObjectPooler] Pool non disponibile per {data.name}. Creazione di un nuovo oggetto al volo.");
+            return CreateNewObject(data, position, rotation);
         }
 
-        var obj = poolDictionary[data].Dequeue();
-        obj.transform.SetPositionAndRotation(position, rotation);
-        obj.SetActive(true);
-        poolDictionary[data].Enqueue(obj);
+        var pool = poolDictionary[data];
 
-        return obj;
+        if (pool.Count > 0)
+        {
+            while (pool.Count > 0)
+            {
+                GameObject obj = pool.Dequeue();
+
+                if (obj != null)
+                {
+                    obj.transform.SetPositionAndRotation(position, rotation);
+                    obj.SetActive(true);
+
+                    pool.Enqueue(obj);
+
+                    return obj;
+                }
+            }
+        }
+
+        Debug.LogWarning($"[ObjectPooler] Pool vuoto o inaffidabile per {data.name}. Creazione di un nuovo oggetto.");
+        return CreateNewObject(data, position, rotation);
     }
 
     public T Spawn<T>(CreatureSO data, Vector3 position, Quaternion rotation) where T : Component

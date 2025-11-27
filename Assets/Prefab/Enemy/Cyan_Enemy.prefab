@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5655358860017750366}
   - component: {fileID: 7929578630466261061}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: Cyan_Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,9 @@ MonoBehaviour:
   damage: 1
   speed: 4
   returnToPoolOffset: 5
-  enemyData: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  deathSound: EnemyDeathSound
+  hitSound: EnemyHit
+  currentColorType: 0
 --- !u!114 &132741838927846209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0662a1373a52914ca917fea28fb96dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PooledMarker
-  data: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  data: {fileID: 11400000, guid: d251b1c072f004046bfdbb026f17952b, type: 2}
 --- !u!114 &-5655358860017750366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb1421835607314595cd270e1c18e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LifeController
-  objectSO: {fileID: 11400000, guid: 4cf2d2d044976704f88f60a42f526179, type: 2}
+  objectSO: {fileID: 11400000, guid: d251b1c072f004046bfdbb026f17952b, type: 2}
   currentHp: 1
 --- !u!50 &7929578630466261061
 Rigidbody2D:

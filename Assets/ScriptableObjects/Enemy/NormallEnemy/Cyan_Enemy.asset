@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreatureSO
   maxHp: 1
   deathType: 1
-  prefab: {fileID: 1415131233706008856, guid: 28e184dd47cead94c963514586694108, type: 3}
+  prefab: {fileID: 1415131233706008856, guid: 7bfbcee952c3fb949a996f0e2d16e534, type: 3}
   hitSound: EnemyHit
   deathSound: EnemyHit
   colorID: 5
   EnemySprite: {fileID: -1369069537715588026, guid: cfd9179755326884c8e0e9a26998a843, type: 3}
+  particle: {fileID: 0}

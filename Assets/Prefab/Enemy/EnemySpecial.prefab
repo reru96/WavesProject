@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 132741838927846209}
   - component: {fileID: -5655358860017750366}
   - component: {fileID: 7929578630466261061}
-  - component: {fileID: 5402489527330717679}
+  - component: {fileID: 1530108898417530125}
   m_Layer: 8
-  m_Name: Enemy 1
+  m_Name: EnemySpecial
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5402489527330717679
+--- !u!114 &1530108898417530125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,4 +200,6 @@ MonoBehaviour:
   damage: 1
   speed: 2
   returnToPoolOffset: 5
-  enemyData: {fileID: 11400000, guid: 6f82e6c474d097c42a4b59c43218eceb, type: 2}
+  deathSound: EnemyDeathSound
+  hitSound: EnemyHit
+  currentColorType: 0

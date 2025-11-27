@@ -8,11 +8,11 @@ public class Enemy : MonoBehaviour
     public float returnToPoolOffset = 5f;
     public string deathSound = "EnemyDeathSound";
     public string hitSound = "EnemyHit";
+    public ColorType currentColorType;
     protected SpriteRenderer _sprite;
     protected Transform player;
     protected Rigidbody2D _rb;
     protected Vector2 moveDirection; 
-    [SerializeField]protected ParticleSystem _particleSystem;
 
     protected virtual void Awake()
     {
@@ -34,12 +34,13 @@ public class Enemy : MonoBehaviour
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 
-    public virtual void Initialize(Sprite colorToSet)
+    public virtual void Initialize(Sprite colorToSet, ColorType colorType)
     {
         if (_sprite == null)
             _sprite = GetComponent<SpriteRenderer>();
 
         _sprite.sprite = colorToSet;
+        currentColorType = colorType;
     }
 
     public virtual void SetDirection(Vector2 dir)
@@ -50,24 +51,31 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        var playerLife = other.GetComponent<LifeController>();
-
-        if (playerLife != null)
+        if (other.CompareTag("Player"))
         {
-            Color playerColor = playerLife.GetComponent<SpriteRenderer>().color;
+            var playerWaveController = other.GetComponentInParent<PlayerWaveController>();
+            var life = other.GetComponentInParent<LifeController>();
 
-            if (ColorsSimilar(_sprite.color, playerColor))
+            if (playerWaveController == null || life == null)
+            {
+                Debug.LogWarning("Hai colpito un oggetto taggato 'Player', ma mancano gli script necessari (PlayerWaveController o LifeController)!", other.gameObject);
+                return;
+            }
+
+            ColorType enemy = currentColorType;
+            ColorType player = playerWaveController.CurrentColorType; 
+
+            if (enemy == player)
             {
                 AudioManager.Instance.PlaySfx(hitSound);
+                Debug.Log("non colpito");
             }
             else
             {
+                Debug.Log("colpito");
                 AudioManager.Instance.PlaySfx(deathSound);
                 TimeSetter.Instance.SlowMotionForImpact(0.1f);
-                ParticleSystem.Instantiate(_particleSystem, Vector2.right, Quaternion.identity);
-                playerLife.TakeDamage(damage);
+                life.TakeDamage(damage);
             }
 
             ObjectPooler.Instance.ReturnToPool(gameObject);

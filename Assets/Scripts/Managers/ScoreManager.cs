@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        SetCanvas(0f, false);
+        HideCanvas();
     }
 
     public void AddScore(int newScore)
@@ -29,20 +29,26 @@ public class ScoreManager : MonoBehaviour
         SaveManager.Save(saveData);
     }
 
-    public void SetCanvas(float alpha, bool first)
+    public void HideCanvas()
     {
-        canvasGroup.alpha = alpha;
-        canvasGroup.blocksRaycasts = first;
-        canvasGroup.interactable = first;
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
+    }
+    public void ShowCanvas()
+    {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
     }
 
     public void OnEnable()
     {
-        RespawnManager.Instance.OnGameOver += () => SetCanvas(1f, true);
-    }
-    public void OnDisable()
-    {
-        RespawnManager.Instance.OnGameOver -= () => SetCanvas(1f, true);
+        RespawnManager.Instance.OnGameOver += ShowCanvas;
+    }                                        
+    public void OnDestroy()                   
+    {                                         
+        RespawnManager.Instance.OnGameOver -= ShowCanvas;
     }
     public List<int> GetHighScores()
     {

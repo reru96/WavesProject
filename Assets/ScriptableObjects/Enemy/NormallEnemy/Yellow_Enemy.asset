@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Yellow_Enemy
   m_EditorClassIdentifier: Assembly-CSharp::CreatureSO
   maxHp: 1
-  deathType: 0
-  prefab: {fileID: 1415131233706008856, guid: 28e184dd47cead94c963514586694108, type: 3}
+  deathType: 1
+  prefab: {fileID: 1415131233706008856, guid: 302729c4496eaba4f9e8f76c0fc83621, type: 3}
   hitSound: EnemyHit
   deathSound: EnemyHit
   colorID: 3
   EnemySprite: {fileID: -1060083045642819754, guid: 2f29f1c17cdd0ff45ba134b97ea20809, type: 3}
+  particle: {fileID: 0}

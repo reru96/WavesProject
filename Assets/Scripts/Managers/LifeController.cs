@@ -33,7 +33,9 @@ public class LifeController : MonoBehaviour
     public void HitAction()
     {
         AudioManager.Instance.PlaySfxRandomPitch(objectSO.hitSound);
-        objectSO.particle.Play();
+        if (CompareTag("Player"))
+        { objectSO.particle.Play(); }
+        
         // qui possono andare animazioni o effetti particellari
     }
 

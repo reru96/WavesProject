@@ -49,6 +49,7 @@ public class PlayerWaveController : MonoBehaviour
     public float lineWidthExtraAtMaxInertia = 0.2f;
     public float lineMinAlphaAtMaxInertia = 0.6f;
     private MaterialPropertyBlock _mpb;
+    public ColorType CurrentColorType => _currentType;
 
     void Start()
     {
@@ -106,6 +107,7 @@ public class PlayerWaveController : MonoBehaviour
         {
             _parryTimer = parryDuration;
             _isParrying = true;
+            Debug.Log("parry attivo");
         }
 
         if (_isParrying)

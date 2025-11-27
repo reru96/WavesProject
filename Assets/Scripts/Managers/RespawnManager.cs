@@ -20,6 +20,7 @@ public class RespawnManager : Singleton<RespawnManager>
     public event Action OnLivesChanged;
     public event Action OnGameOver;
     public GameObject Player => player;
+    public int LeftTry => leftTry;
 
     protected override void Awake()
     {

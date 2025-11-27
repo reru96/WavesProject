@@ -3,11 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class MainMenuUI : MonoBehaviour
 {
     [Header("Menus")]
+    [SerializeField] private CanvasGroup mainMenu;
     [SerializeField] private CanvasGroup optionsMenu;
+    [SerializeField] private CanvasGroup creditsMenu;
 
     [Header("Resolution, Fullscreen")]
     [SerializeField] private TMP_Dropdown resolutionsDropdown;
@@ -21,13 +24,26 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
+    private bool _isOnCredits = false;
+
     private void Start()
     {
         SetupResolutions();
         SetupFullscreen();
         SetupBrightness();
         SetUpVolume();
-        HideOptionsMenu();
+        ShowMainMenu();
+    }
+
+    private void Update()
+    {
+        if (_isOnCredits)
+        {
+            if (Mouse.current.leftButton.isPressed)
+            {
+                ShowMainMenu();
+            }
+        }
     }
 
     private void SetupResolutions()
@@ -97,8 +113,29 @@ public class MainMenuUI : MonoBehaviour
         sfxSlider.onValueChanged.AddListener(v => ApplyVolume("Sfx", v));
     }
 
+    public void ShowMainMenu()
+    {
+        HideOptionsMenu();
+        HideCreditsMenu();
+        mainMenu.alpha = 1.0f;
+        mainMenu.blocksRaycasts = true;
+        mainMenu.interactable = true;
+    }
+
+    public void HideMainMenu()
+    {
+        if (mainMenu.alpha > 0)
+        {
+            mainMenu.alpha = 0;
+            mainMenu.blocksRaycasts = false;
+            mainMenu.interactable = false;
+        }
+    }
+
     public void ShowOptionsMenu()
     {
+        HideMainMenu();
+        HideCreditsMenu();
         optionsMenu.alpha = 1f;
         optionsMenu.blocksRaycasts = true;
         optionsMenu.interactable = true;
@@ -106,9 +143,35 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideOptionsMenu()
     {
-        optionsMenu.alpha = 0f;
-        optionsMenu.blocksRaycasts = false;
-        optionsMenu.interactable = false;
+        if (optionsMenu.alpha > 0)
+        {
+            optionsMenu.alpha = 0f;
+            optionsMenu.blocksRaycasts = false;
+            optionsMenu.interactable = false;
+        }
+    }
+
+    public void ShowCreditsMenu()
+    {
+        HideMainMenu();
+        HideOptionsMenu();
+        creditsMenu.alpha = 1f;
+        creditsMenu.blocksRaycasts = true;
+        creditsMenu.interactable = true;
+
+        _isOnCredits = true;
+    }
+
+    public void HideCreditsMenu()
+    {
+        if (creditsMenu.alpha > 0)
+        {
+            creditsMenu.alpha = 0f;
+            creditsMenu.blocksRaycasts = false;
+            creditsMenu.interactable = false;
+
+            _isOnCredits = false;
+        }
     }
 
     public void NewGame()
@@ -126,10 +189,13 @@ public class MainMenuUI : MonoBehaviour
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene("StartMenu");
+        SceneManager.LoadScene("MainMenu");
     }
     public void QuitGame()
     {
+#if UNITY_EDITOR
+        Debug.Log("Sorry, I can't quit on unity editor!");
+#endif
         Application.Quit();
     }
 }

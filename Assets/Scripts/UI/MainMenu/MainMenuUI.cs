@@ -11,6 +11,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private CanvasGroup mainMenu;
     [SerializeField] private CanvasGroup optionsMenu;
     [SerializeField] private CanvasGroup creditsMenu;
+    [SerializeField] private CanvasGroup scoreMenu;
+    [SerializeField] private CanvasGroup leaderboardPanel;
 
     [Header("Resolution, Fullscreen")]
     [SerializeField] private TMP_Dropdown resolutionsDropdown;
@@ -22,7 +24,13 @@ public class MainMenuUI : MonoBehaviour
 
     [Header("UI Sliders")]
     [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider sfxSlider; 
+    public List<TMP_Text> scoreTexts;
+
+    [Header("Managers")]
+    [SerializeField] private ScoreManager scoreManager;
+
+
 
     private bool _isOnCredits = false;
 
@@ -33,6 +41,9 @@ public class MainMenuUI : MonoBehaviour
         SetupBrightness();
         SetUpVolume();
         ShowMainMenu();
+        HideLeaderboard();
+        UpdateLeaderboard();
+
     }
 
     private void Update()
@@ -45,6 +56,7 @@ public class MainMenuUI : MonoBehaviour
             }
         }
     }
+
 
     private void SetupResolutions()
     {
@@ -134,8 +146,6 @@ public class MainMenuUI : MonoBehaviour
 
     public void ShowOptionsMenu()
     {
-        HideMainMenu();
-        HideCreditsMenu();
         optionsMenu.alpha = 1f;
         optionsMenu.blocksRaycasts = true;
         optionsMenu.interactable = true;
@@ -143,12 +153,22 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideOptionsMenu()
     {
-        if (optionsMenu.alpha > 0)
-        {
-            optionsMenu.alpha = 0f;
-            optionsMenu.blocksRaycasts = false;
-            optionsMenu.interactable = false;
-        }
+      optionsMenu.alpha = 0f;
+      optionsMenu.blocksRaycasts = false;
+      optionsMenu.interactable = false;
+    }
+    public void ShowScoreMenu()
+    {
+        optionsMenu.alpha = 1f;
+        optionsMenu.blocksRaycasts = true;
+        optionsMenu.interactable = true;
+    }
+
+    public void HideScoreMenu()
+    {
+      optionsMenu.alpha = 0f;
+      optionsMenu.blocksRaycasts = false;
+      optionsMenu.interactable = false;
     }
 
     public void ShowCreditsMenu()
@@ -188,7 +208,36 @@ public class MainMenuUI : MonoBehaviour
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("StartMenu");
+    }
+
+    public void UpdateLeaderboard()
+    {
+        var scores = scoreManager.GetHighScores();
+
+        for (int i = 0; i < scoreTexts.Count; i++)
+        {
+            if (i < scores.Count)
+                scoreTexts[i].text = $"{i + 1}. {scores[i]}";
+            else
+                scoreTexts[i].text = $"{i + 1}. ---";
+        }
+    }
+
+    public void ShowLeaderboard()
+    {
+        UpdateLeaderboard();
+
+        leaderboardPanel.alpha = 1f;
+        leaderboardPanel.blocksRaycasts = true;
+        leaderboardPanel.interactable = true;
+    }
+
+    public void HideLeaderboard()
+    {
+        leaderboardPanel.alpha = 0f;
+        leaderboardPanel.blocksRaycasts = false;
+        leaderboardPanel.interactable = false;
     }
     public void QuitGame()
     {

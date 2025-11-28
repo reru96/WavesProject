@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.6
+  m_fontSize: 70.9
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6523,7 +6523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6589861825988560092, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8498027482875287581, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_Material
@@ -6559,7 +6559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91087c81222f214398e35315e92220e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _colorPropertyName: _BaseColor
+  _colorChangeDuration: 0.5
 --- !u!1 &778259799
 GameObject:
   m_ObjectHideFlags: 0
@@ -9715,7 +9715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ca3236624a10749becdf2ccffb4ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
+  mainMenu: {fileID: 1688197709}
   optionsMenu: {fileID: 95036869}
+  creditsMenu: {fileID: 95036869}
   resolutionsDropdown: {fileID: 700626825}
   fullscreenToggle: {fileID: 334685334}
   brightnessSlider: {fileID: 314255112}

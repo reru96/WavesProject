@@ -164,14 +164,13 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideCreditsMenu()
     {
-        if (creditsMenu.alpha > 0)
-        {
-            creditsMenu.alpha = 0f;
-            creditsMenu.blocksRaycasts = false;
-            creditsMenu.interactable = false;
 
-            _isOnCredits = false;
-        }
+        creditsMenu.alpha = 0f;
+        creditsMenu.blocksRaycasts = false;
+        creditsMenu.interactable = false;
+
+        _isOnCredits = false;
+
     }
 
     public void NewGame()

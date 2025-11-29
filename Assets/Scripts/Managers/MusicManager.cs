@@ -28,6 +28,11 @@ public class MusicManager : MonoBehaviour
 
     void Update()
     {
+        SetVolume();
+    }
+
+    public void SetVolume()
+    {
         if (playerWave != null)
         {
 
@@ -36,7 +41,6 @@ public class MusicManager : MonoBehaviour
             musicInstance.setVolume(volume);
         }
     }
-
 
     void OnDestroy()
     {

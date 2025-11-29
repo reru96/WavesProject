@@ -159,17 +159,17 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ShowScoreMenu()
     {
-        optionsMenu.alpha = 1f;
-        optionsMenu.blocksRaycasts = true;
-        optionsMenu.interactable = true;
+       scoreMenu.alpha = 1f;
+       scoreMenu.blocksRaycasts = true;
+       scoreMenu.interactable = true;
     }
 
     public void HideScoreMenu()
     {
-      optionsMenu.alpha = 0f;
-      optionsMenu.blocksRaycasts = false;
-      optionsMenu.interactable = false;
-    }
+      scoreMenu.alpha = 0f;
+      scoreMenu.blocksRaycasts = false;
+      scoreMenu.interactable = false;
+    } 
 
     public void ShowCreditsMenu()
     {

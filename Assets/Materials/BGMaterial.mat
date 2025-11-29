@@ -70,7 +70,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _Float: 13.27
     - _GlowIntensity: 0.5
-    - _Scale: 1
+    - _Scale: 0.5
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -78,9 +78,9 @@ Material:
     - _StencilWriteMask: 255
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
-    - _WaveAmplitude: 0.68
-    - _WaveFrequency: -1.12
-    - _WaveSpeed: 0.9
+    - _WaveAmplitude: 0.34
+    - _WaveFrequency: 1
+    - _WaveSpeed: 1
     - _ZWrite: 0
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}

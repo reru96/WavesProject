@@ -106,6 +106,8 @@ public class PlayerWaveController : MonoBehaviour
         if (Input.GetKeyDown(parryKey) && !_isParrying)
         {
             _parryTimer = parryDuration;
+            var collider = this.gameObject.GetComponent<Collider2D>();
+            collider.enabled = false;
             _isParrying = true;
             Debug.Log("parry attivo");
         }
@@ -115,7 +117,10 @@ public class PlayerWaveController : MonoBehaviour
             _parryTimer -= Time.deltaTime;
             if (_parryTimer <= 0f)
             {
+                
                 _isParrying = false;
+                var collider = this.gameObject.GetComponent<Collider2D>();
+                collider.enabled = true;
             }
         }
     }

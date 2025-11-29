@@ -19,7 +19,6 @@ public class Level1UI : MonoBehaviour
     private Resolution[] resolutions;
 
     [Header("UI Sliders")]
-    [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
     private void Start()
@@ -85,16 +84,9 @@ public class Level1UI : MonoBehaviour
 
     public void SetUpVolume()
     {
-        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
         float sfxVol = PlayerPrefs.GetFloat("SfxVolume", 0.8f);
-
-        musicSlider.value = musicVol;
         sfxSlider.value = sfxVol;
-
-        ApplyVolume("Music", musicVol);
         ApplyVolume("Sfx", sfxVol);
-
-        musicSlider.onValueChanged.AddListener(v => ApplyVolume("Music", v));
         sfxSlider.onValueChanged.AddListener(v => ApplyVolume("Sfx", v));
     }
 

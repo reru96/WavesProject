@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 using TMPro;
 using UnityEngine.InputSystem;
 
@@ -12,26 +12,12 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private CanvasGroup optionsMenu;
     [SerializeField] private CanvasGroup creditsMenu;
 
-    [Header("Resolution, Fullscreen")]
-    [SerializeField] private TMP_Dropdown resolutionsDropdown;
-    [SerializeField] private Toggle fullscreenToggle;
-
-    [Header("Graphics Settings")]
-    [SerializeField] private Slider brightnessSlider;
-    private Resolution[] resolutions;
-
-    [Header("UI Sliders")]
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
+   
 
     private bool _isOnCredits = false;
 
     private void Start()
     {
-        SetupResolutions();
-        SetupFullscreen();
-        SetupBrightness();
-        SetUpVolume();
         ShowMainMenu();
     }
 
@@ -46,72 +32,7 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    private void SetupResolutions()
-    {
-        resolutions = Screen.resolutions;
-        resolutionsDropdown.ClearOptions();
-
-        List<string> options = new List<string>();
-        int currentResolutionIndex = GameManager.Instance.GetSavedResolutionIndex();
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            options.Add(resolutions[i].width + " x " + resolutions[i].height);
-        }
-
-        resolutionsDropdown.AddOptions(options);
-        resolutionsDropdown.value = currentResolutionIndex;
-        resolutionsDropdown.RefreshShownValue();
-
-        resolutionsDropdown.onValueChanged.AddListener(i =>
-        {
-            GameManager.Instance.SetResolution(i);
-        });
-    }
-
-    private void SetupFullscreen()
-    {
-        fullscreenToggle.isOn = GameManager.Instance.GetSavedFullscreen();
-        fullscreenToggle.onValueChanged.AddListener(b =>
-        {
-            GameManager.Instance.SetFullscreen(b);
-        });
-    }
-
-    private void SetupBrightness()
-    {
-        brightnessSlider.value = GameManager.Instance.GetBrightness();
-        brightnessSlider.onValueChanged.AddListener(v =>
-        {
-            GameManager.Instance.SetBrightness(v);
-        });
-    }
-
-    private void ApplyVolume(string type, float value)
-    {
-
-        if (type == "Music")
-            AudioManager.Instance.SetMusicVolume(value);
-        else if (type == "Sfx")
-            AudioManager.Instance.SetSfxVolume(value);
-
-        PlayerPrefs.SetFloat($"{type}Volume", value);
-    }
-
-    public void SetUpVolume()
-    {
-        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
-        float sfxVol = PlayerPrefs.GetFloat("SfxVolume", 0.8f);
-
-        musicSlider.value = musicVol;
-        sfxSlider.value = sfxVol;
-
-        ApplyVolume("Music", musicVol);
-        ApplyVolume("Sfx", sfxVol);
-
-        musicSlider.onValueChanged.AddListener(v => ApplyVolume("Music", v));
-        sfxSlider.onValueChanged.AddListener(v => ApplyVolume("Sfx", v));
-    }
+    
 
     public void ShowMainMenu()
     {
@@ -124,7 +45,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideMainMenu()
     {
-        if (mainMenu.alpha > 0)
+        if (mainMenu != null && mainMenu.alpha > 0)
         {
             mainMenu.alpha = 0;
             mainMenu.blocksRaycasts = false;
@@ -143,7 +64,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideOptionsMenu()
     {
-        if (optionsMenu.alpha > 0)
+        if (optionsMenu != null && optionsMenu.alpha > 0)
         {
             optionsMenu.alpha = 0f;
             optionsMenu.blocksRaycasts = false;
@@ -164,7 +85,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void HideCreditsMenu()
     {
-        if (creditsMenu.alpha > 0)
+        if (creditsMenu != null && creditsMenu.alpha > 0)
         {
             creditsMenu.alpha = 0f;
             creditsMenu.blocksRaycasts = false;
@@ -198,4 +119,6 @@ public class MainMenuUI : MonoBehaviour
 #endif
         Application.Quit();
     }
+
+    public void Retry() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 }

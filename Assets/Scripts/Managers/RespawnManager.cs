@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -82,12 +81,6 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void GameOver()
     {
-        if (player != null)
-        {
-            Destroy(player);
-            player = null;
-        }
-
         OnGameOver?.Invoke();
         Debug.Log("Game Over! L'evento è stato notificato.");
     }

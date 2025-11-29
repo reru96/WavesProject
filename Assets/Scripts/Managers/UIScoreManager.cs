@@ -22,7 +22,6 @@ public class UIScoreManager : MonoBehaviour
     private float distanceTravelled;
     private float timeAlive;
     private int score;
-    private float multiplier = 1f;
 
     private void Start()
     {
@@ -31,27 +30,26 @@ public class UIScoreManager : MonoBehaviour
 
         if (RespawnManager.Instance != null && RespawnManager.Instance.Player != null)
             AssignPlayer(RespawnManager.Instance.Player);
+        else
+        {
+          var playerobj = FindAnyObjectByType<PlayerControl>();
+            player = playerobj.transform;
+        }
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
-        if (RespawnManager.Instance != null)
-            RespawnManager.Instance.OnPlayerSpawned += AssignPlayer;
-
         SaveController.OnScoreLoaded += SetScore;
         RespawnManager.OnGameOver += SaveAndUpdateLeaderboard;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
-        if (RespawnManager.Instance != null)
-            RespawnManager.Instance.OnPlayerSpawned -= AssignPlayer;
-
         SaveController.OnScoreLoaded -= SetScore;
         RespawnManager.OnGameOver -= SaveAndUpdateLeaderboard;
     }
 
-    private void AssignPlayer(GameObject newPlayer)
+    public void AssignPlayer(GameObject newPlayer)
     {
         player = newPlayer.transform;
         startX = player.position.x;
@@ -59,19 +57,18 @@ public class UIScoreManager : MonoBehaviour
         score = 0;
     }
 
-    private void Update()
+    public void Update()
     {
         if (player == null) return;
 
         distanceTravelled = Mathf.Max(0, player.position.x - startX);
         timeAlive += Time.deltaTime;
-        multiplier = 1f + (timeAlive * multiplierRate);
-        score = Mathf.FloorToInt(distanceTravelled * pointsPerMeter * multiplier);
+        score = Mathf.FloorToInt(distanceTravelled * pointsPerMeter);
 
         if (scoreText != null)
-            scoreText.text = $": {score}\n: x{multiplier:F2}";
+            scoreText.text = $"Score: {score}\n";
         if (distanceText != null)
-            distanceText.text = $": {distanceTravelled:F0}m";
+            distanceText.text = $"Distance: {distanceTravelled:F0}m";
     }
 
     public void SetScore(int newScore)
@@ -94,7 +91,6 @@ public class UIScoreManager : MonoBehaviour
         SaveManager.Save(data);
         UpdateLeaderboard();
 
-        Time.timeScale = 0f;
         leaderBoard.alpha = 1f;
         leaderBoard.interactable = true;
         leaderBoard.blocksRaycasts = true;

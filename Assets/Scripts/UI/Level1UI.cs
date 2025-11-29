@@ -24,13 +24,14 @@ public class Level1UI : MonoBehaviour
 
     private void Start()
     {
+        HideOptionsMenu();
         SetupResolutions();
         SetupFullscreen();
         SetupBrightness();
         SetUpVolume();
     }
 
-    private void SetupResolutions()
+    public void SetupResolutions()
     {
         resolutions = Screen.resolutions;
         resolutionsDropdown.ClearOptions();
@@ -53,7 +54,7 @@ public class Level1UI : MonoBehaviour
         });
     }
 
-    private void SetupFullscreen()
+    public void SetupFullscreen()
     {
         fullscreenToggle.isOn = GameManager.Instance.GetSavedFullscreen();
         fullscreenToggle.onValueChanged.AddListener(b =>
@@ -62,7 +63,7 @@ public class Level1UI : MonoBehaviour
         });
     }
 
-    private void SetupBrightness()
+    public void SetupBrightness()
     {
         brightnessSlider.value = GameManager.Instance.GetBrightness();
         brightnessSlider.onValueChanged.AddListener(v =>
@@ -71,7 +72,7 @@ public class Level1UI : MonoBehaviour
         });
     }
 
-    private void ApplyVolume(string type, float value)
+    public void ApplyVolume(string type, float value)
     {
 
         if (type == "Music")
@@ -114,6 +115,7 @@ public class Level1UI : MonoBehaviour
 
     public void GoToMenu()
     {
+        Debug.Log("Tasto premuto");
         SceneManager.LoadScene("StartMenu");
     }
 

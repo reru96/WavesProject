@@ -59,7 +59,7 @@ public class LifeController : MonoBehaviour
     public void SetHp(int hp)
     {
         int oldHp = currentHp;
-        currentHp = Mathf.Clamp(hp, 0, objectSO.maxHp);
+        currentHp = Mathf.Clamp(hp, 0, maxHp);
 
         if (oldHp > 0 && currentHp == 0)
         {

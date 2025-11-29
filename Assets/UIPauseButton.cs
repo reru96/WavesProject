@@ -5,7 +5,6 @@ public class UIPauseButton : MonoBehaviour
 {
     private Button buttonComponent;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private CanvasGroup buttoncanvas;
 
     void Awake()
     {
@@ -16,25 +15,14 @@ public class UIPauseButton : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        if (RespawnManager.Instance != null)
-        {
-            RespawnManager.OnGameOver += DisableButton;
-        }
-    }
-
     private void OnDisable()
     {
-        if (RespawnManager.Instance != null)
-        {
-            RespawnManager.OnGameOver -= DisableButton;
-        }
 
         if (buttonComponent != null)
         {
             buttonComponent.onClick.RemoveListener(TimeSetter.Instance.TogglePause);
         }
+
     }
 
     void Start()
@@ -46,19 +34,6 @@ public class UIPauseButton : MonoBehaviour
             TimeSetter.OnGameResumed.AddListener(HideCanvasGroup);
         }
 
-        HideCanvasGroup();
-    }
-
-    public void DisableButton()
-    {
-        if (canvasGroup == null)
-        {
-            Debug.LogWarning("UIPauseButton: CanvasGroup è stato distrutto (probabilmente al Game Over). Impossibile disabilitare il bottone.");
-            return;
-        }
-        canvasGroup.alpha = 0f;
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
     }
 
     private void ShowCanvasGroup()

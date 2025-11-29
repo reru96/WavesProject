@@ -33,13 +33,11 @@ public class PlayerControl : MonoBehaviour
 
     private void OnEnable()
     {
-        if (RespawnManager.Instance != null)
             RespawnManager.OnGameOver += StopPlayer;
     }
 
     private void OnDisable()
     {
-        if (RespawnManager.Instance != null)
             RespawnManager.OnGameOver -= StopPlayer;
     }
 
@@ -53,7 +51,7 @@ public class PlayerControl : MonoBehaviour
 
     private void MoveForward()
     {
-        transform.position += Vector3.right * speed * Time.deltaTime;
+        transform.position += Vector3.right * (speed * Time.deltaTime);
     }
 
     private void HandleAmplitude()

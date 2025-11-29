@@ -69,7 +69,7 @@ Material:
     - _ColorMask: 15
     - _EnableExternalAlpha: 0
     - _Float: 13.27
-    - _GlowIntensity: 2
+    - _GlowIntensity: 0.5
     - _Scale: 1
     - _Stencil: 0
     - _StencilComp: 8

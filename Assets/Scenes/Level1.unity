@@ -3645,7 +3645,6 @@ GameObject:
   m_Component:
   - component: {fileID: 572704284}
   - component: {fileID: 572704286}
-  - component: {fileID: 572704285}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -3668,18 +3667,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &572704285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572704283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2330c242c6a2c6439cc46359f793561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SaveController
 --- !u!114 &572704286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4821,6 +4808,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1069747893}
     m_Modifications:
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1.9199
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.050499916
+      objectReference: {fileID: 0}
+    - target: {fileID: 304060191436448611, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1383619421706504537, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4883,11 +4906,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1383619421706504537, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -941.91266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1383619421706504537, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 240.61879
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1383619421706504537, guid: 0abeb631fd9da0145827f022fa655486, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10932,7 +10955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3609712544047217752, guid: a65ac15e8fac9e9458aa56f56a4d0880, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0002593994
+      value: 0.000032424927
       objectReference: {fileID: 0}
     - target: {fileID: 3665043529153428363, guid: a65ac15e8fac9e9458aa56f56a4d0880, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12217,6 +12240,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2009133045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2009133046}
+  - component: {fileID: 2009133047}
+  m_Layer: 0
+  m_Name: SaveController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2009133046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009133045}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 374.47476, y: -60.48782, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2009133047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009133045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2330c242c6a2c6439cc46359f793561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveController
 --- !u!1 &2018921590
 GameObject:
   m_ObjectHideFlags: 0
@@ -13593,3 +13660,4 @@ SceneRoots:
   - {fileID: 262710310}
   - {fileID: 1688555749}
   - {fileID: 572704284}
+  - {fileID: 2009133046}

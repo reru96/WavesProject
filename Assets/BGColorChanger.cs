@@ -63,6 +63,11 @@ public class BGColorChanger : MonoBehaviour
             _waveController.OnColorChanged += OnPlayerColorChanged;
             OnPlayerColorChanged(_waveController.CurrentColorType);
         }
+        else
+        {
+            _waveController = FindAnyObjectByType<PlayerWaveController>();
+            OnPlayerColorChanged(_waveController.CurrentColorType);
+        }
     }
 
     private void OnPlayerColorChanged(ColorType newType)
